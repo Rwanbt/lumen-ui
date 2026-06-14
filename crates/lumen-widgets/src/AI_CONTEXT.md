@@ -49,6 +49,8 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `ctx.data`, auto-dismiss via egui frame time, rendered in a foreground `Area`.
 - `modal.rs` — `Modal` (+ `open_modal`/`close_modal`); open state in `ctx.data`, wraps
   `egui::Modal` (backdrop + Esc close). `show` returns `None` while closed.
+- `select.rs` — `Select<T>` dropdown (`&mut T`) over `egui::ComboBox` + `selectable_value`.
+- `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 
 v0.3 composed components reuse atomic widgets/recipes + read `theme.tokens()` for incidental
 chrome rather than growing the frozen `Theme` trait per component.
