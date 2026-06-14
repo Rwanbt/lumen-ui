@@ -55,15 +55,18 @@ impl eframe::App for App {
             Breakpoint::Lg | Breakpoint::Xl => 3,
         };
 
-        Flex::row().gap(8.0).fill_width().show(ui, "cards", |t| {
-            for index in 0..columns {
-                t.item_grow(|ui| {
-                    Card::new().show(ui, |ui| {
-                        ui.add(Heading::new(format!("Card {}", index + 1)));
-                        ui.add(Label::muted("Grows to share the row."));
+        Grid::new(columns)
+            .gap(8.0)
+            .fill_width()
+            .show(ui, "cards", |t| {
+                for index in 0..columns {
+                    t.item(|ui| {
+                        Card::new().show(ui, |ui| {
+                            ui.add(Heading::new(format!("Card {}", index + 1)));
+                            ui.add(Label::muted("Equal grid column."));
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
     }
 }

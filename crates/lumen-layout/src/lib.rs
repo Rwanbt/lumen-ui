@@ -23,7 +23,7 @@
 use std::hash::Hash;
 
 use egui::{Id, Ui};
-use egui_taffy::taffy::prelude::length;
+use egui_taffy::taffy::prelude::{fr, length};
 use egui_taffy::taffy::{self, Display, FlexDirection};
 use egui_taffy::{tui, Tui, TuiBuilderLogic};
 
@@ -149,7 +149,63 @@ impl Flex {
     }
 }
 
-/// Adds flex items inside a [`Flex::show`] closure.
+/// A grid container with `columns` equal-fraction columns. Cells are added with
+/// [`FlexUiExt::item`] (each item is one cell, filled in row-major order).
+#[derive(Clone, Copy, Debug)]
+pub struct Grid {
+    columns: usize,
+    gap: f32,
+    fill_width: bool,
+}
+
+impl Grid {
+    /// A grid with `columns` equal columns (minimum 1).
+    #[must_use]
+    pub fn new(columns: usize) -> Self {
+        Self {
+            columns: columns.max(1),
+            gap: 0.0,
+            fill_width: false,
+        }
+    }
+
+    #[must_use]
+    pub fn gap(mut self, gap: f32) -> Self {
+        self.gap = gap;
+        self
+    }
+
+    #[must_use]
+    pub fn fill_width(mut self) -> Self {
+        self.fill_width = true;
+        self
+    }
+
+    fn style(self) -> taffy::Style {
+        taffy::Style {
+            display: Display::Grid,
+            grid_template_columns: vec![fr(1.0); self.columns],
+            gap: length(self.gap),
+            align_items: Some(taffy::AlignItems::Stretch),
+            justify_items: Some(taffy::AlignItems::Stretch),
+            ..Default::default()
+        }
+    }
+
+    /// Lay out the cells. `id_source` must be stable and unique in the parent `Ui`.
+    pub fn show(self, ui: &mut Ui, id_source: impl Hash, content: impl FnOnce(&mut Tui)) {
+        let style = self.style();
+        let init = tui(ui, Id::new(id_source));
+        let init = if self.fill_width {
+            init.reserve_available_width()
+        } else {
+            init
+        };
+        init.style(style).show(content);
+    }
+}
+
+/// Adds flex/grid items inside a [`Flex::show`] / [`Grid::show`] closure.
 pub trait FlexUiExt {
     /// Add an item sized to its content.
     fn item(&mut self, content: impl FnOnce(&mut Ui));

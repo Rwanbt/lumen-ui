@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-14 23:41** — do not edit manually.
+> **Auto-generated 2026-06-14 23:44** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -12,11 +12,12 @@ Depends only on `egui` + `egui_taffy` — not on `lumen-core`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 182 | |
-| **Total** | **182** | |
+| `lib.rs` | 228 | |
+| **Total** | **228** | |
 
 ## Rust API
 - `Flex` (struct)
+- `Grid` (struct)
 - `Align` (enum)
 - `Breakpoint` (enum)
 - `Justify` (enum)
