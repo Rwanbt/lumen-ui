@@ -8,6 +8,11 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.2 (in progress)
 
+- **`LightTheme`** — a light counterpart to `DarkTheme`. Recipe rules are centralized in a
+  shared `builder` module parameterized by tokens + an emphasis fn (lighten/darken), so a theme
+  is now just a palette (DRY).
+- **`examples/gallery.rs`** — every widget on one screen with a **live Dark/Light theme switch**
+  (the v0.2 exit criterion: toggling restyles everything, zero widget changes).
 - **`TextField`** themed single-line input (`&mut String`, hint, password), focus-highlighted
   border (frame N-1), via `TextFieldRecipe` + `Theme::text_field_recipe`.
 - **`RadioGroup`** generic single-selection (`&mut T`, builder `.option(value, label)`).

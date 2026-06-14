@@ -27,6 +27,10 @@ eframe = "0.34"
 name = "minimal"
 required-features = ["widgets"]
 
+[[example]]
+name = "gallery"
+required-features = ["widgets"]
+
 [features]
 default = ["theme", "widgets"]
 tokens = ["dep:lumen-core"]

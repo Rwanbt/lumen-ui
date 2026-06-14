@@ -1,10 +1,12 @@
-//! `DarkTheme` — the bootstrap theme that validates the whole pipeline in v0.1.
+//! `DarkTheme` — the default dark theme.
 //!
-//! Lives in `lumen-core` for now; the full theme family (Light, AudioDark,
-//! HighContrast) moves to the `lumen-themes` crate in v0.7.
+//! Holds a dark palette and delegates all recipe resolution to [`crate::builder`]
+//! with `lighten` as the emphasis. Lives in `lumen-core` for now; the full theme
+//! family (Light, AudioDark, HighContrast) consolidates in `lumen-themes` (v0.7).
 
-use egui::{Color32, Stroke};
+use egui::Color32;
 
+use crate::builder;
 use crate::context::UiContext;
 use crate::recipe::{
     BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, SliderRecipe,
@@ -57,12 +59,6 @@ impl DarkTheme {
             },
         }
     }
-
-    /// Lighten a color towards white by `t` in `[0, 1]` — used for hover states.
-    fn lighten(c: Color32, t: f32) -> Color32 {
-        let mix = |v: u8| (f32::from(v) + (255.0 - f32::from(v)) * t).round() as u8;
-        Color32::from_rgb(mix(c.r()), mix(c.g()), mix(c.b()))
-    }
 }
 
 impl Theme for DarkTheme {
@@ -76,194 +72,35 @@ impl Theme for DarkTheme {
         state: WidgetState,
         ctx: &UiContext,
     ) -> ButtonRecipe {
-        let c = &self.tokens.colors;
-        let (base_fill, text_color, has_border) = match variant {
-            ButtonVariant::Primary => (c.primary, c.on_primary, false),
-            ButtonVariant::Secondary => (c.secondary, c.on_secondary, false),
-            ButtonVariant::Ghost => (Color32::TRANSPARENT, c.text, true),
-            ButtonVariant::Danger => (c.danger, c.on_danger, false),
-        };
-
-        let fill = match state {
-            WidgetState::Normal | WidgetState::Disabled | WidgetState::Focused => base_fill,
-            WidgetState::Hovered => Self::lighten(base_fill, 0.10),
-            WidgetState::Active => Self::lighten(base_fill, 0.18),
-        };
-
-        let stroke = if has_border {
-            Stroke::new(1.0, c.border)
-        } else {
-            Stroke::NONE
-        };
-
-        let shadow = match (variant, state) {
-            (ButtonVariant::Ghost, _) => self.tokens.elevation.none,
-            (_, WidgetState::Hovered | WidgetState::Active) => self.tokens.elevation.low,
-            _ => self.tokens.elevation.none,
-        };
-
-        let scale = ctx.density_scale();
-        ButtonRecipe {
-            fill,
-            text_color,
-            stroke,
-            corner_radius: self.tokens.radius.md,
-            shadow,
-            inner_margin: Spacing::pad(
-                self.tokens.spacing.md * scale,
-                self.tokens.spacing.sm * scale,
-            ),
-        }
+        builder::button(&self.tokens, builder::lighten, variant, state, ctx)
     }
 
     fn text_recipe(&self, role: TextRole, _ctx: &UiContext) -> TextRecipe {
-        let c = &self.tokens.colors;
-        let t = &self.tokens.typography;
-        match role {
-            TextRole::Display => TextRecipe {
-                color: c.text,
-                size: t.display,
-            },
-            TextRole::Heading => TextRecipe {
-                color: c.text,
-                size: t.heading,
-            },
-            TextRole::Body => TextRecipe {
-                color: c.text,
-                size: t.body,
-            },
-            TextRole::Label => TextRecipe {
-                color: c.text,
-                size: t.label,
-            },
-            TextRole::Muted => TextRecipe {
-                color: c.text_muted,
-                size: t.body,
-            },
-        }
+        builder::text(&self.tokens, role)
     }
 
     fn card_recipe(&self, ctx: &UiContext) -> CardRecipe {
-        let c = &self.tokens.colors;
-        let scale = ctx.density_scale();
-        CardRecipe {
-            fill: c.surface,
-            stroke: Stroke::new(1.0, c.border),
-            corner_radius: self.tokens.radius.lg,
-            shadow: self.tokens.elevation.low,
-            inner_margin: Spacing::pad(
-                self.tokens.spacing.lg * scale,
-                self.tokens.spacing.lg * scale,
-            ),
-        }
+        builder::card(&self.tokens, ctx)
     }
 
     fn badge_recipe(&self, variant: BadgeVariant, ctx: &UiContext) -> BadgeRecipe {
-        let c = &self.tokens.colors;
-        let (fill, text_color) = match variant {
-            BadgeVariant::Neutral => (c.surface_variant, c.text_muted),
-            BadgeVariant::Primary => (c.primary, c.on_primary),
-            BadgeVariant::Success => (c.success, c.on_success),
-            BadgeVariant::Warning => (c.warning, c.on_warning),
-            BadgeVariant::Danger => (c.danger, c.on_danger),
-        };
-        let scale = ctx.density_scale();
-        BadgeRecipe {
-            fill,
-            text_color,
-            corner_radius: self.tokens.radius.full,
-            inner_margin: Spacing::pad(
-                self.tokens.spacing.sm * scale,
-                self.tokens.spacing.xs * scale,
-            ),
-            text_size: self.tokens.typography.label,
-        }
+        builder::badge(&self.tokens, variant, ctx)
     }
 
     fn toggle_recipe(&self, on: bool, state: WidgetState, _ctx: &UiContext) -> ToggleRecipe {
-        let c = &self.tokens.colors;
-        let base_track = if on { c.primary } else { c.surface_variant };
-        let track = match state {
-            WidgetState::Hovered | WidgetState::Active => Self::lighten(base_track, 0.10),
-            _ => base_track,
-        };
-        let knob = if on { c.on_primary } else { c.text_muted };
-        let border = if on {
-            Stroke::NONE
-        } else {
-            Stroke::new(1.0, c.border)
-        };
-        ToggleRecipe {
-            track,
-            knob,
-            border,
-        }
+        builder::toggle(&self.tokens, builder::lighten, on, state)
     }
 
     fn slider_recipe(&self, state: WidgetState, _ctx: &UiContext) -> SliderRecipe {
-        let c = &self.tokens.colors;
-        let (fill, knob) = match state {
-            WidgetState::Hovered | WidgetState::Active => {
-                (Self::lighten(c.primary, 0.10), Color32::WHITE)
-            }
-            _ => (c.primary, c.on_primary),
-        };
-        SliderRecipe {
-            track: c.surface_variant,
-            fill,
-            knob,
-        }
+        builder::slider(&self.tokens, builder::lighten, state)
     }
 
     fn text_field_recipe(&self, state: WidgetState, ctx: &UiContext) -> TextFieldRecipe {
-        let c = &self.tokens.colors;
-        let border = match state {
-            WidgetState::Focused => Stroke::new(1.5, c.primary),
-            WidgetState::Hovered => Stroke::new(1.0, DarkTheme::lighten(c.border, 0.15)),
-            _ => Stroke::new(1.0, c.border),
-        };
-        let scale = ctx.density_scale();
-        TextFieldRecipe {
-            fill: c.surface_variant,
-            text_color: c.text,
-            border,
-            corner_radius: self.tokens.radius.md,
-            inner_margin: Spacing::pad(
-                self.tokens.spacing.sm * scale,
-                self.tokens.spacing.sm * scale,
-            ),
-        }
+        builder::text_field(&self.tokens, builder::lighten, state, ctx)
     }
 
     fn apply_to_ctx(&self, ctx: &egui::Context) {
-        let c = &self.tokens.colors;
-        ctx.global_style_mut(|style| {
-            let v = &mut style.visuals;
-            v.dark_mode = true;
-            v.panel_fill = c.background;
-            v.window_fill = c.surface;
-            v.extreme_bg_color = c.background;
-            v.override_text_color = Some(c.text);
-            v.window_stroke = Stroke::new(1.0, c.border);
-
-            let radius = self.tokens.radius.md;
-            for w in [
-                &mut v.widgets.noninteractive,
-                &mut v.widgets.inactive,
-                &mut v.widgets.hovered,
-                &mut v.widgets.active,
-                &mut v.widgets.open,
-            ] {
-                w.corner_radius = radius;
-            }
-            v.widgets.inactive.bg_fill = c.surface_variant;
-            v.widgets.hovered.bg_fill = DarkTheme::lighten(c.surface_variant, 0.08);
-            v.widgets.active.bg_fill = DarkTheme::lighten(c.surface_variant, 0.14);
-
-            let s = &mut style.spacing;
-            s.item_spacing = egui::vec2(self.tokens.spacing.sm, self.tokens.spacing.sm);
-            s.button_padding = egui::vec2(self.tokens.spacing.md, self.tokens.spacing.sm);
-        });
+        builder::apply_visuals(&self.tokens, true, builder::lighten, ctx);
     }
 }
 
@@ -323,7 +160,6 @@ mod tests {
             theme.badge_recipe(BadgeVariant::Danger, &ctx).fill,
             t.colors.danger
         );
-        // Neutral badges use the muted text color, not the strong text color.
         assert_eq!(
             theme.badge_recipe(BadgeVariant::Neutral, &ctx).text_color,
             t.colors.text_muted

@@ -40,5 +40,8 @@ let recipe = ui.theme().button_recipe(variant, state, &ui.ui_ctx()); // inside a
   `CardRecipe`, `BadgeVariant`/`BadgeRecipe`, `ToggleRecipe`, `SliderRecipe`, `TextFieldRecipe`.
   `WidgetState` includes `Focused` (text input).
 - `theme.rs` — `Theme` trait, `UiThemeExt`, `install`/`set_theme`.
-- `dark.rs` — `DarkTheme` bootstrap theme (moves to `lumen-themes` in v0.7).
+- `builder.rs` — shared recipe-resolution logic (pure fns over `&Tokens` + an emphasis fn);
+  themes delegate here so the rules live in one place (DRY).
+- `dark.rs` / `light.rs` — `DarkTheme` / `LightTheme`: a palette + delegation to `builder`
+  (lighten vs darken emphasis). Move to `lumen-themes` in v0.7.
 - `anim.rs` — minimal motion (`lerp_color`); swaps to `lumen-motion` in v0.5.
