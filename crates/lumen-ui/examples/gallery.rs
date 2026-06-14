@@ -156,7 +156,32 @@ impl eframe::App for Gallery {
                 .show(ui, |ui| {
                     ui.add(Label::muted("Collapsible content, state kept by egui."));
                 });
+            ui.add_space(8.0);
+
+            Card::new().show(ui, |ui| {
+                ui.add(Heading::new("Dialog"));
+                if ui.add(Button::primary("Open dialog")).clicked() {
+                    open_modal(ui.ctx(), "demo_modal");
+                }
+            });
         });
+
+        // Modal renders only while open; opening/closing is state-free for the caller.
+        Modal::new("demo_modal")
+            .title("Delete project?")
+            .show(ui.ctx(), |ui| {
+                ui.add(Label::new("This action cannot be undone."));
+                ui.add_space(12.0);
+                ui.horizontal(|ui| {
+                    if ui.add(Button::danger("Delete")).clicked() {
+                        toast_error(ui.ctx(), "Project deleted");
+                        close_modal(ui.ctx(), "demo_modal");
+                    }
+                    if ui.add(Button::ghost("Cancel")).clicked() {
+                        close_modal(ui.ctx(), "demo_modal");
+                    }
+                });
+            });
 
         // Render queued toasts on top, once per frame.
         show_toasts(ui.ctx());

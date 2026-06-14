@@ -8,6 +8,9 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.3 (in progress)
 
+- **`Modal`** — centered dialog with backdrop; open state in `ctx.data` (`open_modal` /
+  `close_modal`, no external boolean). Auto-closes on backdrop click / Esc; `show` returns
+  `None` while closed. Wraps `egui::Modal`.
 - **Toasts** — transient notifications with a queue + auto-dismiss. Push from anywhere with
   `toast(ctx, msg)` / `toast_success|warning|error`; render once per frame with
   `show_toasts(ctx)`. Queue in `ctx.data`, expiry via egui frame time. No external state.
