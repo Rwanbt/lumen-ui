@@ -35,3 +35,6 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `Theme::text_recipe(role, ctx)`.
 - `card.rs` — `Card` themed surface container; exposes `show(ui, |ui| …)` (not a `Widget`).
 - `badge.rs` — `Badge` status label (Neutral/Primary/Success/Warning/Danger).
+- `switch.rs` — `Switch` (`&mut bool`), animated knob; custom painter (rect+circle).
+- `checkbox.rs` — `Checkbox` (`&mut bool` + label); custom box + check mark.
+  Both use `Theme::toggle_recipe`.

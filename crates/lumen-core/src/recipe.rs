@@ -42,6 +42,20 @@ pub struct TextRecipe {
     pub size: f32,
 }
 
+/// Fully resolved style for a boolean toggle (switch, checkbox).
+///
+/// Geometry (pill vs rounded box) is chosen by the widget; the recipe carries
+/// the colors and border so on/off and hover states stay theme-driven.
+#[derive(Clone, Copy, Debug)]
+pub struct ToggleRecipe {
+    /// Track/box fill for the resolved on/off state.
+    pub track: Color32,
+    /// Knob (switch) or check mark (checkbox) color.
+    pub knob: Color32,
+    /// Border around the track/box.
+    pub border: Stroke,
+}
+
 /// Fully resolved style for a card container.
 #[derive(Clone, Copy, Debug)]
 pub struct CardRecipe {

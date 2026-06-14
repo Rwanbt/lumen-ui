@@ -26,7 +26,7 @@ pub use context::{Density, UiContext};
 pub use dark::DarkTheme;
 pub use recipe::{
     BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, TextRecipe, TextRole,
-    WidgetState,
+    ToggleRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};

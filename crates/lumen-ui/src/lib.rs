@@ -32,12 +32,12 @@ pub use lumen_core as core;
 pub use lumen_core::{
     anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe,
     Colors, DarkTheme, Density, Elevation, Motion, Radius, Spacing, TextRecipe, TextRole, Theme,
-    Tokens, Typography, UiContext, UiThemeExt, WidgetState,
+    ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
-pub use lumen_widgets::{Badge, Button, Card, Heading, Label};
+pub use lumen_widgets::{Badge, Button, Card, Checkbox, Heading, Label, Switch};
 
 /// Glob-importable essentials.
 pub mod prelude {
@@ -47,5 +47,5 @@ pub mod prelude {
         UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "widgets")]
-    pub use lumen_widgets::{Badge, Button, Card, Heading, Label};
+    pub use lumen_widgets::{Badge, Button, Card, Checkbox, Heading, Label, Switch};
 }

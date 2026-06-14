@@ -8,6 +8,8 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.2 (in progress)
 
+- **`Switch`** (animated knob via `animate_bool_with_time`) and **`Checkbox`** (labelled),
+  bound to `&mut bool`, styled by a new `ToggleRecipe` + `Theme::toggle_recipe(on, state, ctx)`.
 - **`Card`** themed surface container (`Card::show`) and **`Badge`** status label
   (Neutral/Primary/Success/Warning/Danger), via new `CardRecipe` / `BadgeRecipe` +
   `Theme::card_recipe` / `Theme::badge_recipe`.
