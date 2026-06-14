@@ -1798,6 +1798,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "lumen-patterns"
+version = "0.1.0"
+dependencies = [
+ "egui",
+ "lumen-core",
+ "lumen-widgets",
+]
+
+[[package]]
 name = "lumen-ui"
 version = "0.1.0"
 dependencies = [
@@ -1806,6 +1815,7 @@ dependencies = [
  "lumen-core",
  "lumen-layout",
  "lumen-motion",
+ "lumen-patterns",
  "lumen-widgets",
 ]
 

@@ -18,6 +18,7 @@ lumen-core = { workspace = true, optional = true }
 lumen-widgets = { workspace = true, optional = true }
 lumen-layout = { workspace = true, optional = true }
 lumen-motion = { workspace = true, optional = true }
+lumen-patterns = { workspace = true, optional = true }
 
 # Drapeaux de features — voir ROADMAP.md §A. Les crates motion/layout/patterns/icons/
 # themes/material naissent à leur version respective ; leurs features sont déclarées ici
@@ -41,6 +42,10 @@ required-features = ["widgets", "layout"]
 name = "motion"
 required-features = ["widgets", "motion"]
 
+[[example]]
+name = "dashboard"
+required-features = ["patterns"]
+
 [features]
 default = ["theme", "widgets"]
 tokens = ["dep:lumen-core"]
@@ -48,5 +53,6 @@ theme = ["tokens"]
 widgets = ["theme", "dep:lumen-widgets"]
 layout = ["dep:lumen-layout"]
 motion = ["dep:lumen-motion"]
+patterns = ["widgets", "dep:lumen-patterns"]
 serde = ["lumen-core/serde"]
-full = ["widgets", "layout", "motion", "serde"]
+full = ["widgets", "layout", "motion", "patterns", "serde"]
