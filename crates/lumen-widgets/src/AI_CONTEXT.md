@@ -47,6 +47,8 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `accordion.rs` — `Accordion` themed collapsible (wraps `egui::CollapsingHeader`).
 - `toast.rs` — free fns `toast`/`toast_success|warning|error` + `show_toasts(ctx)`; queue in
   `ctx.data`, auto-dismiss via egui frame time, rendered in a foreground `Area`.
+- `modal.rs` — `Modal` (+ `open_modal`/`close_modal`); open state in `ctx.data`, wraps
+  `egui::Modal` (backdrop + Esc close). `show` returns `None` while closed.
 
 v0.3 composed components reuse atomic widgets/recipes + read `theme.tokens()` for incidental
 chrome rather than growing the frozen `Theme` trait per component.
