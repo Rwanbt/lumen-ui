@@ -8,6 +8,9 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.6 (in progress)
 
+- **`LogPanel`** scrollable leveled log (`LogEntry` + `LogLevel`, severity badges, stick-to-bottom)
+  and **`CommandPalette`** (searchable command overlay; open state + query in `ctx.data`,
+  `open_command_palette` + filter; returns the chosen index).
 - **`Sidebar`** vertical nav (bound to a `&mut usize`), **`SettingsPage`** (titled + scroll) /
   **`InspectorPanel`** (titled) containers, and the **`property_row`** label-control helper.
 - **`lumen-patterns` crate** (façade feature `patterns`): **`DashboardLayout`** app shell

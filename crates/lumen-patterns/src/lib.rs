@@ -7,11 +7,15 @@
 #![forbid(unsafe_code)]
 
 mod bars;
+mod command_palette;
 mod dashboard;
+mod logpanel;
 mod rows;
 mod sidebar;
 
 pub use bars::{StatusBar, Toolbar};
+pub use command_palette::{open_command_palette, CommandPalette};
 pub use dashboard::DashboardLayout;
+pub use logpanel::{LogEntry, LogLevel, LogPanel};
 pub use rows::{property_row, InspectorPanel, SettingsPage};
 pub use sidebar::Sidebar;

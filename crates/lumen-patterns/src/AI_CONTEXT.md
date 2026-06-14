@@ -31,4 +31,6 @@ DashboardLayout::new()
 - `bars.rs` — `Toolbar` / `StatusBar` horizontal bar helpers.
 - `sidebar.rs` — `Sidebar` vertical nav (bound to `&mut usize`, full-width entries).
 - `rows.rs` — `property_row(ui, label, |ui| control)`, `SettingsPage` (scroll) / `InspectorPanel`.
-- (next slice) log panel, command palette.
+- `logpanel.rs` — `LogPanel` + `LogEntry`/`LogLevel` (severity badges, stick-to-bottom scroll).
+- `command_palette.rs` — `CommandPalette` (+ `open_command_palette`); open state + query in
+  `ctx.data`, modal overlay with live filter, returns the chosen command index.

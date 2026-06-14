@@ -45,6 +45,9 @@ impl eframe::App for App {
                 Toolbar::new().show(ui, |ui| {
                     ui.add(Heading::new("Acme"));
                     ui.add(Badge::primary("v0.6"));
+                    if ui.add(Button::ghost("Commands")).clicked() {
+                        open_command_palette(ui.ctx(), "cmd_palette");
+                    }
                 });
             })
             .sidebar(|ui| {
@@ -68,8 +71,19 @@ impl eframe::App for App {
                     ui.add(Label::muted(format!("Section: {}", SECTIONS[section])));
                 });
             })
-            .show(ui, |ui| {
-                if section == 2 {
+            .show(ui, |ui| match section {
+                1 => {
+                    ui.add(Heading::display("Reports"));
+                    ui.add_space(8.0);
+                    let logs = [
+                        LogEntry::info("Server started on :8080"),
+                        LogEntry::debug("Cache warmed (1280 entries)"),
+                        LogEntry::warn("Slow query: 412ms"),
+                        LogEntry::error("Upstream timeout (retrying)"),
+                    ];
+                    LogPanel::new().show(ui, &logs);
+                }
+                2 => {
                     SettingsPage::new("Settings").show(ui, |ui| {
                         property_row(ui, "Name", |ui| {
                             ui.add(TextField::new(&mut self.name).hint("Your name"));
@@ -78,10 +92,21 @@ impl eframe::App for App {
                             ui.add(Slider::new(&mut self.volume, 0.0..=1.0));
                         });
                     });
-                } else {
-                    ui.add(Heading::display(SECTIONS[section]));
+                }
+                _ => {
+                    ui.add(Heading::display("Overview"));
                     ui.add(Label::muted("Central content area."));
                 }
             });
+
+        // Command palette overlay — opening/closing is state-free for the caller.
+        if let Some(index) = CommandPalette::new("cmd_palette")
+            .command("Go to Overview")
+            .command("Go to Reports")
+            .command("Go to Settings")
+            .show(ui.ctx())
+        {
+            self.section = index;
+        }
     }
 }
