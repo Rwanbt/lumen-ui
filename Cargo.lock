@@ -1783,6 +1783,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "lumen-icons"
+version = "0.1.0"
+dependencies = [
+ "egui",
+ "lumen-core",
+]
+
+[[package]]
 name = "lumen-layout"
 version = "0.1.0"
 dependencies = [
@@ -1821,6 +1829,7 @@ dependencies = [
  "eframe",
  "egui",
  "lumen-core",
+ "lumen-icons",
  "lumen-layout",
  "lumen-motion",
  "lumen-patterns",
