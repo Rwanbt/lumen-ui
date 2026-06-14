@@ -40,3 +40,6 @@ ui.add(Button::ghost("Cancel").enabled(false));
   Both use `Theme::toggle_recipe`.
 - `slider.rs` — `Slider` (`&mut f32`, inclusive range); custom track+fill+knob, drag handling;
   uses `Theme::slider_recipe`.
+- `radio.rs` — `RadioGroup<T>` generic single-selection (builder `.option`); custom ring+dot.
+- `text_field.rs` — `TextField` (`&mut String`, hint, password) wrapping `TextEdit` in a themed
+  `Frame` (`TextEdit::frame(Frame::NONE)`); focus border via frame N-1; `Theme::text_field_recipe`.

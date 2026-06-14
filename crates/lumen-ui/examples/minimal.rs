@@ -27,12 +27,22 @@ fn main() -> eframe::Result<()> {
     )
 }
 
+#[derive(Clone, Copy, PartialEq, Eq, Default)]
+enum Plan {
+    #[default]
+    Free,
+    Pro,
+    Team,
+}
+
 #[derive(Default)]
 struct DemoApp {
     clicks: u32,
     notifications: bool,
     accept_terms: bool,
     volume: f32,
+    name: String,
+    plan: Plan,
 }
 
 impl eframe::App for DemoApp {
@@ -79,6 +89,15 @@ impl eframe::App for DemoApp {
                 ui.add(Slider::new(&mut self.volume, 0.0..=1.0));
                 ui.add(Label::muted(format!("volume {:.0}%", self.volume * 100.0)));
             });
+            ui.add_space(8.0);
+            ui.add(TextField::new(&mut self.name).hint("Your name"));
+            ui.add_space(8.0);
+            ui.add(
+                RadioGroup::new(&mut self.plan)
+                    .option(Plan::Free, "Free")
+                    .option(Plan::Pro, "Pro")
+                    .option(Plan::Team, "Team"),
+            );
         });
     }
 }

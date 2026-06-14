@@ -31,13 +31,16 @@ pub use lumen_core as core;
 #[doc(inline)]
 pub use lumen_core::{
     anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe,
-    Colors, DarkTheme, Density, Elevation, Motion, Radius, SliderRecipe, Spacing, TextRecipe,
-    TextRole, Theme, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
+    Colors, DarkTheme, Density, Elevation, Motion, Radius, SliderRecipe, Spacing, TextFieldRecipe,
+    TextRecipe, TextRole, Theme, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt,
+    WidgetState,
 };
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
-pub use lumen_widgets::{Badge, Button, Card, Checkbox, Heading, Label, Slider, Switch};
+pub use lumen_widgets::{
+    Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, TextField,
+};
 
 /// Glob-importable essentials.
 pub mod prelude {
@@ -47,5 +50,7 @@ pub mod prelude {
         UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "widgets")]
-    pub use lumen_widgets::{Badge, Button, Card, Checkbox, Heading, Label, Slider, Switch};
+    pub use lumen_widgets::{
+        Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, TextField,
+    };
 }
