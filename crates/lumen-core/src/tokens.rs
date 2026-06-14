@@ -18,6 +18,7 @@ pub struct Tokens {
 
 /// Semantic color roles (not raw palette swatches).
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Colors {
     pub background: Color32,
     pub surface: Color32,
