@@ -1,0 +1,36 @@
+# lumen-ui — workspace root.
+# Workspace dès le jalon 0 (cf. ROADMAP.md §"Décision d'architecture") : on ne crée
+# que les crates nécessaires à chaque version, mais les frontières pub/pub(crate) sont
+# imposées par le compilateur dès le début.
+[workspace]
+resolver = "2"
+members = [
+    "crates/lumen-core",
+    "crates/lumen-widgets",
+    "crates/lumen-ui",
+]
+
+# Métadonnées partagées par toutes les crates lumen-* (héritées via `*.workspace = true`).
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.92"            # MSRV — voir docs/adr/0004-msrv-egui-pin.md
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Rwanbt/lumen-ui"
+homepage = "https://github.com/Rwanbt/lumen-ui"
+authors = ["Erwan Barat <barat.erwan@gmail.com>"]
+keywords = ["egui", "ui", "design-system", "gui", "theme"]
+categories = ["gui"]
+
+[workspace.dependencies]
+# Pin strict de la version egui — la couche d'adaptation unique vit dans lumen-core.
+# Voir le registre des risques de ROADMAP.md (breaking changes egui ~3 mineures/an).
+egui = "0.34.3"
+# Crates internes (chemin) — versionnées ensemble pour la publication coordonnée v1.0.
+lumen-core = { path = "crates/lumen-core", version = "0.1.0" }
+lumen-widgets = { path = "crates/lumen-widgets", version = "0.1.0" }
+
+# Profil release optimisé pour les exemples / galeries WASM.
+[profile.release]
+opt-level = 3
+lto = "thin"

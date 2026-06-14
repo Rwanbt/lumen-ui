@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  fmt:
+    name: rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt --all -- --check
+
+  clippy:
+    name: clippy (-D warnings)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+  test:
+    name: test ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --all-features
+      - run: cargo build --workspace --examples
+
+  wasm:
+    name: wasm build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      # Façade libs only — examples pull eframe which needs a JS canvas runner on wasm.
+      - run: cargo build -p lumen-core -p lumen-widgets -p lumen-ui --target wasm32-unknown-unknown
+
+  loc-gate:
+    name: LOC gate (<1500 per source file)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail on any source file over 1500 LOC
+        run: |
+          set -e
+          BIG=$(find crates tools -name '*.rs' 2>/dev/null \
+            -not -path '*/target/*' -print0 \
+            | xargs -0 -I{} sh -c 'n=$(wc -l < "{}"); [ "$n" -gt 1500 ] && echo "{} ($n)"' || true)
+          if [ -n "$BIG" ]; then
+            echo "Files exceeding the 1500 LOC gate:"; echo "$BIG"; exit 1
+          fi
+          echo "OK — no source file exceeds 1500 LOC."

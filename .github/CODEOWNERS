@@ -1,0 +1,16 @@
+# Ownership by domain. Even solo, this prepares a second contributor without ambiguity.
+# Syntax: <path>  <owner...>
+
+# Default owner for everything.
+*                       @Rwanbt
+
+# Frozen core — the most fundamental contract; review required.
+/crates/lumen-core/     @Rwanbt
+
+# Public API surface and feature wiring.
+/crates/lumen-ui/       @Rwanbt
+
+# CI, governance, and AI-native stack tooling.
+/.github/               @Rwanbt
+/tools/                 @Rwanbt
+/docs/adr/              @Rwanbt

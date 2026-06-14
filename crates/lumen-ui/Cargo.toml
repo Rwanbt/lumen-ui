@@ -1,0 +1,36 @@
+[package]
+name = "lumen-ui"
+description = "A token-driven, themeable design system for egui — façade crate (re-exports, prelude, feature flags)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[dependencies]
+egui = { workspace = true }
+lumen-core = { workspace = true, optional = true }
+lumen-widgets = { workspace = true, optional = true }
+
+# Drapeaux de features — voir ROADMAP.md §A. Les crates motion/layout/patterns/icons/
+# themes/material naissent à leur version respective ; leurs features sont déclarées ici
+# par anticipation et seront branchées sur `dep:` quand la crate existera.
+[dev-dependencies]
+eframe = "0.34"
+
+[[example]]
+name = "minimal"
+required-features = ["widgets"]
+
+[features]
+default = ["theme", "widgets"]
+tokens = ["dep:lumen-core"]
+theme = ["tokens"]
+widgets = ["theme", "dep:lumen-widgets"]
+serde = ["lumen-core/serde"]
+full = ["widgets", "serde"]

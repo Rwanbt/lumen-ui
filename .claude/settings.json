@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /d/App/lumen-ui/tools/ai_docs/run_hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

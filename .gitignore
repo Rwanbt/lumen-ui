@@ -1,0 +1,27 @@
+# Rust
+/target
+**/*.rs.bk
+*.pdb
+
+# Cargo (libraries commit Cargo.lock optionally; we keep it for reproducible CI)
+# Cargo.lock is committed — see CONTRIBUTING.md
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# mdBook output (v0.9)
+/book
+
+# Local env
+.env
+
+# AI docs stack — machine-specific config (never commit)
+tools/ai_docs/config.sh
+
+# Python bytecode cache
+__pycache__/
+*.pyc
