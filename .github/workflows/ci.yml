@@ -45,6 +45,16 @@ jobs:
       - run: cargo test --workspace --all-features
       - run: cargo build --workspace --examples
 
+  msrv:
+    name: MSRV (Rust 1.92)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # MSRV is declared via `rust-version` in Cargo.toml (ADR-0004); this job proves it.
+      - uses: dtolnay/rust-toolchain@1.92.0
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --workspace --all-features
+
   wasm:
     name: wasm build
     runs-on: ubuntu-latest

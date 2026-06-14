@@ -25,3 +25,6 @@ tools/ai_docs/config.sh
 # Python bytecode cache
 __pycache__/
 *.pyc
+
+# graphify — regenerable AST graph (run: graphify update .)
+graphify-out/
