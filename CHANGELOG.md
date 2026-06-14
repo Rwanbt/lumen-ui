@@ -6,7 +6,13 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.5 (in progress)
+### Added — v0.6 (in progress)
+
+- **`lumen-patterns` crate** (façade feature `patterns`): **`DashboardLayout`** app shell
+  (optional toolbar/status-bar/sidebar/inspector + central) over egui 0.34's `Panel`
+  (`show_inside`), plus **`Toolbar`** / **`StatusBar`** bar helpers. `examples/dashboard.rs`.
+
+### Added — v0.5
 
 - **`lumen-motion` crate** (façade feature `motion`): frame-rate-independent **`Spring`**
   solver (stiffness/damping/mass + SMOOTH/GENTLE/WOBBLY/STIFF presets; `animate` / `animate_color`),

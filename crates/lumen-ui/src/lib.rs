@@ -52,6 +52,10 @@ pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Jus
 #[doc(inline)]
 pub use lumen_motion::{ease, fade, Easing, Spring};
 
+#[cfg(feature = "patterns")]
+#[doc(inline)]
+pub use lumen_patterns::{DashboardLayout, StatusBar, Toolbar};
+
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "theme")]
@@ -63,6 +67,8 @@ pub mod prelude {
     pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
     #[cfg(feature = "motion")]
     pub use lumen_motion::{ease, fade, Easing, Spring};
+    #[cfg(feature = "patterns")]
+    pub use lumen_patterns::{DashboardLayout, StatusBar, Toolbar};
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
