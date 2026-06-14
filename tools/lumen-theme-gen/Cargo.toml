@@ -1,0 +1,19 @@
+[package]
+name = "lumen-theme-gen"
+description = "CLI to scaffold lumen-ui themes: RON palette <-> Rust PaletteTheme code."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+publish = false
+
+[[bin]]
+name = "lumen-theme-gen"
+path = "src/main.rs"
+
+[dependencies]
+lumen-core = { workspace = true, features = ["serde"] }
+ron = "0.12"

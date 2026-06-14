@@ -8,6 +8,8 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.7 (in progress)
 
+- **`lumen-theme-gen` CLI** (`tools/`): `template` emits a starter palette (RON); `gen <palette.ron>`
+  emits Rust code for a `PaletteTheme`. `Colors` is now (de)serializable under the `serde` feature.
 - **`lumen-icons` crate** (façade feature `icons`): a painter-drawn icon set (`Icon` widget —
   check/close/chevrons/plus/minus/search/menu), theme-colored, no font asset. `examples/icons.rs`.
 - **`PaletteTheme` + `ThemeMode`** in `lumen-core`: a theme is now just a palette + a mode, so new
