@@ -13,6 +13,8 @@ All notable changes to lumen-ui are documented here. The format is based on
   **`Easing`** curves (Linear/EaseIn/EaseOut/EaseInOut/CubicBezier with a CSS bézier solver), and
   the **`ease`** tween helper. State in `ctx.data`, repaints while moving. The richer counterpart
   to `lumen-core::anim` (ADR-0003).
+- **`fade`** enter/exit transition (animated opacity; content not laid out once fully hidden).
+  `examples/motion.rs` shows a spring-animated bar + a fading panel.
 
 ### Added — v0.4
 

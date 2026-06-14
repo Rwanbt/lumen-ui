@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 00:07** — do not edit manually.
+> **Auto-generated 2026-06-15 00:10** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,9 +13,10 @@ widgets). Enabled via the façade `motion` feature. Depends only on `egui`.
 | File | LOC | |
 |------|-----|--|
 | `easing.rs` | 93 | |
-| `lib.rs` | 64 | |
+| `lib.rs` | 66 | |
 | `spring.rs` | 118 | |
-| **Total** | **275** | |
+| `transitions.rs` | 38 | |
+| **Total** | **315** | |
 
 ## Rust API
 - `Spring` (struct)
@@ -23,3 +24,4 @@ widgets). Enabled via the façade `motion` feature. Depends only on `egui`.
 
 ## Rust Functions
 - `ease()`
+- `fade()`
