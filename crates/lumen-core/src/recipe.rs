@@ -42,6 +42,36 @@ pub struct TextRecipe {
     pub size: f32,
 }
 
+/// Fully resolved style for a card container.
+#[derive(Clone, Copy, Debug)]
+pub struct CardRecipe {
+    pub fill: Color32,
+    pub stroke: Stroke,
+    pub corner_radius: CornerRadius,
+    pub shadow: Shadow,
+    pub inner_margin: Vec2,
+}
+
+/// Semantic flavor of a badge.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum BadgeVariant {
+    Neutral,
+    Primary,
+    Success,
+    Warning,
+    Danger,
+}
+
+/// Fully resolved style for a badge (small pill-shaped status label).
+#[derive(Clone, Copy, Debug)]
+pub struct BadgeRecipe {
+    pub fill: Color32,
+    pub text_color: Color32,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+    pub text_size: f32,
+}
+
 /// Fully resolved style for a button.
 ///
 /// Note the deliberate split, dictated by egui 0.34's API: `egui::Button`

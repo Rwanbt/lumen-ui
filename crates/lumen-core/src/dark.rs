@@ -6,7 +6,10 @@
 use egui::{Color32, Stroke};
 
 use crate::context::UiContext;
-use crate::recipe::{ButtonRecipe, ButtonVariant, TextRecipe, TextRole, WidgetState};
+use crate::recipe::{
+    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, TextRecipe, TextRole,
+    WidgetState,
+};
 use crate::theme::Theme;
 use crate::tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
 
@@ -33,6 +36,10 @@ impl DarkTheme {
             on_primary: Color32::from_rgb(0xf5, 0xf7, 0xfa),
             secondary: Color32::from_rgb(0x39, 0x3f, 0x4a),
             on_secondary: Color32::from_rgb(0xe6, 0xe9, 0xee),
+            success: Color32::from_rgb(0x3f, 0xb9, 0x50),
+            on_success: Color32::from_rgb(0x06, 0x1a, 0x0b),
+            warning: Color32::from_rgb(0xe0, 0xa4, 0x2b),
+            on_warning: Color32::from_rgb(0x1a, 0x12, 0x00),
             danger: Color32::from_rgb(0xe5, 0x48, 0x4d),
             on_danger: Color32::from_rgb(0xff, 0xff, 0xff),
             text: Color32::from_rgb(0xe6, 0xe9, 0xee),
@@ -136,6 +143,43 @@ impl Theme for DarkTheme {
         }
     }
 
+    fn card_recipe(&self, ctx: &UiContext) -> CardRecipe {
+        let c = &self.tokens.colors;
+        let scale = ctx.density_scale();
+        CardRecipe {
+            fill: c.surface,
+            stroke: Stroke::new(1.0, c.border),
+            corner_radius: self.tokens.radius.lg,
+            shadow: self.tokens.elevation.low,
+            inner_margin: Spacing::pad(
+                self.tokens.spacing.lg * scale,
+                self.tokens.spacing.lg * scale,
+            ),
+        }
+    }
+
+    fn badge_recipe(&self, variant: BadgeVariant, ctx: &UiContext) -> BadgeRecipe {
+        let c = &self.tokens.colors;
+        let (fill, text_color) = match variant {
+            BadgeVariant::Neutral => (c.surface_variant, c.text_muted),
+            BadgeVariant::Primary => (c.primary, c.on_primary),
+            BadgeVariant::Success => (c.success, c.on_success),
+            BadgeVariant::Warning => (c.warning, c.on_warning),
+            BadgeVariant::Danger => (c.danger, c.on_danger),
+        };
+        let scale = ctx.density_scale();
+        BadgeRecipe {
+            fill,
+            text_color,
+            corner_radius: self.tokens.radius.full,
+            inner_margin: Spacing::pad(
+                self.tokens.spacing.sm * scale,
+                self.tokens.spacing.xs * scale,
+            ),
+            text_size: self.tokens.typography.label,
+        }
+    }
+
     fn apply_to_ctx(&self, ctx: &egui::Context) {
         let c = &self.tokens.colors;
         ctx.global_style_mut(|style| {
@@ -208,6 +252,26 @@ mod tests {
         assert!(
             ghost.stroke.width > 0.0,
             "ghost variant must have a visible border"
+        );
+    }
+
+    #[test]
+    fn badge_variants_map_to_semantic_colors() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let t = theme.tokens();
+        assert_eq!(
+            theme.badge_recipe(BadgeVariant::Success, &ctx).fill,
+            t.colors.success
+        );
+        assert_eq!(
+            theme.badge_recipe(BadgeVariant::Danger, &ctx).fill,
+            t.colors.danger
+        );
+        // Neutral badges use the muted text color, not the strong text color.
+        assert_eq!(
+            theme.badge_recipe(BadgeVariant::Neutral, &ctx).text_color,
+            t.colors.text_muted
         );
     }
 
