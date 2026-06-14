@@ -159,6 +159,34 @@ impl eframe::App for Gallery {
             ui.add_space(8.0);
 
             Card::new().show(ui, |ui| {
+                ui.add(Heading::new("Overlays"));
+                ui.horizontal(|ui| {
+                    ui.add(Label::new("Plan:"));
+                    Select::new("plan_select", &mut self.plan)
+                        .option(Plan::Free, "Free")
+                        .option(Plan::Pro, "Pro")
+                        .option(Plan::Team, "Team")
+                        .show(ui);
+                });
+                ui.add_space(6.0);
+                ui.horizontal(|ui| {
+                    tooltip(ui.add(Button::ghost("Hover me")), "A themed tooltip");
+                    let menu = ui.add(Button::secondary("Popover"));
+                    popover(&menu, |ui| {
+                        ui.add(Label::new("Popover content"));
+                        ui.add(Label::muted("closes on outside click"));
+                    });
+                });
+                let target = ui.add(Label::new("Right-click me"));
+                context_menu(&target, |ui| {
+                    if ui.add(Button::ghost("Copy")).clicked() {
+                        toast(ui.ctx(), "Copied");
+                    }
+                });
+            });
+            ui.add_space(8.0);
+
+            Card::new().show(ui, |ui| {
                 ui.add(Heading::new("Dialog"));
                 if ui.add(Button::primary("Open dialog")).clicked() {
                     open_modal(ui.ctx(), "demo_modal");

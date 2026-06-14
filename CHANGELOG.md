@@ -8,6 +8,9 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.3 (in progress)
 
+- **`Select<T>`** themed dropdown bound to `&mut T` (over `egui::ComboBox`).
+- **Anchored overlays**: `tooltip(response, text)`, `popover(&trigger, |ui| …)` (over the new
+  `egui::Popup`), and `context_menu(&trigger, |ui| …)`.
 - **`Modal`** — centered dialog with backdrop; open state in `ctx.data` (`open_modal` /
   `close_modal`, no external boolean). Auto-closes on backdrop click / Esc; `show` returns
   `None` while closed. Wraps `egui::Modal`.
