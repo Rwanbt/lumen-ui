@@ -31,20 +31,21 @@ pub use lumen_core as core;
 #[doc(inline)]
 pub use lumen_core::{
     anim, install, set_theme, ButtonRecipe, ButtonVariant, Colors, DarkTheme, Density, Elevation,
-    Motion, Radius, Spacing, Theme, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
+    Motion, Radius, Spacing, TextRecipe, TextRole, Theme, Tokens, Typography, UiContext,
+    UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
-pub use lumen_widgets::Button;
+pub use lumen_widgets::{Button, Heading, Label};
 
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "theme")]
     pub use lumen_core::{
-        install, set_theme, ButtonVariant, DarkTheme, Density, Theme, UiContext, UiThemeExt,
-        WidgetState,
+        install, set_theme, ButtonVariant, DarkTheme, Density, TextRole, Theme, UiContext,
+        UiThemeExt, WidgetState,
     };
     #[cfg(feature = "widgets")]
-    pub use lumen_widgets::Button;
+    pub use lumen_widgets::{Button, Heading, Label};
 }

@@ -6,6 +6,15 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added — v0.2 (in progress)
+
+- **Minimal motion wired into `Button`**: the fill now interpolates toward its target state
+  color via `anim::lerp_color` (ADR-0003). Swaps to `lumen-motion` springs in v0.5 with no API
+  change.
+- **Text primitives**: `Label` (+ `Label::muted`) and `Heading` (+ `Heading::display`),
+  driven by a new `TextRecipe` / `TextRole` and the `Theme::text_recipe` method.
+- Unit tests for `DarkTheme` recipe resolution (text roles, hover, ghost border, touch density).
+
 ### Added — v0.1 foundation (2026-06-14)
 
 - **Workspace from day zero** (`lumen-core`, `lumen-widgets`, façade `lumen-ui`).

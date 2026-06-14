@@ -30,3 +30,6 @@ ui.add(Button::ghost("Cancel").enabled(false));
 
 ## Modules
 - `button.rs` — the `Button` widget (Primary/Secondary/Ghost/Danger), Frame+Button technique.
+  v0.2: fill interpolates via `lumen_core::anim::lerp_color` (minimal motion).
+- `text.rs` — `Label` (+ `muted`) and `Heading` (+ `display`); resolve color/size from
+  `Theme::text_recipe(role, ctx)`.

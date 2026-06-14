@@ -24,6 +24,6 @@ pub mod tokens;
 
 pub use context::{Density, UiContext};
 pub use dark::DarkTheme;
-pub use recipe::{ButtonRecipe, ButtonVariant, WidgetState};
+pub use recipe::{ButtonRecipe, ButtonVariant, TextRecipe, TextRole, WidgetState};
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
