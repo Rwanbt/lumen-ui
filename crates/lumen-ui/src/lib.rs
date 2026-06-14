@@ -48,6 +48,10 @@ pub use lumen_widgets::{
 #[doc(inline)]
 pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
 
+#[cfg(feature = "motion")]
+#[doc(inline)]
+pub use lumen_motion::{ease, Easing, Spring};
+
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "theme")]
@@ -57,6 +61,8 @@ pub mod prelude {
     };
     #[cfg(feature = "layout")]
     pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
+    #[cfg(feature = "motion")]
+    pub use lumen_motion::{ease, Easing, Spring};
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,

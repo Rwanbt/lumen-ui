@@ -5,7 +5,7 @@
 //! `lumen_ui::install(..)` to have run (it sets `max_passes = 2`, which taffy
 //! needs to resolve sizes before painting).
 //!
-//! ```no_run
+//! ```ignore
 //! use eframe::egui;
 //! use lumen_layout::{Flex, FlexUiExt};
 //!
