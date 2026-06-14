@@ -6,7 +6,13 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.2 (in progress)
+### Added — v0.3 (in progress)
+
+- **`Tabs`** headless tab bar — selection persisted in `ctx.data` (no external index);
+  `Tabs::new(id).tab(..).show(ui) -> usize`. Composes themed `Button`s.
+- **`Accordion`** themed collapsible section over `egui::CollapsingHeader`.
+
+### Added — v0.2
 
 - **`LightTheme`** — a light counterpart to `DarkTheme`. Recipe rules are centralized in a
   shared `builder` module parameterized by tokens + an emphasis fn (lighten/darken), so a theme

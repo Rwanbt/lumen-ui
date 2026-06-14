@@ -43,3 +43,8 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `radio.rs` — `RadioGroup<T>` generic single-selection (builder `.option`); custom ring+dot.
 - `text_field.rs` — `TextField` (`&mut String`, hint, password) wrapping `TextEdit` in a themed
   `Frame` (`TextEdit::frame(Frame::NONE)`); focus border via frame N-1; `Theme::text_field_recipe`.
+- `tabs.rs` — `Tabs` headless tab bar; selection persisted in `ctx.data`; composes `Button`.
+- `accordion.rs` — `Accordion` themed collapsible (wraps `egui::CollapsingHeader`).
+
+v0.3 composed components reuse atomic widgets/recipes + read `theme.tokens()` for incidental
+chrome rather than growing the frozen `Theme` trait per component.

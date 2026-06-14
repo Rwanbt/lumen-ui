@@ -39,7 +39,8 @@ pub use lumen_core::{
 #[cfg(feature = "widgets")]
 #[doc(inline)]
 pub use lumen_widgets::{
-    Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, TextField,
+    Accordion, Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, Tabs,
+    TextField,
 };
 
 /// Glob-importable essentials.
@@ -51,6 +52,7 @@ pub mod prelude {
     };
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
-        Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, TextField,
+        Accordion, Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, Tabs,
+        TextField,
     };
 }
