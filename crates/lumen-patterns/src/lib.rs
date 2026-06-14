@@ -8,6 +8,10 @@
 
 mod bars;
 mod dashboard;
+mod rows;
+mod sidebar;
 
 pub use bars::{StatusBar, Toolbar};
 pub use dashboard::DashboardLayout;
+pub use rows::{property_row, InspectorPanel, SettingsPage};
+pub use sidebar::Sidebar;

@@ -8,6 +8,8 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.6 (in progress)
 
+- **`Sidebar`** vertical nav (bound to a `&mut usize`), **`SettingsPage`** (titled + scroll) /
+  **`InspectorPanel`** (titled) containers, and the **`property_row`** label-control helper.
 - **`lumen-patterns` crate** (façade feature `patterns`): **`DashboardLayout`** app shell
   (optional toolbar/status-bar/sidebar/inspector + central) over egui 0.34's `Panel`
   (`show_inside`), plus **`Toolbar`** / **`StatusBar`** bar helpers. `examples/dashboard.rs`.
