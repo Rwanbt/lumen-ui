@@ -9,8 +9,9 @@ All notable changes to lumen-ui are documented here. The format is based on
 ### Added — v0.4 (in progress)
 
 - **`lumen-layout` crate** (façade feature `layout`) over `egui_taffy` 0.12 (verified against
-  egui 0.34.3): `Flex` (row/column, `gap`/`justify`/`align`/`fill_width`) + `FlexUiExt`
-  (`item`/`item_grow`/`nest`); `Breakpoint` + `responsive(ui, |bp| …)`.
+  egui 0.34.3): `Flex` (row/column, `gap`/`justify`/`align`/`fill_width`) + `Grid`
+  (equal columns) + `FlexUiExt` (`item`/`item_grow`/`nest`); `Breakpoint` +
+  `responsive(ui, |bp| …)`.
 - `examples/responsive.rs` — toolbar + breakpoint-driven card columns.
 
 ### Added — v0.3

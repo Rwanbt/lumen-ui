@@ -30,5 +30,5 @@ let columns = responsive(ui, |bp| if bp <= Breakpoint::Sm { 1 } else { 3 });
 ```
 
 ## Modules
-- `lib.rs` — `Flex` (row/column, gap/justify/align/fill_width), `FlexUiExt` (item/item_grow/nest),
-  `Justify`/`Align`, `Breakpoint` + `responsive(ui, |bp| ...)`.
+- `lib.rs` — `Flex` (row/column, gap/justify/align/fill_width), `Grid` (N equal columns),
+  `FlexUiExt` (item/item_grow/nest), `Justify`/`Align`, `Breakpoint` + `responsive(ui, |bp| ...)`.

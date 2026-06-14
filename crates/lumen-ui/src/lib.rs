@@ -46,7 +46,7 @@ pub use lumen_widgets::{
 
 #[cfg(feature = "layout")]
 #[doc(inline)]
-pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Justify};
+pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
 
 /// Glob-importable essentials.
 pub mod prelude {
@@ -56,7 +56,7 @@ pub mod prelude {
         Theme, UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "layout")]
-    pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Justify};
+    pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
