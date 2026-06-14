@@ -7,8 +7,8 @@ use egui::{Color32, Stroke};
 
 use crate::context::UiContext;
 use crate::recipe::{
-    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, SliderRecipe, TextRecipe,
-    TextRole, ToggleRecipe, WidgetState,
+    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, SliderRecipe,
+    TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
 };
 use crate::theme::Theme;
 use crate::tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
@@ -85,7 +85,7 @@ impl Theme for DarkTheme {
         };
 
         let fill = match state {
-            WidgetState::Normal | WidgetState::Disabled => base_fill,
+            WidgetState::Normal | WidgetState::Disabled | WidgetState::Focused => base_fill,
             WidgetState::Hovered => Self::lighten(base_fill, 0.10),
             WidgetState::Active => Self::lighten(base_fill, 0.18),
         };
@@ -215,6 +215,26 @@ impl Theme for DarkTheme {
         }
     }
 
+    fn text_field_recipe(&self, state: WidgetState, ctx: &UiContext) -> TextFieldRecipe {
+        let c = &self.tokens.colors;
+        let border = match state {
+            WidgetState::Focused => Stroke::new(1.5, c.primary),
+            WidgetState::Hovered => Stroke::new(1.0, DarkTheme::lighten(c.border, 0.15)),
+            _ => Stroke::new(1.0, c.border),
+        };
+        let scale = ctx.density_scale();
+        TextFieldRecipe {
+            fill: c.surface_variant,
+            text_color: c.text,
+            border,
+            corner_radius: self.tokens.radius.md,
+            inner_margin: Spacing::pad(
+                self.tokens.spacing.sm * scale,
+                self.tokens.spacing.sm * scale,
+            ),
+        }
+    }
+
     fn apply_to_ctx(&self, ctx: &egui::Context) {
         let c = &self.tokens.colors;
         ctx.global_style_mut(|style| {
@@ -329,6 +349,16 @@ mod tests {
         let r = theme.slider_recipe(WidgetState::Normal, &ctx);
         assert_eq!(r.fill, theme.tokens().colors.primary);
         assert_ne!(r.track, r.fill, "track and fill must be visually distinct");
+    }
+
+    #[test]
+    fn text_field_focus_highlights_border() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let focused = theme.text_field_recipe(WidgetState::Focused, &ctx);
+        let normal = theme.text_field_recipe(WidgetState::Normal, &ctx);
+        assert_eq!(focused.border.color, theme.tokens().colors.primary);
+        assert!(focused.border.width > normal.border.width);
     }
 
     #[test]

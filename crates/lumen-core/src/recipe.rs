@@ -22,6 +22,8 @@ pub enum WidgetState {
     Normal,
     Hovered,
     Active,
+    /// Keyboard focus — primarily for text input.
+    Focused,
     Disabled,
 }
 
@@ -40,6 +42,16 @@ pub enum TextRole {
 pub struct TextRecipe {
     pub color: Color32,
     pub size: f32,
+}
+
+/// Fully resolved style for a text input field.
+#[derive(Clone, Copy, Debug)]
+pub struct TextFieldRecipe {
+    pub fill: Color32,
+    pub text_color: Color32,
+    pub border: Stroke,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
 }
 
 /// Fully resolved style for a slider.

@@ -8,6 +8,10 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.2 (in progress)
 
+- **`TextField`** themed single-line input (`&mut String`, hint, password), focus-highlighted
+  border (frame N-1), via `TextFieldRecipe` + `Theme::text_field_recipe`.
+- **`RadioGroup`** generic single-selection (`&mut T`, builder `.option(value, label)`).
+- **`WidgetState::Focused`** added for text input (handled across recipes).
 - **`Slider`** draggable value control (`&mut f32` over a range), via new `SliderRecipe` +
   `Theme::slider_recipe(state, ctx)`.
 - **`Switch`** (animated knob via `animate_bool_with_time`) and **`Checkbox`** (labelled),
