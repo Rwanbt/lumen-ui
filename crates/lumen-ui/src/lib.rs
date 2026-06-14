@@ -54,7 +54,9 @@ pub use lumen_motion::{ease, fade, Easing, Spring};
 
 #[cfg(feature = "patterns")]
 #[doc(inline)]
-pub use lumen_patterns::{DashboardLayout, StatusBar, Toolbar};
+pub use lumen_patterns::{
+    property_row, DashboardLayout, InspectorPanel, SettingsPage, Sidebar, StatusBar, Toolbar,
+};
 
 /// Glob-importable essentials.
 pub mod prelude {
@@ -68,7 +70,9 @@ pub mod prelude {
     #[cfg(feature = "motion")]
     pub use lumen_motion::{ease, fade, Easing, Spring};
     #[cfg(feature = "patterns")]
-    pub use lumen_patterns::{DashboardLayout, StatusBar, Toolbar};
+    pub use lumen_patterns::{
+        property_row, DashboardLayout, InspectorPanel, SettingsPage, Sidebar, StatusBar, Toolbar,
+    };
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,

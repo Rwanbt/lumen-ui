@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 00:22** — do not edit manually.
+> **Auto-generated 2026-06-15 00:56** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -14,10 +14,18 @@ Depends on `egui` + `lumen-core` + `lumen-widgets`.
 |------|-----|--|
 | `bars.rs` | 31 | |
 | `dashboard.rs` | 65 | |
-| `lib.rs` | 9 | |
-| **Total** | **105** | |
+| `lib.rs` | 13 | |
+| `rows.rs` | 49 | |
+| `sidebar.rs` | 36 | |
+| **Total** | **194** | |
 
 ## Rust API
 - `DashboardLayout` (struct)
+- `InspectorPanel` (struct)
+- `SettingsPage` (struct)
+- `Sidebar` (struct)
 - `StatusBar` (struct)
 - `Toolbar` (struct)
+
+## Rust Functions
+- `property_row()`

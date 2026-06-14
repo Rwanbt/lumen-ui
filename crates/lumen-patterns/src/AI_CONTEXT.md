@@ -29,4 +29,6 @@ DashboardLayout::new()
 ## Modules
 - `dashboard.rs` — `DashboardLayout` (optional toolbar/status_bar/sidebar/inspector + central).
 - `bars.rs` — `Toolbar` / `StatusBar` horizontal bar helpers.
-- (next slices) sidebar nav, settings/inspector rows, log panel, command palette.
+- `sidebar.rs` — `Sidebar` vertical nav (bound to `&mut usize`, full-width entries).
+- `rows.rs` — `property_row(ui, label, |ui| control)`, `SettingsPage` (scroll) / `InspectorPanel`.
+- (next slice) log panel, command palette.

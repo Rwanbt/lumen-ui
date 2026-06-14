@@ -29,6 +29,8 @@ fn main() -> eframe::Result<()> {
 struct App {
     section: usize,
     notify: bool,
+    name: String,
+    volume: f32,
 }
 
 const SECTIONS: [&str; 3] = ["Overview", "Reports", "Settings"];
@@ -48,24 +50,17 @@ impl eframe::App for App {
             .sidebar(|ui| {
                 ui.add(Heading::new("Nav"));
                 ui.add_space(6.0);
-                for (index, name) in SECTIONS.iter().enumerate() {
-                    let widget = if index == self.section {
-                        Button::primary(*name)
-                    } else {
-                        Button::ghost(*name)
-                    };
-                    if ui.add(widget).clicked() {
-                        self.section = index;
-                    }
-                }
+                Sidebar::new(&mut self.section)
+                    .item(SECTIONS[0])
+                    .item(SECTIONS[1])
+                    .item(SECTIONS[2])
+                    .show(ui);
             })
             .inspector(|ui| {
-                ui.add(Heading::new("Inspector"));
-                ui.add(Label::muted("Properties for the selection."));
-                ui.add_space(6.0);
-                ui.horizontal(|ui| {
-                    ui.add(Switch::new(&mut self.notify));
-                    ui.add(Label::new("Notifications"));
+                InspectorPanel::new("Inspector").show(ui, |ui| {
+                    property_row(ui, "Notifications", |ui| {
+                        ui.add(Switch::new(&mut self.notify));
+                    });
                 });
             })
             .status_bar(move |ui| {
@@ -73,9 +68,20 @@ impl eframe::App for App {
                     ui.add(Label::muted(format!("Section: {}", SECTIONS[section])));
                 });
             })
-            .show(ui, move |ui| {
-                ui.add(Heading::display(SECTIONS[section]));
-                ui.add(Label::muted("Central content area."));
+            .show(ui, |ui| {
+                if section == 2 {
+                    SettingsPage::new("Settings").show(ui, |ui| {
+                        property_row(ui, "Name", |ui| {
+                            ui.add(TextField::new(&mut self.name).hint("Your name"));
+                        });
+                        property_row(ui, "Volume", |ui| {
+                            ui.add(Slider::new(&mut self.volume, 0.0..=1.0));
+                        });
+                    });
+                } else {
+                    ui.add(Heading::display(SECTIONS[section]));
+                    ui.add(Label::muted("Central content area."));
+                }
             });
     }
 }
