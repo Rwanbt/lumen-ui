@@ -25,6 +25,23 @@ pub enum WidgetState {
     Disabled,
 }
 
+/// Semantic role of a piece of text — drives color and size, not layout.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum TextRole {
+    Display,
+    Heading,
+    Body,
+    Label,
+    Muted,
+}
+
+/// Fully resolved style for a run of text.
+#[derive(Clone, Copy, Debug)]
+pub struct TextRecipe {
+    pub color: Color32,
+    pub size: f32,
+}
+
 /// Fully resolved style for a button.
 ///
 /// Note the deliberate split, dictated by egui 0.34's API: `egui::Button`

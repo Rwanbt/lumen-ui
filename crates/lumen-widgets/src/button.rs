@@ -8,7 +8,7 @@
 //!   `ctx.read_response(id)`. `install()` sets `max_passes = 2` so this is stable.
 
 use egui::{Frame, Margin, Response, RichText, Ui, Widget};
-use lumen_core::{ButtonVariant, UiThemeExt, WidgetState};
+use lumen_core::{anim, ButtonVariant, UiThemeExt, WidgetState};
 
 /// A themed button. Build it with [`Button::primary`] / [`Button::secondary`] /
 /// [`Button::ghost`] / [`Button::danger`], then `ui.add(button)`.
@@ -78,6 +78,15 @@ impl Widget for Button {
 
         let recipe = theme.button_recipe(self.variant, state, &ui_ctx);
 
+        // Minimal motion (v0.2): interpolate the fill toward its target state color.
+        // Swaps to the lumen-motion spring solver in v0.5 with no API change (ADR-0003).
+        let fill = anim::lerp_color(
+            ui.ctx(),
+            id.with("fill"),
+            recipe.fill,
+            theme.tokens().motion.base,
+        );
+
         // padding + shadow via Frame; fill/stroke/corner_radius on the Button.
         Frame::NONE
             .inner_margin(Margin::symmetric(
@@ -86,12 +95,12 @@ impl Widget for Button {
             ))
             .shadow(recipe.shadow)
             .corner_radius(recipe.corner_radius)
-            .fill(recipe.fill)
+            .fill(fill)
             .show(ui, |ui| {
                 ui.add_enabled(
                     self.enabled,
                     egui::Button::new(RichText::new(&self.label).color(recipe.text_color))
-                        .fill(recipe.fill)
+                        .fill(fill)
                         .stroke(recipe.stroke)
                         .corner_radius(recipe.corner_radius),
                 )

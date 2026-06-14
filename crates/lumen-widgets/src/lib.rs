@@ -9,5 +9,7 @@
 #![warn(missing_debug_implementations)]
 
 mod button;
+mod text;
 
 pub use button::Button;
+pub use text::{Heading, Label};

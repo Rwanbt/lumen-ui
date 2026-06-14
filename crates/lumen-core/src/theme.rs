@@ -6,7 +6,7 @@
 use std::sync::Arc;
 
 use crate::context::{Density, UiContext};
-use crate::recipe::{ButtonRecipe, ButtonVariant, WidgetState};
+use crate::recipe::{ButtonRecipe, ButtonVariant, TextRecipe, TextRole, WidgetState};
 use crate::tokens::Tokens;
 
 const THEME_KEY: &str = "lumen_theme";
@@ -27,6 +27,9 @@ pub trait Theme: Send + Sync {
         state: WidgetState,
         ctx: &UiContext,
     ) -> ButtonRecipe;
+
+    /// Resolve the text recipe (color + size) for a semantic role.
+    fn text_recipe(&self, role: TextRole, ctx: &UiContext) -> TextRecipe;
 
     /// Map the tokens onto egui's global `Style`/`Visuals`/`Spacing` so that even
     /// stock egui widgets pick up the theme.

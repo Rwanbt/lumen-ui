@@ -35,8 +35,10 @@ struct DemoApp {
 impl eframe::App for DemoApp {
     // eframe 0.34: `ui` is the required method; eframe provides the central panel.
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
-        ui.heading("lumen-ui");
-        ui.label("A token-driven, themeable design system for egui.");
+        ui.add(Heading::display("lumen-ui"));
+        ui.add(Label::muted(
+            "A token-driven, themeable design system for egui.",
+        ));
         ui.add_space(16.0);
 
         ui.horizontal(|ui| {
@@ -54,6 +56,6 @@ impl eframe::App for DemoApp {
         });
 
         ui.add_space(8.0);
-        ui.label(format!("clicks: {}", self.clicks));
+        ui.add(Label::new(format!("clicks: {}", self.clicks)));
     }
 }

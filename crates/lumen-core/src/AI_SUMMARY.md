@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-14 16:18** — do not edit manually.
+> **Auto-generated 2026-06-14 18:27** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -15,12 +15,12 @@ workspace depends on this crate; it depends only on `egui`.
 |------|-----|--|
 | `anim.rs` | 23 | |
 | `context.rs` | 27 | |
-| `dark.rs` | 125 | |
+| `dark.rs` | 203 | |
 | `lib.rs` | 24 | |
-| `recipe.rs` | 36 | |
-| `theme.rs` | 73 | |
+| `recipe.rs` | 49 | |
+| `theme.rs` | 75 | |
 | `tokens.rs` | 134 | |
-| **Total** | **442** | |
+| **Total** | **535** | |
 
 ## Rust API
 - `ButtonRecipe` (struct)
@@ -30,11 +30,13 @@ workspace depends on this crate; it depends only on `egui`.
 - `Motion` (struct)
 - `Radius` (struct)
 - `Spacing` (struct)
+- `TextRecipe` (struct)
 - `Tokens` (struct)
 - `Typography` (struct)
 - `UiContext` (struct)
 - `ButtonVariant` (enum)
 - `Density` (enum)
+- `TextRole` (enum)
 - `WidgetState` (enum)
 - `Theme` (trait)
 - `UiThemeExt` (trait)

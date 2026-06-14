@@ -6,7 +6,7 @@
 use egui::{Color32, Stroke};
 
 use crate::context::UiContext;
-use crate::recipe::{ButtonRecipe, ButtonVariant, WidgetState};
+use crate::recipe::{ButtonRecipe, ButtonVariant, TextRecipe, TextRole, WidgetState};
 use crate::theme::Theme;
 use crate::tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
 
@@ -109,6 +109,33 @@ impl Theme for DarkTheme {
         }
     }
 
+    fn text_recipe(&self, role: TextRole, _ctx: &UiContext) -> TextRecipe {
+        let c = &self.tokens.colors;
+        let t = &self.tokens.typography;
+        match role {
+            TextRole::Display => TextRecipe {
+                color: c.text,
+                size: t.display,
+            },
+            TextRole::Heading => TextRecipe {
+                color: c.text,
+                size: t.heading,
+            },
+            TextRole::Body => TextRecipe {
+                color: c.text,
+                size: t.body,
+            },
+            TextRole::Label => TextRecipe {
+                color: c.text,
+                size: t.label,
+            },
+            TextRole::Muted => TextRecipe {
+                color: c.text_muted,
+                size: t.body,
+            },
+        }
+    }
+
     fn apply_to_ctx(&self, ctx: &egui::Context) {
         let c = &self.tokens.colors;
         ctx.global_style_mut(|style| {
@@ -138,5 +165,69 @@ impl Theme for DarkTheme {
             s.item_spacing = egui::vec2(self.tokens.spacing.sm, self.tokens.spacing.sm);
             s.button_padding = egui::vec2(self.tokens.spacing.md, self.tokens.spacing.sm);
         });
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::context::Density;
+
+    #[test]
+    fn text_recipe_maps_role_to_tokens() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let t = theme.tokens();
+
+        let display = theme.text_recipe(TextRole::Display, &ctx);
+        assert_eq!(display.size, t.typography.display);
+        assert_eq!(display.color, t.colors.text);
+
+        let muted = theme.text_recipe(TextRole::Muted, &ctx);
+        assert_eq!(muted.color, t.colors.text_muted);
+    }
+
+    #[test]
+    fn button_hover_brightens_fill() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let normal = theme.button_recipe(ButtonVariant::Primary, WidgetState::Normal, &ctx);
+        let hovered = theme.button_recipe(ButtonVariant::Primary, WidgetState::Hovered, &ctx);
+        assert_ne!(
+            normal.fill, hovered.fill,
+            "hover state must change the fill"
+        );
+    }
+
+    #[test]
+    fn ghost_button_is_transparent_with_border() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let ghost = theme.button_recipe(ButtonVariant::Ghost, WidgetState::Normal, &ctx);
+        assert_eq!(ghost.fill, egui::Color32::TRANSPARENT);
+        assert!(
+            ghost.stroke.width > 0.0,
+            "ghost variant must have a visible border"
+        );
+    }
+
+    #[test]
+    fn touch_density_enlarges_padding() {
+        let theme = DarkTheme::new();
+        let comfortable = theme.button_recipe(
+            ButtonVariant::Primary,
+            WidgetState::Normal,
+            &UiContext {
+                density: Density::Comfortable,
+            },
+        );
+        let touch = theme.button_recipe(
+            ButtonVariant::Primary,
+            WidgetState::Normal,
+            &UiContext {
+                density: Density::Touch,
+            },
+        );
+        assert!(touch.inner_margin.x > comfortable.inner_margin.x);
     }
 }
