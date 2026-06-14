@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-14 22:56** — do not edit manually.
+> **Auto-generated 2026-06-14 23:12** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -12,5 +12,5 @@ wiring its feature here in the same PR.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 43 | |
-| **Total** | **43** | |
+| `lib.rs` | 45 | |
+| **Total** | **45** | |

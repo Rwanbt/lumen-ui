@@ -129,6 +129,29 @@ impl eframe::App for Gallery {
                         .option(Plan::Team, "Team"),
                 );
             });
+            ui.add_space(8.0);
+
+            Card::new().show(ui, |ui| {
+                ui.add(Heading::new("Tabs"));
+                let tab = Tabs::new("gallery_tabs")
+                    .tab("Overview")
+                    .tab("Details")
+                    .tab("Activity")
+                    .show(ui);
+                ui.add_space(6.0);
+                match tab {
+                    0 => ui.add(Label::new("Overview content.")),
+                    1 => ui.add(Label::new("Detailed content.")),
+                    _ => ui.add(Label::new("Recent activity.")),
+                };
+            });
+            ui.add_space(8.0);
+
+            Accordion::new("Advanced settings")
+                .default_open(false)
+                .show(ui, |ui| {
+                    ui.add(Label::muted("Collapsible content, state kept by egui."));
+                });
         });
     }
 }
