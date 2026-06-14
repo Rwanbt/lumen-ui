@@ -19,6 +19,7 @@ mod switch;
 mod tabs;
 mod text;
 mod text_field;
+mod toast;
 
 pub use accordion::Accordion;
 pub use badge::Badge;
@@ -31,3 +32,4 @@ pub use switch::Switch;
 pub use tabs::Tabs;
 pub use text::{Heading, Label};
 pub use text_field::TextField;
+pub use toast::{show_toasts, toast, toast_error, toast_success, toast_warning, ToastVariant};

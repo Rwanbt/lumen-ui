@@ -45,6 +45,8 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `Frame` (`TextEdit::frame(Frame::NONE)`); focus border via frame N-1; `Theme::text_field_recipe`.
 - `tabs.rs` — `Tabs` headless tab bar; selection persisted in `ctx.data`; composes `Button`.
 - `accordion.rs` — `Accordion` themed collapsible (wraps `egui::CollapsingHeader`).
+- `toast.rs` — free fns `toast`/`toast_success|warning|error` + `show_toasts(ctx)`; queue in
+  `ctx.data`, auto-dismiss via egui frame time, rendered in a foreground `Area`.
 
 v0.3 composed components reuse atomic widgets/recipes + read `theme.tokens()` for incidental
 chrome rather than growing the frozen `Theme` trait per component.
