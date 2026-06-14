@@ -31,10 +31,14 @@ pub use lumen_core as core;
 #[doc(inline)]
 pub use lumen_core::{
     anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe,
-    Colors, DarkTheme, Density, Elevation, LightTheme, Motion, Radius, SliderRecipe, Spacing,
-    TextFieldRecipe, TextRecipe, TextRole, Theme, ToggleRecipe, Tokens, Typography, UiContext,
-    UiThemeExt, WidgetState,
+    Colors, DarkTheme, Density, Elevation, LightTheme, Motion, PaletteTheme, Radius, SliderRecipe,
+    Spacing, TextFieldRecipe, TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens,
+    Typography, UiContext, UiThemeExt, WidgetState,
 };
+
+#[cfg(feature = "themes")]
+#[doc(inline)]
+pub use lumen_themes::{audio_dark, high_contrast};
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
@@ -63,8 +67,8 @@ pub use lumen_patterns::{
 pub mod prelude {
     #[cfg(feature = "theme")]
     pub use lumen_core::{
-        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme, TextRole,
-        Theme, UiContext, UiThemeExt, WidgetState,
+        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme,
+        PaletteTheme, TextRole, Theme, ThemeMode, UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "layout")]
     pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
@@ -75,6 +79,8 @@ pub mod prelude {
         open_command_palette, property_row, CommandPalette, DashboardLayout, InspectorPanel,
         LogEntry, LogLevel, LogPanel, SettingsPage, Sidebar, StatusBar, Toolbar,
     };
+    #[cfg(feature = "themes")]
+    pub use lumen_themes::{audio_dark, high_contrast};
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,

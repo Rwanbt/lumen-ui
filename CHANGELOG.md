@@ -6,7 +6,14 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.6 (in progress)
+### Added — v0.7 (in progress)
+
+- **`PaletteTheme` + `ThemeMode`** in `lumen-core`: a theme is now just a palette + a mode, so new
+  themes need no recipe code (DRY; `DarkTheme`/`LightTheme` and the family all build on it).
+- **`lumen-themes` crate** (façade feature `themes`, now in `default`): **`audio_dark()`** (near-black,
+  teal accent) and **`high_contrast()`** (WCAG-friendly). The gallery now cycles 4 themes live.
+
+### Added — v0.6
 
 - **`LogPanel`** scrollable leveled log (`LogEntry` + `LogLevel`, severity badges, stick-to-bottom)
   and **`CommandPalette`** (searchable command overlay; open state + query in `ctx.data`,
