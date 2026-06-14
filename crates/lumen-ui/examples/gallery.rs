@@ -82,10 +82,14 @@ impl eframe::App for Gallery {
             Card::new().show(ui, |ui| {
                 ui.add(Heading::new("Buttons"));
                 ui.horizontal(|ui| {
-                    ui.add(Button::primary("Primary"));
+                    if ui.add(Button::primary("Primary")).clicked() {
+                        toast_success(ui.ctx(), "Primary action done");
+                    }
                     ui.add(Button::secondary("Secondary"));
                     ui.add(Button::ghost("Ghost"));
-                    ui.add(Button::danger("Danger"));
+                    if ui.add(Button::danger("Danger")).clicked() {
+                        toast_error(ui.ctx(), "Something went wrong");
+                    }
                     ui.add(Button::primary("Disabled").enabled(false));
                 });
             });
@@ -153,5 +157,8 @@ impl eframe::App for Gallery {
                     ui.add(Label::muted("Collapsible content, state kept by egui."));
                 });
         });
+
+        // Render queued toasts on top, once per frame.
+        show_toasts(ui.ctx());
     }
 }

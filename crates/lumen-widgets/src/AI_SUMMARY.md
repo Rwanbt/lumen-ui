@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-14 23:12** — do not edit manually.
+> **Auto-generated 2026-06-14 23:16** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -17,14 +17,15 @@ Widgets are the only place that calls egui's drawing API besides `lumen-core::th
 | `button.rs` | 91 | |
 | `card.rs` | 28 | |
 | `checkbox.rs` | 55 | |
-| `lib.rs` | 28 | |
+| `lib.rs` | 30 | |
 | `radio.rs` | 68 | |
 | `slider.rs` | 66 | |
 | `switch.rs` | 46 | |
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
-| **Total** | **635** | |
+| `toast.rs` | 100 | |
+| **Total** | **737** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -39,3 +40,11 @@ Widgets are the only place that calls egui's drawing API besides `lumen-core::th
 - `Switch` (struct)
 - `Tabs` (struct)
 - `TextField` (struct)
+- `ToastVariant` (enum)
+
+## Rust Functions
+- `show_toasts()`
+- `toast()`
+- `toast_error()`
+- `toast_success()`
+- `toast_warning()`

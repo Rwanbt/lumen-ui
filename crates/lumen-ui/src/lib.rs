@@ -39,8 +39,8 @@ pub use lumen_core::{
 #[cfg(feature = "widgets")]
 #[doc(inline)]
 pub use lumen_widgets::{
-    Accordion, Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, Tabs,
-    TextField,
+    show_toasts, toast, toast_error, toast_success, toast_warning, Accordion, Badge, Button, Card,
+    Checkbox, Heading, Label, RadioGroup, Slider, Switch, Tabs, TextField, ToastVariant,
 };
 
 /// Glob-importable essentials.
@@ -52,7 +52,7 @@ pub mod prelude {
     };
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
-        Accordion, Badge, Button, Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, Tabs,
-        TextField,
+        show_toasts, toast, toast_error, toast_success, toast_warning, Accordion, Badge, Button,
+        Card, Checkbox, Heading, Label, RadioGroup, Slider, Switch, Tabs, TextField, ToastVariant,
     };
 }
