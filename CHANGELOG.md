@@ -6,7 +6,15 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.4 (in progress)
+### Added — v0.5 (in progress)
+
+- **`lumen-motion` crate** (façade feature `motion`): frame-rate-independent **`Spring`**
+  solver (stiffness/damping/mass + SMOOTH/GENTLE/WOBBLY/STIFF presets; `animate` / `animate_color`),
+  **`Easing`** curves (Linear/EaseIn/EaseOut/EaseInOut/CubicBezier with a CSS bézier solver), and
+  the **`ease`** tween helper. State in `ctx.data`, repaints while moving. The richer counterpart
+  to `lumen-core::anim` (ADR-0003).
+
+### Added — v0.4
 
 - **`lumen-layout` crate** (façade feature `layout`) over `egui_taffy` 0.12 (verified against
   egui 0.34.3): `Flex` (row/column, `gap`/`justify`/`align`/`fill_width`) + `Grid`

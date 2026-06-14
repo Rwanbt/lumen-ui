@@ -1,0 +1,15 @@
+[package]
+name = "lumen-motion"
+description = "Spring physics, easings, and transitions for lumen-ui animations."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+egui = { workspace = true }

@@ -8,6 +8,7 @@ members = [
     "crates/lumen-core",
     "crates/lumen-widgets",
     "crates/lumen-layout",
+    "crates/lumen-motion",
     "crates/lumen-ui",
 ]
 
@@ -34,6 +35,7 @@ egui_taffy = "0.12"
 lumen-core = { path = "crates/lumen-core", version = "0.1.0" }
 lumen-widgets = { path = "crates/lumen-widgets", version = "0.1.0" }
 lumen-layout = { path = "crates/lumen-layout", version = "0.1.0" }
+lumen-motion = { path = "crates/lumen-motion", version = "0.1.0" }
 
 # Profil release optimisé pour les exemples / galeries WASM.
 [profile.release]
