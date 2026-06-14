@@ -31,3 +31,5 @@ let col = Spring::WOBBLY.animate_color(ctx, egui::Id::new("c"), target_color);
   `animate(ctx,id,target)`, `animate_color(...)`.
 - `easing.rs` — `Easing` (Linear/EaseIn/EaseOut/EaseInOut/CubicBezier) with a CSS bézier solver.
 - `lib.rs` — `ease(ctx, id, target, duration, easing)` tween helper.
+- `transitions.rs` — `fade(ui, id, visible, |ui| …)` opacity transition (returns `None` when fully
+  hidden). Slide/scale need sub-tree transforms egui lacks ergonomically → app-level for now.

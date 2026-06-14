@@ -37,6 +37,10 @@ required-features = ["widgets"]
 name = "responsive"
 required-features = ["widgets", "layout"]
 
+[[example]]
+name = "motion"
+required-features = ["widgets", "motion"]
+
 [features]
 default = ["theme", "widgets"]
 tokens = ["dep:lumen-core"]

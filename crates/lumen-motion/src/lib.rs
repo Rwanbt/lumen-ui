@@ -21,9 +21,11 @@
 
 mod easing;
 mod spring;
+mod transitions;
 
 pub use easing::Easing;
 pub use spring::Spring;
+pub use transitions::fade;
 
 use egui::{Context, Id};
 
