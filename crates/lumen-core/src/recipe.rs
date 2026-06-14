@@ -42,6 +42,17 @@ pub struct TextRecipe {
     pub size: f32,
 }
 
+/// Fully resolved style for a slider.
+#[derive(Clone, Copy, Debug)]
+pub struct SliderRecipe {
+    /// The inactive part of the track (right of the knob).
+    pub track: Color32,
+    /// The filled part of the track (left of the knob).
+    pub fill: Color32,
+    /// The draggable knob.
+    pub knob: Color32,
+}
+
 /// Fully resolved style for a boolean toggle (switch, checkbox).
 ///
 /// Geometry (pill vs rounded box) is chosen by the widget; the recipe carries

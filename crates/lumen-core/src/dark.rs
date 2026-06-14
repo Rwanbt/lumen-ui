@@ -7,8 +7,8 @@ use egui::{Color32, Stroke};
 
 use crate::context::UiContext;
 use crate::recipe::{
-    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, TextRecipe, TextRole,
-    ToggleRecipe, WidgetState,
+    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, SliderRecipe, TextRecipe,
+    TextRole, ToggleRecipe, WidgetState,
 };
 use crate::theme::Theme;
 use crate::tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
@@ -200,6 +200,21 @@ impl Theme for DarkTheme {
         }
     }
 
+    fn slider_recipe(&self, state: WidgetState, _ctx: &UiContext) -> SliderRecipe {
+        let c = &self.tokens.colors;
+        let (fill, knob) = match state {
+            WidgetState::Hovered | WidgetState::Active => {
+                (Self::lighten(c.primary, 0.10), Color32::WHITE)
+            }
+            _ => (c.primary, c.on_primary),
+        };
+        SliderRecipe {
+            track: c.surface_variant,
+            fill,
+            knob,
+        }
+    }
+
     fn apply_to_ctx(&self, ctx: &egui::Context) {
         let c = &self.tokens.colors;
         ctx.global_style_mut(|style| {
@@ -305,6 +320,15 @@ mod tests {
         assert_eq!(on.border.width, 0.0, "the on state has no border");
         assert!(off.border.width > 0.0, "the off state has a visible border");
         assert_ne!(on.track, off.track);
+    }
+
+    #[test]
+    fn slider_fill_uses_primary() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let r = theme.slider_recipe(WidgetState::Normal, &ctx);
+        assert_eq!(r.fill, theme.tokens().colors.primary);
+        assert_ne!(r.track, r.fill, "track and fill must be visually distinct");
     }
 
     #[test]
