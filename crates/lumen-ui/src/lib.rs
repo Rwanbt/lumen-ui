@@ -44,6 +44,10 @@ pub use lumen_widgets::{
     RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,
 };
 
+#[cfg(feature = "layout")]
+#[doc(inline)]
+pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Justify};
+
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "theme")]
@@ -51,6 +55,8 @@ pub mod prelude {
         install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme, TextRole,
         Theme, UiContext, UiThemeExt, WidgetState,
     };
+    #[cfg(feature = "layout")]
+    pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Justify};
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,

@@ -7,6 +7,7 @@ resolver = "2"
 members = [
     "crates/lumen-core",
     "crates/lumen-widgets",
+    "crates/lumen-layout",
     "crates/lumen-ui",
 ]
 
@@ -26,9 +27,13 @@ categories = ["gui"]
 # Pin strict de la version egui — la couche d'adaptation unique vit dans lumen-core.
 # Voir le registre des risques de ROADMAP.md (breaking changes egui ~3 mineures/an).
 egui = "0.34.3"
+# egui_taffy: flexbox/grid layout (v0.4). Isolé derrière la feature `layout`.
+# Compat vérifiée : egui_taffy 0.12 dépend de egui 0.34.3.
+egui_taffy = "0.12"
 # Crates internes (chemin) — versionnées ensemble pour la publication coordonnée v1.0.
 lumen-core = { path = "crates/lumen-core", version = "0.1.0" }
 lumen-widgets = { path = "crates/lumen-widgets", version = "0.1.0" }
+lumen-layout = { path = "crates/lumen-layout", version = "0.1.0" }
 
 # Profil release optimisé pour les exemples / galeries WASM.
 [profile.release]

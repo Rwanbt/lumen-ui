@@ -16,6 +16,7 @@ readme = "../../README.md"
 egui = { workspace = true }
 lumen-core = { workspace = true, optional = true }
 lumen-widgets = { workspace = true, optional = true }
+lumen-layout = { workspace = true, optional = true }
 
 # Drapeaux de features — voir ROADMAP.md §A. Les crates motion/layout/patterns/icons/
 # themes/material naissent à leur version respective ; leurs features sont déclarées ici
@@ -31,10 +32,15 @@ required-features = ["widgets"]
 name = "gallery"
 required-features = ["widgets"]
 
+[[example]]
+name = "responsive"
+required-features = ["widgets", "layout"]
+
 [features]
 default = ["theme", "widgets"]
 tokens = ["dep:lumen-core"]
 theme = ["tokens"]
 widgets = ["theme", "dep:lumen-widgets"]
+layout = ["dep:lumen-layout"]
 serde = ["lumen-core/serde"]
-full = ["widgets", "serde"]
+full = ["widgets", "layout", "serde"]
