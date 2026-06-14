@@ -42,6 +42,7 @@ let recipe = ui.theme().button_recipe(variant, state, &ui.ui_ctx()); // inside a
 - `theme.rs` — `Theme` trait, `UiThemeExt`, `install`/`set_theme`.
 - `builder.rs` — shared recipe-resolution logic (pure fns over `&Tokens` + an emphasis fn);
   themes delegate here so the rules live in one place (DRY).
-- `dark.rs` / `light.rs` — `DarkTheme` / `LightTheme`: a palette + delegation to `builder`
-  (lighten vs darken emphasis). Move to `lumen-themes` in v0.7.
+- `dark.rs` / `light.rs` — `DarkTheme` / `LightTheme`: a palette + delegation to `builder`.
+- `palette.rs` — `PaletteTheme` (public) + `ThemeMode`: a theme = `Tokens` palette + mode; the
+  generic basis for `lumen-themes`. New themes use this, never re-implement recipes.
 - `anim.rs` — minimal motion (`lerp_color`); swaps to `lumen-motion` in v0.5.

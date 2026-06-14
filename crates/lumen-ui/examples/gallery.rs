@@ -34,7 +34,7 @@ enum Plan {
 }
 
 struct Gallery {
-    dark: bool,
+    theme: usize,
     name: String,
     agree: bool,
     notify: bool,
@@ -42,10 +42,12 @@ struct Gallery {
     plan: Plan,
 }
 
+const THEMES: [&str; 4] = ["Dark", "Light", "AudioDark", "HighContrast"];
+
 impl Default for Gallery {
     fn default() -> Self {
         Self {
-            dark: true,
+            theme: 0,
             name: String::new(),
             agree: false,
             notify: true,
@@ -55,27 +57,30 @@ impl Default for Gallery {
     }
 }
 
+fn apply_theme(ctx: &egui::Context, index: usize) {
+    match index {
+        1 => set_theme(ctx, Arc::new(LightTheme::new())),
+        2 => set_theme(ctx, Arc::new(audio_dark())),
+        3 => set_theme(ctx, Arc::new(high_contrast())),
+        _ => set_theme(ctx, Arc::new(DarkTheme::new())),
+    }
+}
+
 impl eframe::App for Gallery {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         egui::ScrollArea::vertical().show(ui, |ui| {
             ui.horizontal(|ui| {
                 ui.add(Heading::display("lumen-ui gallery"));
-                let label = if self.dark {
-                    "Switch to Light"
-                } else {
-                    "Switch to Dark"
-                };
-                if ui.add(Button::ghost(label)).clicked() {
-                    self.dark = !self.dark;
-                    if self.dark {
-                        set_theme(ui.ctx(), Arc::new(DarkTheme::new()));
-                    } else {
-                        set_theme(ui.ctx(), Arc::new(LightTheme::new()));
-                    }
+                if ui
+                    .add(Button::ghost(format!("Theme: {}", THEMES[self.theme])))
+                    .clicked()
+                {
+                    self.theme = (self.theme + 1) % THEMES.len();
+                    apply_theme(ui.ctx(), self.theme);
                 }
             });
             ui.add(Label::muted(
-                "Toggle the theme — the whole gallery restyles, zero widget changes.",
+                "Cycle the theme — the whole gallery restyles, zero widget changes.",
             ));
             ui.add_space(12.0);
 
