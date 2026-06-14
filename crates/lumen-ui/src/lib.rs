@@ -40,6 +40,10 @@ pub use lumen_core::{
 #[doc(inline)]
 pub use lumen_themes::{audio_dark, high_contrast};
 
+#[cfg(feature = "icons")]
+#[doc(inline)]
+pub use lumen_icons::{Icon, IconKind};
+
 #[cfg(feature = "widgets")]
 #[doc(inline)]
 pub use lumen_widgets::{
@@ -70,6 +74,8 @@ pub mod prelude {
         install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme,
         PaletteTheme, TextRole, Theme, ThemeMode, UiContext, UiThemeExt, WidgetState,
     };
+    #[cfg(feature = "icons")]
+    pub use lumen_icons::{Icon, IconKind};
     #[cfg(feature = "layout")]
     pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
     #[cfg(feature = "motion")]

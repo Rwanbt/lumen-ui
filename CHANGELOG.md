@@ -8,6 +8,8 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.7 (in progress)
 
+- **`lumen-icons` crate** (façade feature `icons`): a painter-drawn icon set (`Icon` widget —
+  check/close/chevrons/plus/minus/search/menu), theme-colored, no font asset. `examples/icons.rs`.
 - **`PaletteTheme` + `ThemeMode`** in `lumen-core`: a theme is now just a palette + a mode, so new
   themes need no recipe code (DRY; `DarkTheme`/`LightTheme` and the family all build on it).
 - **`lumen-themes` crate** (façade feature `themes`, now in `default`): **`audio_dark()`** (near-black,

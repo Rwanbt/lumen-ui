@@ -11,6 +11,7 @@ members = [
     "crates/lumen-motion",
     "crates/lumen-patterns",
     "crates/lumen-themes",
+    "crates/lumen-icons",
     "crates/lumen-ui",
 ]
 
@@ -40,6 +41,7 @@ lumen-layout = { path = "crates/lumen-layout", version = "0.1.0" }
 lumen-motion = { path = "crates/lumen-motion", version = "0.1.0" }
 lumen-patterns = { path = "crates/lumen-patterns", version = "0.1.0" }
 lumen-themes = { path = "crates/lumen-themes", version = "0.1.0" }
+lumen-icons = { path = "crates/lumen-icons", version = "0.1.0" }
 
 # Profil release optimisé pour les exemples / galeries WASM.
 [profile.release]
