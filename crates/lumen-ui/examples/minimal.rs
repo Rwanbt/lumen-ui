@@ -32,6 +32,7 @@ struct DemoApp {
     clicks: u32,
     notifications: bool,
     accept_terms: bool,
+    volume: f32,
 }
 
 impl eframe::App for DemoApp {
@@ -73,6 +74,11 @@ impl eframe::App for DemoApp {
                 ui.add(Label::new("Notifications"));
             });
             ui.add(Checkbox::new(&mut self.accept_terms, "I accept the terms"));
+            ui.add_space(8.0);
+            ui.horizontal(|ui| {
+                ui.add(Slider::new(&mut self.volume, 0.0..=1.0));
+                ui.add(Label::muted(format!("volume {:.0}%", self.volume * 100.0)));
+            });
         });
     }
 }

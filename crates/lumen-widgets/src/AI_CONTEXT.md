@@ -38,3 +38,5 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `switch.rs` — `Switch` (`&mut bool`), animated knob; custom painter (rect+circle).
 - `checkbox.rs` — `Checkbox` (`&mut bool` + label); custom box + check mark.
   Both use `Theme::toggle_recipe`.
+- `slider.rs` — `Slider` (`&mut f32`, inclusive range); custom track+fill+knob, drag handling;
+  uses `Theme::slider_recipe`.

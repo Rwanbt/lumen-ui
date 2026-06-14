@@ -7,8 +7,8 @@ use std::sync::Arc;
 
 use crate::context::{Density, UiContext};
 use crate::recipe::{
-    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, TextRecipe, TextRole,
-    ToggleRecipe, WidgetState,
+    BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, SliderRecipe, TextRecipe,
+    TextRole, ToggleRecipe, WidgetState,
 };
 use crate::tokens::Tokens;
 
@@ -42,6 +42,9 @@ pub trait Theme: Send + Sync {
 
     /// Resolve the toggle recipe (switch, checkbox) for a given on/off + interaction state.
     fn toggle_recipe(&self, on: bool, state: WidgetState, ctx: &UiContext) -> ToggleRecipe;
+
+    /// Resolve the slider recipe for a given interaction state.
+    fn slider_recipe(&self, state: WidgetState, ctx: &UiContext) -> SliderRecipe;
 
     /// Map the tokens onto egui's global `Style`/`Visuals`/`Spacing` so that even
     /// stock egui widgets pick up the theme.

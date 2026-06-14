@@ -37,7 +37,7 @@ let recipe = ui.theme().button_recipe(variant, state, &ui.ui_ctx()); // inside a
 - `tokens.rs` — raw constants (Colors, Spacing, Radius, Typography, Elevation, Motion).
 - `context.rs` — `Density` + `UiContext`.
 - `recipe.rs` — `ButtonVariant`/`WidgetState`/`ButtonRecipe`, `TextRole`/`TextRecipe`,
-  `CardRecipe`, `BadgeVariant`/`BadgeRecipe`, `ToggleRecipe`.
+  `CardRecipe`, `BadgeVariant`/`BadgeRecipe`, `ToggleRecipe`, `SliderRecipe`.
 - `theme.rs` — `Theme` trait, `UiThemeExt`, `install`/`set_theme`.
 - `dark.rs` — `DarkTheme` bootstrap theme (moves to `lumen-themes` in v0.7).
 - `anim.rs` — minimal motion (`lerp_color`); swaps to `lumen-motion` in v0.5.
