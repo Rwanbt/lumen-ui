@@ -30,22 +30,22 @@ pub use lumen_core as core;
 #[cfg(feature = "theme")]
 #[doc(inline)]
 pub use lumen_core::{
-    anim, install, set_theme, ButtonRecipe, ButtonVariant, Colors, DarkTheme, Density, Elevation,
-    Motion, Radius, Spacing, TextRecipe, TextRole, Theme, Tokens, Typography, UiContext,
-    UiThemeExt, WidgetState,
+    anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe,
+    Colors, DarkTheme, Density, Elevation, Motion, Radius, Spacing, TextRecipe, TextRole, Theme,
+    Tokens, Typography, UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
-pub use lumen_widgets::{Button, Heading, Label};
+pub use lumen_widgets::{Badge, Button, Card, Heading, Label};
 
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "theme")]
     pub use lumen_core::{
-        install, set_theme, ButtonVariant, DarkTheme, Density, TextRole, Theme, UiContext,
-        UiThemeExt, WidgetState,
+        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, TextRole, Theme,
+        UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "widgets")]
-    pub use lumen_widgets::{Button, Heading, Label};
+    pub use lumen_widgets::{Badge, Button, Card, Heading, Label};
 }

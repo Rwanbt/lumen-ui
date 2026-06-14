@@ -8,6 +8,10 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.2 (in progress)
 
+- **`Card`** themed surface container (`Card::show`) and **`Badge`** status label
+  (Neutral/Primary/Success/Warning/Danger), via new `CardRecipe` / `BadgeRecipe` +
+  `Theme::card_recipe` / `Theme::badge_recipe`.
+- **Semantic color tokens**: `success`/`on_success`, `warning`/`on_warning` added to `Colors`.
 - **Minimal motion wired into `Button`**: the fill now interpolates toward its target state
   color via `anim::lerp_color` (ADR-0003). Swaps to `lumen-motion` springs in v0.5 with no API
   change.

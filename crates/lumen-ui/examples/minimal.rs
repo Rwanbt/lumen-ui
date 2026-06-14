@@ -55,7 +55,16 @@ impl eframe::App for DemoApp {
             ui.add(Button::primary("Disabled").enabled(false));
         });
 
-        ui.add_space(8.0);
-        ui.add(Label::new(format!("clicks: {}", self.clicks)));
+        ui.add_space(16.0);
+        Card::new().show(ui, |ui| {
+            ui.add(Heading::new("Status"));
+            ui.horizontal(|ui| {
+                ui.add(Badge::success("Ready"));
+                ui.add(Badge::primary("v0.2"));
+                ui.add(Badge::warning("Beta"));
+                ui.add(Badge::new("Neutral"));
+            });
+            ui.add(Label::new(format!("clicks: {}", self.clicks)));
+        });
     }
 }

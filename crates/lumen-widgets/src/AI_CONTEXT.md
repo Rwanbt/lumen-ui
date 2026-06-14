@@ -33,3 +33,5 @@ ui.add(Button::ghost("Cancel").enabled(false));
   v0.2: fill interpolates via `lumen_core::anim::lerp_color` (minimal motion).
 - `text.rs` — `Label` (+ `muted`) and `Heading` (+ `display`); resolve color/size from
   `Theme::text_recipe(role, ctx)`.
+- `card.rs` — `Card` themed surface container; exposes `show(ui, |ui| …)` (not a `Widget`).
+- `badge.rs` — `Badge` status label (Neutral/Primary/Success/Warning/Danger).

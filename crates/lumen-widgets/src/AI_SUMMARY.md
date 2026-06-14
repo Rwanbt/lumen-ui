@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-14 18:27** — do not edit manually.
+> **Auto-generated 2026-06-14 18:32** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -12,12 +12,16 @@ Widgets are the only place that calls egui's drawing API besides `lumen-core::th
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
+| `badge.rs` | 52 | |
 | `button.rs` | 91 | |
-| `lib.rs` | 10 | |
+| `card.rs` | 28 | |
+| `lib.rs` | 14 | |
 | `text.rs` | 63 | |
-| **Total** | **164** | |
+| **Total** | **248** | |
 
 ## Rust API
+- `Badge` (struct)
 - `Button` (struct)
+- `Card` (struct)
 - `Heading` (struct)
 - `Label` (struct)
