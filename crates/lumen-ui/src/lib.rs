@@ -31,9 +31,9 @@ pub use lumen_core as core;
 #[doc(inline)]
 pub use lumen_core::{
     anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe,
-    Colors, DarkTheme, Density, Elevation, Motion, Radius, SliderRecipe, Spacing, TextFieldRecipe,
-    TextRecipe, TextRole, Theme, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt,
-    WidgetState,
+    Colors, DarkTheme, Density, Elevation, LightTheme, Motion, Radius, SliderRecipe, Spacing,
+    TextFieldRecipe, TextRecipe, TextRole, Theme, ToggleRecipe, Tokens, Typography, UiContext,
+    UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "widgets")]
@@ -46,8 +46,8 @@ pub use lumen_widgets::{
 pub mod prelude {
     #[cfg(feature = "theme")]
     pub use lumen_core::{
-        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, TextRole, Theme,
-        UiContext, UiThemeExt, WidgetState,
+        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme, TextRole,
+        Theme, UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "widgets")]
     pub use lumen_widgets::{

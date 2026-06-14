@@ -25,3 +25,4 @@ use lumen_ui::prelude::*;   // install, set_theme, DarkTheme, UiContext, Button,
 ## Modules
 - `lib.rs` — feature-gated re-exports + `prelude`.
 - `examples/minimal.rs` — v0.1 live-theming validation example.
+- `examples/gallery.rs` — all v0.2 widgets + live Dark/Light theme switch (`set_theme`).
