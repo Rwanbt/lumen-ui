@@ -8,7 +8,7 @@ use egui::{Color32, Stroke};
 use crate::context::UiContext;
 use crate::recipe::{
     BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, TextRecipe, TextRole,
-    WidgetState,
+    ToggleRecipe, WidgetState,
 };
 use crate::theme::Theme;
 use crate::tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
@@ -180,6 +180,26 @@ impl Theme for DarkTheme {
         }
     }
 
+    fn toggle_recipe(&self, on: bool, state: WidgetState, _ctx: &UiContext) -> ToggleRecipe {
+        let c = &self.tokens.colors;
+        let base_track = if on { c.primary } else { c.surface_variant };
+        let track = match state {
+            WidgetState::Hovered | WidgetState::Active => Self::lighten(base_track, 0.10),
+            _ => base_track,
+        };
+        let knob = if on { c.on_primary } else { c.text_muted };
+        let border = if on {
+            Stroke::NONE
+        } else {
+            Stroke::new(1.0, c.border)
+        };
+        ToggleRecipe {
+            track,
+            knob,
+            border,
+        }
+    }
+
     fn apply_to_ctx(&self, ctx: &egui::Context) {
         let c = &self.tokens.colors;
         ctx.global_style_mut(|style| {
@@ -273,6 +293,18 @@ mod tests {
             theme.badge_recipe(BadgeVariant::Neutral, &ctx).text_color,
             t.colors.text_muted
         );
+    }
+
+    #[test]
+    fn toggle_on_uses_primary_track_no_border() {
+        let theme = DarkTheme::new();
+        let ctx = UiContext::default();
+        let on = theme.toggle_recipe(true, WidgetState::Normal, &ctx);
+        let off = theme.toggle_recipe(false, WidgetState::Normal, &ctx);
+        assert_eq!(on.track, theme.tokens().colors.primary);
+        assert_eq!(on.border.width, 0.0, "the on state has no border");
+        assert!(off.border.width > 0.0, "the off state has a visible border");
+        assert_ne!(on.track, off.track);
     }
 
     #[test]

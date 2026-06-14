@@ -11,9 +11,13 @@
 mod badge;
 mod button;
 mod card;
+mod checkbox;
+mod switch;
 mod text;
 
 pub use badge::Badge;
 pub use button::Button;
 pub use card::Card;
+pub use checkbox::Checkbox;
+pub use switch::Switch;
 pub use text::{Heading, Label};

@@ -30,6 +30,8 @@ fn main() -> eframe::Result<()> {
 #[derive(Default)]
 struct DemoApp {
     clicks: u32,
+    notifications: bool,
+    accept_terms: bool,
 }
 
 impl eframe::App for DemoApp {
@@ -65,6 +67,12 @@ impl eframe::App for DemoApp {
                 ui.add(Badge::new("Neutral"));
             });
             ui.add(Label::new(format!("clicks: {}", self.clicks)));
+            ui.add_space(8.0);
+            ui.horizontal(|ui| {
+                ui.add(Switch::new(&mut self.notifications));
+                ui.add(Label::new("Notifications"));
+            });
+            ui.add(Checkbox::new(&mut self.accept_terms, "I accept the terms"));
         });
     }
 }

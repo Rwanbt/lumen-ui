@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-14 18:32** — do not edit manually.
+> **Auto-generated 2026-06-14 21:49** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -15,12 +15,12 @@ workspace depends on this crate; it depends only on `egui`.
 |------|-----|--|
 | `anim.rs` | 23 | |
 | `context.rs` | 27 | |
-| `dark.rs` | 263 | |
+| `dark.rs` | 292 | |
 | `lib.rs` | 27 | |
-| `recipe.rs` | 73 | |
-| `theme.rs` | 82 | |
+| `recipe.rs` | 85 | |
+| `theme.rs` | 84 | |
 | `tokens.rs` | 138 | |
-| **Total** | **633** | |
+| **Total** | **676** | |
 
 ## Rust API
 - `BadgeRecipe` (struct)
@@ -33,6 +33,7 @@ workspace depends on this crate; it depends only on `egui`.
 - `Radius` (struct)
 - `Spacing` (struct)
 - `TextRecipe` (struct)
+- `ToggleRecipe` (struct)
 - `Tokens` (struct)
 - `Typography` (struct)
 - `UiContext` (struct)
