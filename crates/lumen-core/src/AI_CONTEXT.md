@@ -46,3 +46,5 @@ let recipe = ui.theme().button_recipe(variant, state, &ui.ui_ctx()); // inside a
 - `palette.rs` — `PaletteTheme` (public) + `ThemeMode`: a theme = `Tokens` palette + mode; the
   generic basis for `lumen-themes`. New themes use this, never re-implement recipes.
 - `anim.rs` — minimal motion (`lerp_color`); swaps to `lumen-motion` in v0.5.
+- `a11y.rs` — WCAG 2.1 contrast math (`relative_luminance`, `contrast_ratio`, `meets`/`meets_aa`,
+  `ContrastLevel`). Pure fns; the theme layer audits its color pairs against these (v0.8).
