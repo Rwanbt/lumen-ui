@@ -2,8 +2,13 @@
 
 use std::ops::RangeInclusive;
 
-use egui::{pos2, vec2, Rect, Response, Sense, Ui, Widget};
+use egui::{pos2, vec2, Key, Rect, Response, Sense, Ui, Widget};
 use lumen_core::{UiThemeExt, WidgetState};
+
+use crate::focus::focus_ring;
+
+/// Fraction of the range moved per arrow-key press when the slider is focused.
+const KEYBOARD_STEP_FRACTION: f32 = 0.01;
 
 /// A horizontal slider bound to a `&mut f32` over an inclusive range.
 #[derive(Debug)]
@@ -22,7 +27,8 @@ impl<'a> Slider<'a> {
 impl Widget for Slider<'_> {
     fn ui(self, ui: &mut Ui) -> Response {
         let width = ui.spacing().slider_width;
-        let height = ui.spacing().interact_size.y;
+        // a11y (v0.8): hit target follows the density (44 px in Touch).
+        let height = ui.ui_ctx().min_interactive_size();
         let (rect, mut response) =
             ui.allocate_exact_size(vec2(width, height), Sense::click_and_drag());
 
@@ -41,6 +47,25 @@ impl Widget for Slider<'_> {
             }
         }
 
+        // Keyboard nav (a11y, v0.8): arrows nudge the value when the slider is focused.
+        if response.has_focus() {
+            let step = span * KEYBOARD_STEP_FRACTION;
+            let delta = ui.input(|i| {
+                let mut d = 0.0;
+                if i.key_pressed(Key::ArrowRight) || i.key_pressed(Key::ArrowUp) {
+                    d += step;
+                }
+                if i.key_pressed(Key::ArrowLeft) || i.key_pressed(Key::ArrowDown) {
+                    d -= step;
+                }
+                d
+            });
+            if delta != 0.0 {
+                *self.value = (*self.value + delta).clamp(min, max);
+                response.mark_changed();
+            }
+        }
+
         let t = ((*self.value - min) / span).clamp(0.0, 1.0);
         let state = if !ui.is_enabled() {
             WidgetState::Disabled
@@ -49,7 +74,8 @@ impl Widget for Slider<'_> {
         } else {
             WidgetState::Normal
         };
-        let recipe = ui.theme().slider_recipe(state, &ui.ui_ctx());
+        let theme = ui.theme();
+        let recipe = theme.slider_recipe(state, &ui.ui_ctx());
 
         let cx = egui::lerp(x_min..=x_max, t);
         let cy = rect.center().y;
@@ -73,6 +99,12 @@ impl Widget for Slider<'_> {
         );
         painter.circle_filled(pos2(cx, cy), knob_radius, recipe.knob);
 
+        focus_ring(
+            ui,
+            &response,
+            theme.tokens().radius.sm,
+            theme.tokens().colors.primary,
+        );
         response
     }
 }

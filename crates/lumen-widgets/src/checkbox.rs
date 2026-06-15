@@ -3,6 +3,7 @@
 use egui::{pos2, vec2, Response, Sense, Stroke, StrokeKind, Ui, Widget};
 use lumen_core::{UiThemeExt, WidgetState};
 
+use crate::focus::focus_ring;
 use crate::text::Label;
 
 /// A checkbox bound to a `&mut bool`, with a trailing label.
@@ -25,7 +26,8 @@ impl<'a> Checkbox<'a> {
 impl Widget for Checkbox<'_> {
     fn ui(self, ui: &mut Ui) -> Response {
         ui.horizontal(|ui| {
-            let size = ui.spacing().interact_size.y;
+            // a11y (v0.8): box hit target follows the density (44 px in Touch).
+            let size = ui.ui_ctx().min_interactive_size();
             let (rect, mut response) = ui.allocate_exact_size(vec2(size, size), Sense::click());
 
             if response.clicked() {
@@ -60,6 +62,7 @@ impl Widget for Checkbox<'_> {
                 painter.line_segment([p2, p3], stroke);
             }
 
+            focus_ring(ui, &response, radius, theme.tokens().colors.primary);
             response | ui.add(Label::new(self.label))
         })
         .inner

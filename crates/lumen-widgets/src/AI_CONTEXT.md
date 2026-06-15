@@ -51,6 +51,16 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `egui::Modal` (backdrop + Esc close). `show` returns `None` while closed.
 - `select.rs` — `Select<T>` dropdown (`&mut T`) over `egui::ComboBox` + `selectable_value`.
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
+- `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
+  outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.
+
+## Accessibility (v0.8)
+- Hit targets follow `UiContext::min_interactive_size()` (44 px in Touch — WCAG 2.5.5). Custom
+  widgets allocate that height; `Button` passes it as `egui::Button::min_size`.
+- Keyboard nav: `Sense::click` widgets focus + activate on Space/Enter for free; `Slider` also
+  handles arrow keys when focused. Focus is made visible by `focus_ring` (+ the theme's global
+  `widgets.active.bg_stroke` for stock egui widgets). Built-in palettes are WCAG-AA audited
+  (`lumen_core::a11y::audit_colors`).
 
 v0.3 composed components reuse atomic widgets/recipes + read `theme.tokens()` for incidental
 chrome rather than growing the frozen `Theme` trait per component.

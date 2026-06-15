@@ -208,8 +208,19 @@ pub(crate) fn apply_visuals(t: &Tokens, dark_mode: bool, emph: Emphasis, ctx: &e
         v.widgets.hovered.bg_fill = emph(c.surface_variant, 0.08);
         v.widgets.active.bg_fill = emph(c.surface_variant, 0.14);
 
+        // Focus-visible: egui renders a keyboard-focused interactive widget with the
+        // `active` WidgetVisuals (Widgets::style). Give `active` a 2 px primary ring so
+        // focus (and press) is clearly visible for stock egui widgets and theme widgets
+        // that defer to the global style. lumen's own Button paints its own ring on top.
+        v.widgets.active.bg_stroke = Stroke::new(2.0, c.primary);
+        v.widgets.hovered.bg_stroke = Stroke::new(1.0, c.border);
+
         let s = &mut style.spacing;
         s.item_spacing = egui::vec2(t.spacing.sm, t.spacing.sm);
         s.button_padding = egui::vec2(t.spacing.md, t.spacing.sm);
+        // Comfortable-density hit-target floor for stock widgets (UiContext::min_interactive_size).
+        // Theme-level apply runs without a UiContext, so use the comfortable baseline; lumen
+        // widgets refine per-density via their own `min_size`.
+        s.interact_size.y = s.interact_size.y.max(36.0);
     });
 }
