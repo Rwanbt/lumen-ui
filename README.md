@@ -10,24 +10,52 @@
 
 </div>
 
-> **Status: v0.9 (API-freeze candidate).** All planned crates exist and are feature-complete;
-> the public API is frozen pending the v1.0 release. See [ROADMAP.md](ROADMAP.md) and
-> [docs/api-freeze.md](docs/api-freeze.md). Full guide: **[the book](docs/book/)**
-> (`mdbook serve docs/book`).
+> 🚧 **Work in progress — not yet released on crates.io.** The code is feature-complete and the
+> public API is frozen for a `1.0.0` release candidate, but it has not been published or battle-tested
+> in production yet. Use it via a git dependency and expect rough edges. Feedback welcome.
 
-`lumen-ui` separates *what a widget is* from *how it looks*. Widgets read a **recipe**
-resolved by a **theme** from a set of **design tokens** for a given
-`(variant, state, density)`. Swap the theme and the whole app restyles — without touching
-any widget code.
+## What is this?
 
-## Why
+[**egui**](https://github.com/emilk/egui) is a popular immediate-mode GUI library for Rust — used
+for desktop apps, dev tools, game UIs, and audio-plugin interfaces. It's great, but its styling is
+**one global, imperative `Style`**: you mutate a single struct for the whole context, colors and
+spacings end up hard-coded across your widgets, and there's no built-in notion of a *theme* you can
+design once and swap.
 
-- **One source of visual truth** — tokens, not scattered `Color32::from_rgb(...)` calls.
-- **Live theming** — `lumen_ui::set_theme(ctx, …)` restyles everything, instantly.
-- **State-parameterized recipes from v0.1** — adding interaction states later is *not* a
-  breaking change to the foundation trait.
-- **Built on the real egui 0.34 API** — every signature is verified by compilation, not
-  hallucinated (see [ROADMAP.md §Corrections d'API](ROADMAP.md)).
+**lumen-ui is the design-system layer egui doesn't ship.** It separates *what a widget is* from
+*how it looks*:
+
+```text
+Design tokens ──(a Theme resolves)──► a Recipe per (variant, state, density) ──► the Widget paints
+```
+
+A widget never hard-codes a color or padding — it asks the installed **theme** for a **recipe**
+built from semantic **tokens**. Swap the theme and your entire app restyles, instantly, **without
+touching a single line of widget or app logic**.
+
+## The problems it solves
+
+| Pain with raw egui | What lumen-ui gives you |
+|--------------------|-------------------------|
+| Colors/spacings hard-coded and duplicated everywhere | **One source of visual truth** — semantic tokens, no scattered `Color32::from_rgb(...)` |
+| No real theming; restyling means editing widget code | **Live theming** — `set_theme(ctx, …)` restyles the whole app in one call |
+| Hard to ship dark/light/brand/high-contrast variants | A **theme = a palette + a mode**; new themes need *zero* recipe code (`PaletteTheme`) |
+| Accessibility is on you | Every built-in theme is **WCAG 2.1 AA audited in CI**; visible focus, keyboard nav, 44 px touch targets |
+| Inconsistent widgets, ad-hoc state | A coherent widget set + headless components (Modal/Toast/Tabs) that keep their own state |
+| egui breaks ~3×/year | egui pinned behind a **single adaptation layer**; one place to bump |
+
+## Who it's for
+
+Anyone building a non-trivial egui app who wants a consistent, themeable, accessible look without
+reinventing a styling layer — desktop tools, dashboards, creative/audio software, internal apps.
+
+## Design principles
+
+- **Deep, stable core** — recipes are parameterized by `(variant, state, density)` from day one, so
+  adding states/variants/themes later is **additive, not breaking** ([ADR-0002](docs/adr/0002-recipes-parameterized-by-state.md)).
+- **Fast** — recipe resolution is ~26 ns (a 300-widget frame spends <10 µs theming; see [docs/performance.md](docs/performance.md)).
+- **Honest egui** — every egui signature is verified by compilation, never assumed.
+- **Pay for what you use** — opt-in feature flags; the core pulls only `egui`.
 
 ## Quick start
 
