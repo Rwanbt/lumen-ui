@@ -12,6 +12,12 @@
 
 </div>
 
+<div align="center">
+
+  **[ 🇬🇧 English &nbsp;|&nbsp; 🇫🇷 [Lire en Français](README.fr.md) ]**
+
+</div>
+
 > 🚧 **Work in progress — not yet released on crates.io.** The code is feature-complete and the
 > public API is frozen for a `1.0.0` release candidate, but it has not been published or battle-tested
 > in production yet. Use it via a git dependency and expect rough edges. Feedback welcome.
