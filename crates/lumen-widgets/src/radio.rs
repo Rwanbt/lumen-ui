@@ -1,8 +1,9 @@
 //! [`RadioGroup`] — single selection among a list of options.
 
-use egui::{vec2, Response, Sense, Stroke, Ui, Widget};
+use egui::{vec2, CornerRadius, Response, Sense, Stroke, Ui, Widget, WidgetInfo, WidgetType};
 use lumen_core::{UiThemeExt, WidgetState};
 
+use crate::focus::focus_ring;
 use crate::text::Label;
 
 /// A vertical group of radio buttons bound to a `&mut T`. Build it with
@@ -52,7 +53,8 @@ impl<T: PartialEq + Clone> Widget for RadioGroup<'_, T> {
 /// Draw one selectable radio row (circle + label) and return its combined response.
 fn radio_row(ui: &mut Ui, selected: bool, label: &str) -> Response {
     ui.horizontal(|ui| {
-        let size = ui.spacing().interact_size.y;
+        // a11y (v0.8): hit target follows the density (44 px in Touch — WCAG 2.5.5).
+        let size = ui.ui_ctx().min_interactive_size();
         let (rect, response) = ui.allocate_exact_size(vec2(size, size), Sense::click());
 
         let state = if response.hovered() {
@@ -74,6 +76,18 @@ fn radio_row(ui: &mut Ui, selected: bool, label: &str) -> Response {
             ui.painter()
                 .circle_filled(center, radius * 0.5, recipe.track);
         }
+
+        // a11y: expose selection + label to screen readers / AccessKit (and kittest).
+        let (enabled, primary) = (ui.is_enabled(), ui.theme().tokens().colors.primary);
+        response.widget_info(|| {
+            WidgetInfo::selected(WidgetType::RadioButton, enabled, selected, label)
+        });
+        focus_ring(
+            ui,
+            &response,
+            CornerRadius::same((size * 0.5) as u8),
+            primary,
+        );
 
         response | ui.add(Label::new(label.to_owned()))
     })

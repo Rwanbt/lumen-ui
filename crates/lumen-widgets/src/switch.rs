@@ -1,6 +1,6 @@
 //! [`Switch`] — an animated on/off toggle.
 
-use egui::{vec2, CornerRadius, Response, Sense, StrokeKind, Ui, Widget};
+use egui::{vec2, CornerRadius, Response, Sense, StrokeKind, Ui, Widget, WidgetInfo, WidgetType};
 use lumen_core::{UiThemeExt, WidgetState};
 
 use crate::focus::focus_ring;
@@ -54,6 +54,10 @@ impl Widget for Switch<'_> {
         let knob_radius = radius - 2.0;
         let cx = egui::lerp((rect.left() + radius)..=(rect.right() - radius), how_on);
         painter.circle_filled(egui::pos2(cx, rect.center().y), knob_radius, recipe.knob);
+
+        // a11y: expose toggle state to screen readers / AccessKit (and to egui_kittest).
+        let (enabled, on) = (ui.is_enabled(), *self.on);
+        response.widget_info(|| WidgetInfo::selected(WidgetType::Checkbox, enabled, on, ""));
 
         // Focus-visible (keyboard nav): pill-shaped ring matching the track.
         focus_ring(

@@ -6,6 +6,14 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- **Screen-reader / AccessKit semantics** for the painter-drawn widgets: `Switch`/`Checkbox`
+  expose `WidgetInfo::selected` (toggle state + label), `Slider` exposes `WidgetInfo::slider`
+  (value), `RadioGroup` exposes `WidgetInfo::selected` per `RadioButton`. `RadioGroup` also gained
+  the density hit-target floor (44 px in Touch) and the focus ring (parity with the other widgets).
+  This makes the custom widgets reachable by assistive tech and by `egui_kittest`.
+
 ## [1.0.0] - 2026-06-15
 
 First **stable** release. The public API is frozen ([docs/api-freeze.md](docs/api-freeze.md)) and
