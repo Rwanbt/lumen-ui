@@ -1998,6 +1998,7 @@ name = "lumen-ui-patterns"
 version = "1.0.0"
 dependencies = [
  "egui",
+ "egui_kittest",
  "lumen-ui-core",
  "lumen-ui-widgets",
 ]
