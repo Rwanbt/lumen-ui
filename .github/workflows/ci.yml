@@ -67,6 +67,21 @@ jobs:
       # Façade libs only — examples pull eframe which needs a JS canvas runner on wasm.
       - run: cargo build -p lumen-core -p lumen-widgets -p lumen-ui --target wasm32-unknown-unknown
 
+  docs:
+    name: mdbook build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mdbook
+        run: |
+          set -e
+          mkdir -p "$HOME/.local/bin"
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.5.3/mdbook-v0.5.3-x86_64-unknown-linux-gnu.tar.gz \
+            | tar -xz -C "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      # `build` fails on broken intra-book links, so this guards the docs.
+      - run: mdbook build docs/book
+
   loc-gate:
     name: LOC gate (<1500 per source file)
     runs-on: ubuntu-latest

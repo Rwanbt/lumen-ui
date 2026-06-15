@@ -8,6 +8,9 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.9 (in progress)
 
+- **mdBook documentation** (`docs/book/`): a complete guide — introduction, getting-started
+  (<15 min to a themed app), core concepts, theming, widgets, layout, motion, patterns,
+  accessibility, architecture. Built in CI (`mdbook build` fails on broken links).
 - **Criterion microbenchmarks** (`crates/lumen-core/benches/hot_paths.rs`): recipe resolution and
   the WCAG audit. Measured ~26 ns/`button_recipe`, ~3.5 ns/`text_recipe`, ~1.3 µs/`audit_colors`
   — all far under budget. **`docs/performance.md`** documents the budgets and methodology.

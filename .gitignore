@@ -15,6 +15,7 @@ Thumbs.db
 
 # mdBook output (v0.9)
 /book
+docs/book/book/
 
 # Local env
 .env
