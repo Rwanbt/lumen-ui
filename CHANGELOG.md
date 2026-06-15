@@ -6,7 +6,13 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.9 (in progress)
+## [1.0.0] - 2026-06-15
+
+First **stable** release. The public API is frozen ([docs/api-freeze.md](docs/api-freeze.md)) and
+strict SemVer applies from here. egui compatibility: **0.34.x** (MSRV Rust 1.92). The cumulative
+notes by development milestone follow.
+
+### Added — v0.9
 
 - **API freeze** (`docs/api-freeze.md`): the v1.0-candidate public surface (per façade feature)
   is documented and frozen; stability rules + what's intentionally additive vs breaking.
@@ -149,4 +155,5 @@ All notable changes to lumen-ui are documented here. The format is based on
 - CI: fmt + clippy `-D warnings` + tests + example build + LOC gate on Linux/macOS/Windows.
 - AI-native dev stack wired in (AGENTS.md, `tools/ai_docs`, verify-* skills, AI_CONTEXT per crate).
 
-[Unreleased]: https://github.com/Rwanbt/lumen-ui/commits/main
+[Unreleased]: https://github.com/Rwanbt/lumen-ui/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Rwanbt/lumen-ui/releases/tag/v1.0.0
