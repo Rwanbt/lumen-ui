@@ -6,7 +6,14 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.7 (in progress)
+### Added — v0.8 (in progress)
+
+- **`lumen-core::a11y`** — WCAG 2.1 contrast helpers: `relative_luminance`, `contrast_ratio`
+  (1.0–21.0), `meets`/`meets_aa`, and `ContrastLevel` (Aa/AaLarge/Aaa/AaaLarge). Pure functions
+  with unit tests; the theme layer audits its semantic color pairs against them so a theme that
+  fails AA is caught by a test, not by a user. Re-exported from `lumen-ui`.
+
+### Added — v0.7
 
 - **`lumen-theme-gen` CLI** (`tools/`): `template` emits a starter palette (RON); `gen <palette.ron>`
   emits Rust code for a `PaletteTheme`. `Colors` is now (de)serializable under the `serde` feature.

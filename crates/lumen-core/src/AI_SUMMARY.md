@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 01:19** — do not edit manually.
+> **Auto-generated 2026-06-15 06:38** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,17 +13,18 @@ workspace depends on this crate; it depends only on `egui`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
+| `a11y.rs` | 114 | |
 | `anim.rs` | 23 | |
 | `builder.rs` | 200 | |
 | `context.rs` | 27 | |
 | `dark.rs` | 183 | |
-| `lib.rs` | 32 | |
+| `lib.rs` | 34 | |
 | `light.rs` | 98 | |
 | `palette.rs` | 75 | |
 | `recipe.rs` | 104 | |
 | `theme.rs` | 88 | |
 | `tokens.rs` | 138 | |
-| **Total** | **968** | |
+| **Total** | **1084** | |
 
 ## Rust API
 - `BadgeRecipe` (struct)
@@ -46,6 +47,7 @@ workspace depends on this crate; it depends only on `egui`.
 - `UiContext` (struct)
 - `BadgeVariant` (enum)
 - `ButtonVariant` (enum)
+- `ContrastLevel` (enum)
 - `Density` (enum)
 - `TextRole` (enum)
 - `ThemeMode` (enum)
@@ -54,6 +56,10 @@ workspace depends on this crate; it depends only on `egui`.
 - `UiThemeExt` (trait)
 
 ## Rust Functions
+- `contrast_ratio()`
 - `install()`
 - `lerp_color()`
+- `meets()`
+- `meets_aa()`
+- `relative_luminance()`
 - `set_theme()`

@@ -30,10 +30,10 @@ pub use lumen_core as core;
 #[cfg(feature = "theme")]
 #[doc(inline)]
 pub use lumen_core::{
-    anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe,
-    Colors, DarkTheme, Density, Elevation, LightTheme, Motion, PaletteTheme, Radius, SliderRecipe,
-    Spacing, TextFieldRecipe, TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens,
-    Typography, UiContext, UiThemeExt, WidgetState,
+    a11y, anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant,
+    CardRecipe, Colors, ContrastLevel, DarkTheme, Density, Elevation, LightTheme, Motion,
+    PaletteTheme, Radius, SliderRecipe, Spacing, TextFieldRecipe, TextRecipe, TextRole, Theme,
+    ThemeMode, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]

@@ -15,6 +15,7 @@
 #![forbid(unsafe_code)]
 #![warn(missing_debug_implementations)]
 
+pub mod a11y;
 pub mod anim;
 mod builder;
 pub mod context;
@@ -25,6 +26,7 @@ pub mod recipe;
 pub mod theme;
 pub mod tokens;
 
+pub use a11y::{contrast_ratio, meets, meets_aa, relative_luminance, ContrastLevel};
 pub use context::{Density, UiContext};
 pub use dark::DarkTheme;
 pub use light::LightTheme;
