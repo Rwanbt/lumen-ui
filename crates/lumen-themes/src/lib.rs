@@ -41,7 +41,8 @@ pub fn audio_dark() -> PaletteTheme {
         on_success: Color32::from_rgb(0x03, 0x18, 0x0a),
         warning: Color32::from_rgb(0xe0, 0xa4, 0x2b),
         on_warning: Color32::from_rgb(0x1a, 0x12, 0x00),
-        danger: Color32::from_rgb(0xe5, 0x48, 0x4d),
+        // WCAG: white-on-danger clears AA at rest — see the audit test below.
+        danger: Color32::from_rgb(0xc7, 0x3e, 0x43),
         on_danger: Color32::from_rgb(0xff, 0xff, 0xff),
         text: Color32::from_rgb(0xe8, 0xed, 0xf0),
         text_muted: Color32::from_rgb(0x8a, 0x94, 0x9c),
@@ -92,5 +93,28 @@ mod tests {
             &ctx,
         );
         assert_eq!(r.fill, audio_dark().tokens().colors.primary);
+    }
+
+    fn assert_aa(name: &str, theme: &PaletteTheme) {
+        let report = lumen_core::audit_colors(&theme.tokens().colors);
+        let failures: Vec<String> = report
+            .failures()
+            .map(|c| format!("  {} — {:.2}:1", c.label, c.ratio))
+            .collect();
+        assert!(
+            report.all_pass(),
+            "{name} fails WCAG AA:\n{}",
+            failures.join("\n")
+        );
+    }
+
+    #[test]
+    fn audio_dark_passes_wcag_aa() {
+        assert_aa("audio_dark", &audio_dark());
+    }
+
+    #[test]
+    fn high_contrast_passes_wcag_aa() {
+        assert_aa("high_contrast", &high_contrast());
     }
 }

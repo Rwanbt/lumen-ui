@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 06:38** — do not edit manually.
+> **Auto-generated 2026-06-15 06:46** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,24 +13,26 @@ workspace depends on this crate; it depends only on `egui`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `a11y.rs` | 114 | |
+| `a11y.rs` | 230 | |
 | `anim.rs` | 23 | |
 | `builder.rs` | 200 | |
 | `context.rs` | 27 | |
-| `dark.rs` | 183 | |
-| `lib.rs` | 34 | |
-| `light.rs` | 98 | |
+| `dark.rs` | 184 | |
+| `lib.rs` | 37 | |
+| `light.rs` | 99 | |
 | `palette.rs` | 75 | |
 | `recipe.rs` | 104 | |
 | `theme.rs` | 88 | |
 | `tokens.rs` | 138 | |
-| **Total** | **1084** | |
+| **Total** | **1205** | |
 
 ## Rust API
+- `AuditReport` (struct)
 - `BadgeRecipe` (struct)
 - `ButtonRecipe` (struct)
 - `CardRecipe` (struct)
 - `Colors` (struct)
+- `ContrastCheck` (struct)
 - `DarkTheme` (struct)
 - `Elevation` (struct)
 - `LightTheme` (struct)
@@ -56,6 +58,7 @@ workspace depends on this crate; it depends only on `egui`.
 - `UiThemeExt` (trait)
 
 ## Rust Functions
+- `audit_colors()`
 - `contrast_ratio()`
 - `install()`
 - `lerp_color()`

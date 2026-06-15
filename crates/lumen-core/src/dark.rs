@@ -34,7 +34,8 @@ impl DarkTheme {
             background: Color32::from_rgb(0x12, 0x14, 0x18),
             surface: Color32::from_rgb(0x1b, 0x1e, 0x24),
             surface_variant: Color32::from_rgb(0x24, 0x28, 0x30),
-            primary: Color32::from_rgb(0x5b, 0x8d, 0xef),
+            // WCAG: white-on-primary clears AA (4.5:1) at rest — see a11y::audit_colors test.
+            primary: Color32::from_rgb(0x44, 0x69, 0xb2),
             on_primary: Color32::from_rgb(0xf5, 0xf7, 0xfa),
             secondary: Color32::from_rgb(0x39, 0x3f, 0x4a),
             on_secondary: Color32::from_rgb(0xe6, 0xe9, 0xee),
@@ -42,7 +43,7 @@ impl DarkTheme {
             on_success: Color32::from_rgb(0x06, 0x1a, 0x0b),
             warning: Color32::from_rgb(0xe0, 0xa4, 0x2b),
             on_warning: Color32::from_rgb(0x1a, 0x12, 0x00),
-            danger: Color32::from_rgb(0xe5, 0x48, 0x4d),
+            danger: Color32::from_rgb(0xc7, 0x3e, 0x43),
             on_danger: Color32::from_rgb(0xff, 0xff, 0xff),
             text: Color32::from_rgb(0xe6, 0xe9, 0xee),
             text_muted: Color32::from_rgb(0x9a, 0xa2, 0xb0),

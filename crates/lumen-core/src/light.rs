@@ -37,9 +37,10 @@ impl LightTheme {
             on_primary: Color32::from_rgb(0xff, 0xff, 0xff),
             secondary: Color32::from_rgb(0xe4, 0xe7, 0xec),
             on_secondary: Color32::from_rgb(0x1b, 0x1e, 0x24),
-            success: Color32::from_rgb(0x1f, 0x9d, 0x3a),
+            // WCAG: white text clears AA on these fills — see a11y::audit_colors test.
+            success: Color32::from_rgb(0x1a, 0x83, 0x31),
             on_success: Color32::from_rgb(0xff, 0xff, 0xff),
-            warning: Color32::from_rgb(0xb8, 0x7a, 0x00),
+            warning: Color32::from_rgb(0x9c, 0x67, 0x00),
             on_warning: Color32::from_rgb(0xff, 0xff, 0xff),
             danger: Color32::from_rgb(0xd8, 0x36, 0x3b),
             on_danger: Color32::from_rgb(0xff, 0xff, 0xff),

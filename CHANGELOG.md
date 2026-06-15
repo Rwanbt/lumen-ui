@@ -12,6 +12,22 @@ All notable changes to lumen-ui are documented here. The format is based on
   (1.0–21.0), `meets`/`meets_aa`, and `ContrastLevel` (Aa/AaLarge/Aaa/AaaLarge). Pure functions
   with unit tests; the theme layer audits its semantic color pairs against them so a theme that
   fails AA is caught by a test, not by a user. Re-exported from `lumen-ui`.
+- **WCAG audit harness**: `a11y::audit_colors(&Colors) -> AuditReport` enumerates every
+  text-bearing semantic pair (text/muted on surfaces, each `on_*` on its fill) and checks it
+  against AA. Every built-in theme (`DarkTheme`, `LightTheme`, `audio_dark`, `high_contrast`)
+  now has a test asserting it passes — CI fails on an inaccessible theme.
+
+### Changed — v0.8
+
+- **Accessible palette adjustments** so white/label text clears AA (4.5:1) at rest on every
+  semantic fill: `DarkTheme` `primary`/`danger`, `LightTheme` `success`/`warning`, `audio_dark`
+  `danger` darkened. See ADR-0006 (audit scope = resting state, with hover headroom).
+
+### Deferred — v0.8
+
+- The **`material` feature** (egui-material3 adapters) is **deferred to the post-1.0 backlog**:
+  egui-material3 v0.0.9 targets egui 0.33 (we pin 0.34) and pulls ~465 transitive crates. See
+  ADR-0005. v0.8 delivers the milestone's real exit criterion — WCAG AA across all components.
 
 ### Added — v0.7
 
