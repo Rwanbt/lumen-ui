@@ -14,3 +14,10 @@ categories.workspace = true
 [dependencies]
 egui = { workspace = true }
 lumen-core = { workspace = true }
+
+[dev-dependencies]
+# Headless, AccessKit-driven widget tests. No default features (no wgpu/snapshot) — the
+# functional harness needs neither a GPU nor a renderer.
+egui_kittest = { version = "0.34.3", default-features = false }
+# For the cross-theme smoke test (audio_dark / high_contrast).
+lumen-themes = { workspace = true }
