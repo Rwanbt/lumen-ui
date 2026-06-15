@@ -41,7 +41,7 @@ Equal columns, with a gap:
 ```rust,ignore
 Grid::new(3).gap(8.0).fill_width().show(ui, "cards", |t| {
     for card in &cards {
-        t.item(|ui| { Card::show(ui, |ui| { ui.add(Label::new(&card.name)); }); });
+        t.item(|ui| { Card::new().show(ui, |ui| { ui.add(Label::new(&card.name)); }); });
     }
 });
 ```
