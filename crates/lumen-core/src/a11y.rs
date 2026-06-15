@@ -270,7 +270,7 @@ mod tests {
         let bg = Color32::WHITE;
         let ratio = contrast_ratio(fg, bg);
         assert!(
-            ratio >= 3.0 && ratio < 4.5,
+            (3.0..4.5).contains(&ratio),
             "ratio {ratio} not in the AA-large band"
         );
         assert!(meets(fg, bg, ContrastLevel::AaLarge));
