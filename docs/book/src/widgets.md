@@ -25,14 +25,16 @@ ui.add(Switch::new(&mut enabled));
 ui.add(Checkbox::new(&mut agree, "I agree"));
 ui.add(Slider::new(&mut volume, 0.0..=1.0));
 
-// Single selection
-let choice = RadioGroup::new(&mut selected)
-    .option(Mode::A, "Mode A")
-    .option(Mode::B, "Mode B")
-    .show(ui);
+// Single selection — RadioGroup is a Widget; it mutates the bound `&mut T` in place,
+// so read `selected` after adding it.
+ui.add(
+    RadioGroup::new(&mut selected)
+        .option(Mode::A, "Mode A")
+        .option(Mode::B, "Mode B"),
+);
 
 // Containers / status
-Card::show(ui, |ui| { ui.add(Label::new("inside a card")); });
+Card::new().show(ui, |ui| { ui.add(Label::new("inside a card")); });
 ui.add(Badge::success("OK"));
 ```
 
@@ -45,12 +47,13 @@ let active = Tabs::new("main-tabs").tab("Files").tab("Search").show(ui);
 // Accordion — themed collapsible
 Accordion::new("advanced").show(ui, |ui| { /* … */ });
 
-// Select<T> dropdown bound to &mut T
-Select::new(&mut current).option(A, "A").option(B, "B").show(ui);
+// Select<T> dropdown bound to &mut T (first arg is an id source)
+Select::new("mode", &mut current).option(A, "A").option(B, "B").show(ui);
 
 // Modal — open state in ctx.data, no external bool. Esc / backdrop closes it.
+// `show` takes the egui Context (not a Ui), since the modal renders at the top level.
 open_modal(ctx, "confirm");
-Modal::new("confirm").show(ui, |ui| {
+Modal::new("confirm").show(ctx, |ui| {
     ui.add(Label::new("Are you sure?"));
     if ui.add(Button::primary("Yes")).clicked() { close_modal(ctx, "confirm"); }
 });
@@ -65,9 +68,9 @@ show_toasts(ctx);    // call once per frame, e.g. at the end of your top panel
 
 ```rust,ignore
 let resp = ui.add(Button::ghost("hover me"));
-tooltip(&resp, "extra info");
 popover(&resp, |ui| { ui.add(Label::new("popover body")); });
 context_menu(&resp, |ui| { if ui.add(Button::ghost("Copy")).clicked() {} });
+tooltip(resp, "extra info"); // takes the Response by value — call it last
 ```
 
 Every one of these resolves its styling from the installed theme — swap the theme and they all
