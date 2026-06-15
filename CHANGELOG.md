@@ -17,6 +17,13 @@ All notable changes to lumen-ui are documented here. The format is based on
   against AA. Every built-in theme (`DarkTheme`, `LightTheme`, `audio_dark`, `high_contrast`)
   now has a test asserting it passes — CI fails on an inaccessible theme.
 
+- **Focus-visible + keyboard nav + touch targets** (v0.8 slice 3):
+  `UiContext::min_interactive_size()` (44 px in `Touch` — WCAG 2.5.5; ≥24 px AA floor for all
+  densities). `Button`/`Switch`/`Checkbox`/`Slider` enforce it as their hit target and paint a
+  2 px primary **focus ring** when keyboard-focused (shared `focus_ring` helper). `Slider` now
+  responds to arrow keys (±1 % per press) when focused. The theme also sets a global focus ring
+  (`widgets.active.bg_stroke`) so stock egui widgets show focus too.
+
 ### Changed — v0.8
 
 - **Accessible palette adjustments** so white/label text clears AA (4.5:1) at rest on every

@@ -13,6 +13,7 @@ mod badge;
 mod button;
 mod card;
 mod checkbox;
+mod focus;
 mod modal;
 mod overlay;
 mod radio;

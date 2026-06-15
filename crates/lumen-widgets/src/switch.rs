@@ -1,7 +1,9 @@
 //! [`Switch`] — an animated on/off toggle.
 
-use egui::{vec2, Response, Sense, StrokeKind, Ui, Widget};
+use egui::{vec2, CornerRadius, Response, Sense, StrokeKind, Ui, Widget};
 use lumen_core::{UiThemeExt, WidgetState};
+
+use crate::focus::focus_ring;
 
 /// A pill-shaped toggle bound to a `&mut bool`. The knob slides with the v0.2
 /// minimal motion (`animate_bool_with_time`).
@@ -19,7 +21,8 @@ impl<'a> Switch<'a> {
 
 impl Widget for Switch<'_> {
     fn ui(self, ui: &mut Ui) -> Response {
-        let height = ui.spacing().interact_size.y;
+        // a11y (v0.8): the hit target follows the density (44 px in Touch — WCAG 2.5.5).
+        let height = ui.ui_ctx().min_interactive_size();
         let width = height * 1.8;
         let (rect, mut response) = ui.allocate_exact_size(vec2(width, height), Sense::click());
 
@@ -52,6 +55,13 @@ impl Widget for Switch<'_> {
         let cx = egui::lerp((rect.left() + radius)..=(rect.right() - radius), how_on);
         painter.circle_filled(egui::pos2(cx, rect.center().y), knob_radius, recipe.knob);
 
+        // Focus-visible (keyboard nav): pill-shaped ring matching the track.
+        focus_ring(
+            ui,
+            &response,
+            CornerRadius::same(radius as u8),
+            theme.tokens().colors.primary,
+        );
         response
     }
 }

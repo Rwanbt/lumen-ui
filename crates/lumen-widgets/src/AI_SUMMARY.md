@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 06:46** — do not edit manually.
+> **Auto-generated 2026-06-15 06:59** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -14,21 +14,22 @@ Widgets are the only place that calls egui's drawing API besides `lumen-core::th
 |------|-----|--|
 | `accordion.rs` | 31 | |
 | `badge.rs` | 52 | |
-| `button.rs` | 91 | |
+| `button.rs` | 105 | |
 | `card.rs` | 28 | |
-| `checkbox.rs` | 55 | |
-| `lib.rs` | 36 | |
+| `checkbox.rs` | 58 | |
+| `focus.rs` | 27 | |
+| `lib.rs` | 37 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 29 | |
 | `radio.rs` | 68 | |
 | `select.rs` | 41 | |
-| `slider.rs` | 66 | |
-| `switch.rs` | 46 | |
+| `slider.rs` | 95 | |
+| `switch.rs` | 55 | |
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
 | `toast.rs` | 100 | |
-| **Total** | **870** | |
+| **Total** | **953** | |
 
 ## Rust API
 - `Accordion` (struct)

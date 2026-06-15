@@ -7,8 +7,10 @@
 //!   that drives the recipe is read from the **previous** frame via
 //!   `ctx.read_response(id)`. `install()` sets `max_passes = 2` so this is stable.
 
-use egui::{Frame, Margin, Response, RichText, Ui, Widget};
+use egui::{vec2, Frame, Margin, Response, RichText, Ui, Widget};
 use lumen_core::{anim, ButtonVariant, UiThemeExt, WidgetState};
+
+use crate::focus::focus_ring;
 
 /// A themed button. Build it with [`Button::primary`] / [`Button::secondary`] /
 /// [`Button::ghost`] / [`Button::danger`], then `ui.add(button)`.
@@ -87,8 +89,12 @@ impl Widget for Button {
             theme.tokens().motion.base,
         );
 
+        // Hit-target floor (a11y, v0.8): the clickable button never shrinks below the
+        // density's min interactive size (44 px in Touch — WCAG 2.5.5), even for short labels.
+        let min_h = ui_ctx.min_interactive_size();
+
         // padding + shadow via Frame; fill/stroke/corner_radius on the Button.
-        Frame::NONE
+        let response = Frame::NONE
             .inner_margin(Margin::symmetric(
                 recipe.inner_margin.x as i8,
                 recipe.inner_margin.y as i8,
@@ -102,9 +108,20 @@ impl Widget for Button {
                     egui::Button::new(RichText::new(&self.label).color(recipe.text_color))
                         .fill(fill)
                         .stroke(recipe.stroke)
-                        .corner_radius(recipe.corner_radius),
+                        .corner_radius(recipe.corner_radius)
+                        .min_size(vec2(0.0, min_h)),
                 )
             })
-            .inner
+            .inner;
+
+        // Focus-visible (keyboard nav, v0.8): a primary ring when focused (disabled
+        // buttons are non-interactive, so they never hold focus).
+        focus_ring(
+            ui,
+            &response,
+            recipe.corner_radius,
+            theme.tokens().colors.primary,
+        );
+        response
     }
 }
