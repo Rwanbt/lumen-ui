@@ -3,7 +3,7 @@
 //! for the budgets these guard.
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use lumen_core::{a11y, ButtonVariant, DarkTheme, Theme, TextRole, UiContext, WidgetState};
+use lumen_core::{a11y, ButtonVariant, DarkTheme, TextRole, Theme, UiContext, WidgetState};
 
 fn bench_button_recipe(c: &mut Criterion) {
     let theme = DarkTheme::new();

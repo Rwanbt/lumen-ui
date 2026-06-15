@@ -83,6 +83,15 @@ Every built-in theme is **WCAG 2.1 AA audited in CI**. Widgets are keyboard-navi
 visible focus ring and 44 px touch targets in `Density::Touch`. See
 [the a11y chapter](docs/book/src/accessibility.md).
 
+## Compatibility
+
+| lumen-ui | egui | MSRV |
+|----------|------|------|
+| 1.0.x | 0.34.x | Rust 1.92 |
+
+egui is pinned in a single adaptation layer ([ADR-0004](docs/adr/0004-msrv-egui-pin.md)); a new
+egui minor is handled in one place and shipped as a lumen-ui minor at most.
+
 ## Documentation
 
 - **[The book](docs/book/)** — complete guide (getting started → patterns). `mdbook serve docs/book`.

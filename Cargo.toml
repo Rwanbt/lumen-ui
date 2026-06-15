@@ -18,7 +18,7 @@ members = [
 
 # Métadonnées partagées par toutes les crates lumen-* (héritées via `*.workspace = true`).
 [workspace.package]
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 rust-version = "1.92"            # MSRV — voir docs/adr/0004-msrv-egui-pin.md
 license = "MIT OR Apache-2.0"
@@ -36,13 +36,13 @@ egui = "0.34.3"
 # Compat vérifiée : egui_taffy 0.12 dépend de egui 0.34.3.
 egui_taffy = "0.12"
 # Crates internes (chemin) — versionnées ensemble pour la publication coordonnée v1.0.
-lumen-core = { path = "crates/lumen-core", version = "0.1.0" }
-lumen-widgets = { path = "crates/lumen-widgets", version = "0.1.0" }
-lumen-layout = { path = "crates/lumen-layout", version = "0.1.0" }
-lumen-motion = { path = "crates/lumen-motion", version = "0.1.0" }
-lumen-patterns = { path = "crates/lumen-patterns", version = "0.1.0" }
-lumen-themes = { path = "crates/lumen-themes", version = "0.1.0" }
-lumen-icons = { path = "crates/lumen-icons", version = "0.1.0" }
+lumen-core = { path = "crates/lumen-core", version = "1.0.0" }
+lumen-widgets = { path = "crates/lumen-widgets", version = "1.0.0" }
+lumen-layout = { path = "crates/lumen-layout", version = "1.0.0" }
+lumen-motion = { path = "crates/lumen-motion", version = "1.0.0" }
+lumen-patterns = { path = "crates/lumen-patterns", version = "1.0.0" }
+lumen-themes = { path = "crates/lumen-themes", version = "1.0.0" }
+lumen-icons = { path = "crates/lumen-icons", version = "1.0.0" }
 
 # Profil release optimisé pour les exemples / galeries WASM.
 [profile.release]
