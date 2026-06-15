@@ -6,7 +6,13 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
-### Added — v0.8 (in progress)
+### Added — v0.9 (in progress)
+
+- **Criterion microbenchmarks** (`crates/lumen-core/benches/hot_paths.rs`): recipe resolution and
+  the WCAG audit. Measured ~26 ns/`button_recipe`, ~3.5 ns/`text_recipe`, ~1.3 µs/`audit_colors`
+  — all far under budget. **`docs/performance.md`** documents the budgets and methodology.
+
+### Added — v0.8
 
 - **`lumen-core::a11y`** — WCAG 2.1 contrast helpers: `relative_luminance`, `contrast_ratio`
   (1.0–21.0), `meets`/`meets_aa`, and `ContrastLevel` (Aa/AaLarge/Aaa/AaaLarge). Pure functions
