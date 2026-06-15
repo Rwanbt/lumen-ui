@@ -6,6 +6,14 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ## [Unreleased]
 
+### Changed
+
+- **Crate namespacing** ([ADR-0007](docs/adr/0007-crate-namespacing-lumen-ui.md)): all internal
+  crates renamed to the `lumen-ui-*` namespace (`lumen-core` → `lumen-ui-core`, `lumen-widgets` →
+  `lumen-ui-widgets`, …). The façade `lumen-ui` is **unchanged** — end users install `lumen-ui`
+  and write `use lumen_ui::prelude::*;` exactly as before. Resolves the `lumen-core` crates.io
+  name collision and groups every published crate under one visible namespace. No public API change.
+
 ### Added
 
 - **Screen-reader / AccessKit semantics** for the painter-drawn widgets: `Switch`/`Checkbox`
@@ -16,7 +24,7 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Tested
 
-- **Functional widget test suite** (`crates/lumen-widgets/tests/widgets.rs`) via `egui_kittest`
+- **Functional widget test suite** (`crates/lumen-ui-widgets/tests/widgets.rs`) via `egui_kittest`
   (headless, AccessKit-driven, no GPU): every widget renders without panic under all 4 built-in
   themes; `Button` click reaches the handler and a disabled button stays inert; `TextField`
   accepts typed input; `Switch`/`Checkbox` toggle on click; `Slider` responds to arrow keys when
@@ -39,13 +47,13 @@ notes by development milestone follow.
 - **mdBook documentation** (`docs/book/`): a complete guide — introduction, getting-started
   (<15 min to a themed app), core concepts, theming, widgets, layout, motion, patterns,
   accessibility, architecture. Built in CI (`mdbook build` fails on broken links).
-- **Criterion microbenchmarks** (`crates/lumen-core/benches/hot_paths.rs`): recipe resolution and
+- **Criterion microbenchmarks** (`crates/lumen-ui-core/benches/hot_paths.rs`): recipe resolution and
   the WCAG audit. Measured ~26 ns/`button_recipe`, ~3.5 ns/`text_recipe`, ~1.3 µs/`audit_colors`
   — all far under budget. **`docs/performance.md`** documents the budgets and methodology.
 
 ### Added — v0.8
 
-- **`lumen-core::a11y`** — WCAG 2.1 contrast helpers: `relative_luminance`, `contrast_ratio`
+- **`lumen-ui-core::a11y`** — WCAG 2.1 contrast helpers: `relative_luminance`, `contrast_ratio`
   (1.0–21.0), `meets`/`meets_aa`, and `ContrastLevel` (Aa/AaLarge/Aaa/AaaLarge). Pure functions
   with unit tests; the theme layer audits its semantic color pairs against them so a theme that
   fails AA is caught by a test, not by a user. Re-exported from `lumen-ui`.
@@ -77,11 +85,11 @@ notes by development milestone follow.
 
 - **`lumen-theme-gen` CLI** (`tools/`): `template` emits a starter palette (RON); `gen <palette.ron>`
   emits Rust code for a `PaletteTheme`. `Colors` is now (de)serializable under the `serde` feature.
-- **`lumen-icons` crate** (façade feature `icons`): a painter-drawn icon set (`Icon` widget —
+- **`lumen-ui-icons` crate** (façade feature `icons`): a painter-drawn icon set (`Icon` widget —
   check/close/chevrons/plus/minus/search/menu), theme-colored, no font asset. `examples/icons.rs`.
-- **`PaletteTheme` + `ThemeMode`** in `lumen-core`: a theme is now just a palette + a mode, so new
+- **`PaletteTheme` + `ThemeMode`** in `lumen-ui-core`: a theme is now just a palette + a mode, so new
   themes need no recipe code (DRY; `DarkTheme`/`LightTheme` and the family all build on it).
-- **`lumen-themes` crate** (façade feature `themes`, now in `default`): **`audio_dark()`** (near-black,
+- **`lumen-ui-themes` crate** (façade feature `themes`, now in `default`): **`audio_dark()`** (near-black,
   teal accent) and **`high_contrast()`** (WCAG-friendly). The gallery now cycles 4 themes live.
 
 ### Added — v0.6
@@ -91,23 +99,23 @@ notes by development milestone follow.
   `open_command_palette` + filter; returns the chosen index).
 - **`Sidebar`** vertical nav (bound to a `&mut usize`), **`SettingsPage`** (titled + scroll) /
   **`InspectorPanel`** (titled) containers, and the **`property_row`** label-control helper.
-- **`lumen-patterns` crate** (façade feature `patterns`): **`DashboardLayout`** app shell
+- **`lumen-ui-patterns` crate** (façade feature `patterns`): **`DashboardLayout`** app shell
   (optional toolbar/status-bar/sidebar/inspector + central) over egui 0.34's `Panel`
   (`show_inside`), plus **`Toolbar`** / **`StatusBar`** bar helpers. `examples/dashboard.rs`.
 
 ### Added — v0.5
 
-- **`lumen-motion` crate** (façade feature `motion`): frame-rate-independent **`Spring`**
+- **`lumen-ui-motion` crate** (façade feature `motion`): frame-rate-independent **`Spring`**
   solver (stiffness/damping/mass + SMOOTH/GENTLE/WOBBLY/STIFF presets; `animate` / `animate_color`),
   **`Easing`** curves (Linear/EaseIn/EaseOut/EaseInOut/CubicBezier with a CSS bézier solver), and
   the **`ease`** tween helper. State in `ctx.data`, repaints while moving. The richer counterpart
-  to `lumen-core::anim` (ADR-0003).
+  to `lumen-ui-core::anim` (ADR-0003).
 - **`fade`** enter/exit transition (animated opacity; content not laid out once fully hidden).
   `examples/motion.rs` shows a spring-animated bar + a fading panel.
 
 ### Added — v0.4
 
-- **`lumen-layout` crate** (façade feature `layout`) over `egui_taffy` 0.12 (verified against
+- **`lumen-ui-layout` crate** (façade feature `layout`) over `egui_taffy` 0.12 (verified against
   egui 0.34.3): `Flex` (row/column, `gap`/`justify`/`align`/`fill_width`) + `Grid`
   (equal columns) + `FlexUiExt` (`item`/`item_grow`/`nest`); `Breakpoint` +
   `responsive(ui, |bp| …)`.
@@ -148,7 +156,7 @@ notes by development milestone follow.
   `Theme::card_recipe` / `Theme::badge_recipe`.
 - **Semantic color tokens**: `success`/`on_success`, `warning`/`on_warning` added to `Colors`.
 - **Minimal motion wired into `Button`**: the fill now interpolates toward its target state
-  color via `anim::lerp_color` (ADR-0003). Swaps to `lumen-motion` springs in v0.5 with no API
+  color via `anim::lerp_color` (ADR-0003). Swaps to `lumen-ui-motion` springs in v0.5 with no API
   change.
 - **Text primitives**: `Label` (+ `Label::muted`) and `Heading` (+ `Heading::display`),
   driven by a new `TextRecipe` / `TextRole` and the `Theme::text_recipe` method.
@@ -156,12 +164,12 @@ notes by development milestone follow.
 
 ### Added — v0.1 foundation (2026-06-14)
 
-- **Workspace from day zero** (`lumen-core`, `lumen-widgets`, façade `lumen-ui`).
-- `lumen-core`: design `Tokens` (colors, spacing, radius, typography, elevation, motion);
+- **Workspace from day zero** (`lumen-ui-core`, `lumen-ui-widgets`, façade `lumen-ui`).
+- `lumen-ui-core`: design `Tokens` (colors, spacing, radius, typography, elevation, motion);
   `Density`/`UiContext` ambient parameters; the `Theme` trait with **state-parameterized
   recipes** `(variant, state, ctx)`; `install()` / `set_theme()` and the `UiThemeExt`
   accessor; `DarkTheme` bootstrap theme; minimal-motion helper `anim::lerp_color`.
-- `lumen-widgets`: `Button` (Primary/Secondary/Ghost/Danger) built on the verified egui 0.34
+- `lumen-ui-widgets`: `Button` (Primary/Secondary/Ghost/Danger) built on the verified egui 0.34
   API (`Frame` for padding+shadow, frame-N-1 interaction state).
 - `lumen-ui`: façade with feature flags (`tokens`, `theme`, `widgets`, `serde`, `full`) and a
   `prelude`.

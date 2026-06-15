@@ -1,6 +1,6 @@
 # Layout
 
-`lumen-layout` (feature `layout`) wraps [`egui_taffy`](https://crates.io/crates/egui_taffy) to
+`lumen-ui-layout` (feature `layout`) wraps [`egui_taffy`](https://crates.io/crates/egui_taffy) to
 give egui CSS-style flexbox and grid, plus responsive breakpoints. `install()` already enables the
 two-pass layout these need.
 

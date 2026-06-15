@@ -1,4 +1,4 @@
-//! `icons` — the lumen-icons set (v0.7).
+//! `icons` — the lumen-ui-icons set (v0.7).
 //!
 //! Run with: `cargo run -p lumen-ui --example icons --features icons`
 
@@ -27,7 +27,7 @@ struct App;
 
 impl eframe::App for App {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
-        ui.heading("lumen-icons");
+        ui.heading("lumen-ui-icons");
         ui.add_space(12.0);
         let icons = [
             (Icon::check(), "check"),

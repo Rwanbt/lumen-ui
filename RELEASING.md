@@ -15,30 +15,20 @@ becomes public. Do it deliberately.
 
 ## Owner decisions required before publishing
 
-1. **⚠️ crates.io naming collision — `lumen-core` is already taken.** Checked 2026-06-15:
-   `lumen-core` exists on crates.io (v0.5.0, an unrelated "tiny ML framework"), so we **cannot**
-   publish under that name. The other names (`lumen-widgets`, `lumen-layout`, `lumen-motion`,
-   `lumen-patterns`, `lumen-themes`, `lumen-icons`, `lumen-ui`) appear free, but verify at publish
-   time. **A consistent scheme is needed.** Recommended: namespace the internal crates under the
-   façade name, which is free:
+1. **✅ crates.io naming — resolved (ADR-0007).** The original `lumen-core` package name was
+   taken on crates.io (an unrelated ML crate), so all internal crates were renamed to the
+   `lumen-ui-*` namespace, aligned with the façade. Availability verified 2026-06-15 — every
+   target name is **free**:
 
-   | Workspace dir | Current package name | Suggested crates.io name |
-   |---------------|----------------------|--------------------------|
-   | `crates/lumen-core` | `lumen-core` ❌ taken | `lumen-ui-core` |
-   | `crates/lumen-widgets` | `lumen-widgets` | `lumen-ui-widgets` |
-   | `crates/lumen-layout` | `lumen-layout` | `lumen-ui-layout` |
-   | `crates/lumen-motion` | `lumen-motion` | `lumen-ui-motion` |
-   | `crates/lumen-patterns` | `lumen-patterns` | `lumen-ui-patterns` |
-   | `crates/lumen-themes` | `lumen-themes` | `lumen-ui-themes` |
-   | `crates/lumen-icons` | `lumen-icons` | `lumen-ui-icons` |
-   | `crates/lumen-ui` | `lumen-ui` ✅ | `lumen-ui` (façade, unchanged) |
+   | crates.io name | Status |
+   |----------------|--------|
+   | `lumen-ui` (façade) | free ✅ |
+   | `lumen-ui-core` · `-widgets` · `-layout` · `-motion` · `-patterns` · `-themes` · `-icons` | all free ✅ |
 
-   Renaming touches each crate's `[package].name`, the `[workspace.dependencies]` keys + the
-   `package = "…"` field on each internal dependency, and the `use lumen_core::…` paths
-   (`lumen_ui_core`). It is a mechanical but cross-cutting change — do it as one dedicated PR
-   **before** the first publish. Alternatively pick a different brand entirely if `lumen` is too
-   contested. This is a branding decision left to the owner.
-2. **Repo public?** — required for GitHub Pages (the book / WASM gallery). Independent of crates.io.
+   Re-verify at publish time (someone could claim a name in the interim), but no further rename
+   is planned. `tools/lumen-theme-gen` is a dev utility and is **not** published.
+2. **Repo public** — done (2026-06-15). Required for GitHub Pages (the book / WASM gallery);
+   independent of crates.io.
 3. **Go/no-go** — publishing cannot be undone (a version can be *yanked* but not deleted).
 
 ## Tag the release
@@ -51,19 +41,18 @@ git push origin v1.0.0
 ## Publish to crates.io (in dependency order)
 
 Path+version deps must already exist on crates.io, so publish **bottom-up**. Wait for each to be
-indexed (usually seconds) before the next. (Use the final package names — e.g. `lumen-ui-core` —
-if you applied the renaming from decision 1.)
+indexed (usually seconds) before the next.
 
 ```bash
 cargo login                      # once, with your crates.io token
 
-cargo publish -p lumen-core
-cargo publish -p lumen-widgets   # depends on lumen-core
-cargo publish -p lumen-layout
-cargo publish -p lumen-motion
-cargo publish -p lumen-themes
-cargo publish -p lumen-icons
-cargo publish -p lumen-patterns  # depends on widgets + layout
+cargo publish -p lumen-ui-core
+cargo publish -p lumen-ui-widgets   # depends on lumen-ui-core
+cargo publish -p lumen-ui-layout
+cargo publish -p lumen-ui-motion
+cargo publish -p lumen-ui-themes
+cargo publish -p lumen-ui-icons
+cargo publish -p lumen-ui-patterns  # depends on widgets + layout
 cargo publish -p lumen-ui        # façade — depends on all of the above
 # tools/lumen-theme-gen has publish = false (dev tool) — not published.
 ```
@@ -71,7 +60,7 @@ cargo publish -p lumen-ui        # façade — depends on all of the above
 Dry-run a single leaf crate first to sanity-check packaging:
 
 ```bash
-cargo publish -p lumen-core --dry-run
+cargo publish -p lumen-ui-core --dry-run
 ```
 
 > Note: `lumen-ui` sets `readme = "../../README.md"`. If `cargo package` rejects a readme outside

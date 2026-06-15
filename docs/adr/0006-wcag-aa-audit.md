@@ -14,7 +14,7 @@ vibrant avec texte blanc ne peut pas rester à 4.5:1 à travers un éclaircissem
 
 ## Décision
 
-1. **Logique dans `lumen-core::a11y`** (fonctions pures) : `relative_luminance`, `contrast_ratio`,
+1. **Logique dans `lumen-ui-core::a11y`** (fonctions pures) : `relative_luminance`, `contrast_ratio`,
    `meets`/`meets_aa`, `ContrastLevel`, et `audit_colors(&Colors) -> AuditReport`. Aucune
    dépendance au trait `Theme` — l'audit travaille sur la palette.
 2. **Audit automatisé en test** : chaque thème intégré (`DarkTheme`, `LightTheme`, `audio_dark`,

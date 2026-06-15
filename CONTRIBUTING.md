@@ -29,15 +29,15 @@ All four must pass. CI runs the same on Linux/macOS/Windows + WASM.
 - **Comments document *why*, never *what*.** If a comment restates the code, rename instead.
 - **No magic numbers/strings:** name every non-trivial literal as a `const`.
 - **Error handling:** no `unwrap()`/`expect()` in library code unless the invariant is proven;
-  annotate survivors with `// SAFETY: …`. `lumen-core` is `#![forbid(unsafe_code)]`.
+  annotate survivors with `// SAFETY: …`. `lumen-ui-core` is `#![forbid(unsafe_code)]`.
 - **File size:** signal at >500 LOC, refactor before adding at >800 LOC. Functions ≤ 50 LOC,
   cyclomatic complexity ≤ 10.
 
 ## Adding a widget
 
-1. It lives in `lumen-widgets` and **must** resolve its style from a theme recipe via
+1. It lives in `lumen-ui-widgets` and **must** resolve its style from a theme recipe via
    `ui.theme()` — never hard-code a color or padding.
-2. If it needs a new recipe shape, add it to `lumen-core::recipe` and a method on the `Theme`
+2. If it needs a new recipe shape, add it to `lumen-ui-core::recipe` and a method on the `Theme`
    trait. **This is a breaking change** — open an ADR (`docs/adr/`) first.
 3. Read interaction state from the previous frame (`ctx.read_response(id)`); widgets are
    stateless.
@@ -46,7 +46,7 @@ All four must pass. CI runs the same on Linux/macOS/Windows + WASM.
 ## Adding a crate
 
 Create the crate only when its roadmap version arrives (no speculative empty crates).
-Dependencies must flow *down* toward `lumen-core` — see ARCHITECTURE.md. Wire its feature into
+Dependencies must flow *down* toward `lumen-ui-core` — see ARCHITECTURE.md. Wire its feature into
 the `lumen-ui` façade in the same PR.
 
 ## ADRs

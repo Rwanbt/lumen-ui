@@ -5,7 +5,7 @@
 *                       @Rwanbt
 
 # Frozen core — the most fundamental contract; review required.
-/crates/lumen-core/     @Rwanbt
+/crates/lumen-ui-core/     @Rwanbt
 
 # Public API surface and feature wiring.
 /crates/lumen-ui/       @Rwanbt

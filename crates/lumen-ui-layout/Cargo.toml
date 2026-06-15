@@ -1,0 +1,16 @@
+[package]
+name = "lumen-ui-layout"
+description = "CSS-style flexbox/grid layout and responsive breakpoints for lumen-ui, over egui_taffy."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+egui = { workspace = true }
+egui_taffy = { workspace = true }

@@ -1,6 +1,6 @@
 # Widgets
 
-All widgets live in `lumen-widgets` (feature `widgets`) and re-export from the façade. They're
+All widgets live in `lumen-ui-widgets` (feature `widgets`) and re-export from the façade. They're
 **stateless**: bind them to your data with `&mut`, or — for composed components — let them keep
 their open/visible state in `ctx.data` keyed by an `Id`. None of them require an app-owned boolean.
 

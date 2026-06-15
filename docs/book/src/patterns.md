@@ -1,6 +1,6 @@
 # Patterns
 
-`lumen-patterns` (feature `patterns`) assembles widgets into app-shell building blocks over
+`lumen-ui-patterns` (feature `patterns`) assembles widgets into app-shell building blocks over
 egui 0.34's `Panel` API. These are opinionated layouts, not new theme surface — they reuse the
 atomic widgets and the theme tokens.
 

@@ -9,8 +9,8 @@ découper en workspace multi-crates plus tard (v0.4), pour démarrer plus vite.
 
 ## Décision
 
-Démarrer en **workspace cargo dès le jalon 0**, avec `lumen-core`, `lumen-widgets` et la
-façade `lumen-ui`. Les autres crates (`lumen-motion`, `lumen-layout`, …) naissent quand leur
+Démarrer en **workspace cargo dès le jalon 0**, avec `lumen-ui-core`, `lumen-ui-widgets` et la
+façade `lumen-ui`. Les autres crates (`lumen-ui-motion`, `lumen-ui-layout`, …) naissent quand leur
 version de la roadmap arrive — pas de crates vides spéculatives, mais pas de « grand split »
 ultérieur non plus.
 

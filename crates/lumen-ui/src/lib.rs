@@ -25,11 +25,11 @@
 #![forbid(unsafe_code)]
 
 #[cfg(feature = "tokens")]
-pub use lumen_core as core;
+pub use lumen_ui_core as core;
 
 #[cfg(feature = "theme")]
 #[doc(inline)]
-pub use lumen_core::{
+pub use lumen_ui_core::{
     a11y, anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant,
     CardRecipe, Colors, ContrastLevel, DarkTheme, Density, Elevation, LightTheme, Motion,
     PaletteTheme, Radius, SliderRecipe, Spacing, TextFieldRecipe, TextRecipe, TextRole, Theme,
@@ -38,15 +38,15 @@ pub use lumen_core::{
 
 #[cfg(feature = "themes")]
 #[doc(inline)]
-pub use lumen_themes::{audio_dark, high_contrast};
+pub use lumen_ui_themes::{audio_dark, high_contrast};
 
 #[cfg(feature = "icons")]
 #[doc(inline)]
-pub use lumen_icons::{Icon, IconKind};
+pub use lumen_ui_icons::{Icon, IconKind};
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
-pub use lumen_widgets::{
+pub use lumen_ui_widgets::{
     close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error, toast_success,
     toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Heading, Label, Modal,
     RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,
@@ -54,15 +54,15 @@ pub use lumen_widgets::{
 
 #[cfg(feature = "layout")]
 #[doc(inline)]
-pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
+pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
 
 #[cfg(feature = "motion")]
 #[doc(inline)]
-pub use lumen_motion::{ease, fade, Easing, Spring};
+pub use lumen_ui_motion::{ease, fade, Easing, Spring};
 
 #[cfg(feature = "patterns")]
 #[doc(inline)]
-pub use lumen_patterns::{
+pub use lumen_ui_patterns::{
     open_command_palette, property_row, CommandPalette, DashboardLayout, InspectorPanel, LogEntry,
     LogLevel, LogPanel, SettingsPage, Sidebar, StatusBar, Toolbar,
 };
@@ -70,25 +70,25 @@ pub use lumen_patterns::{
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "theme")]
-    pub use lumen_core::{
+    pub use lumen_ui_core::{
         install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme,
         PaletteTheme, TextRole, Theme, ThemeMode, UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "icons")]
-    pub use lumen_icons::{Icon, IconKind};
+    pub use lumen_ui_icons::{Icon, IconKind};
     #[cfg(feature = "layout")]
-    pub use lumen_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
+    pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
     #[cfg(feature = "motion")]
-    pub use lumen_motion::{ease, fade, Easing, Spring};
+    pub use lumen_ui_motion::{ease, fade, Easing, Spring};
     #[cfg(feature = "patterns")]
-    pub use lumen_patterns::{
+    pub use lumen_ui_patterns::{
         open_command_palette, property_row, CommandPalette, DashboardLayout, InspectorPanel,
         LogEntry, LogLevel, LogPanel, SettingsPage, Sidebar, StatusBar, Toolbar,
     };
     #[cfg(feature = "themes")]
-    pub use lumen_themes::{audio_dark, high_contrast};
+    pub use lumen_ui_themes::{audio_dark, high_contrast};
     #[cfg(feature = "widgets")]
-    pub use lumen_widgets::{
+    pub use lumen_ui_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
         toast_success, toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Heading,
         Label, Modal, RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,

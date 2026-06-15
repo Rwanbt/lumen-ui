@@ -5,13 +5,13 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/lumen-core",
-    "crates/lumen-widgets",
-    "crates/lumen-layout",
-    "crates/lumen-motion",
-    "crates/lumen-patterns",
-    "crates/lumen-themes",
-    "crates/lumen-icons",
+    "crates/lumen-ui-core",
+    "crates/lumen-ui-widgets",
+    "crates/lumen-ui-layout",
+    "crates/lumen-ui-motion",
+    "crates/lumen-ui-patterns",
+    "crates/lumen-ui-themes",
+    "crates/lumen-ui-icons",
     "tools/lumen-theme-gen",
     "crates/lumen-ui",
 ]
@@ -29,20 +29,20 @@ keywords = ["egui", "ui", "design-system", "gui", "theme"]
 categories = ["gui"]
 
 [workspace.dependencies]
-# Pin strict de la version egui — la couche d'adaptation unique vit dans lumen-core.
+# Pin strict de la version egui — la couche d'adaptation unique vit dans lumen-ui-core.
 # Voir le registre des risques de ROADMAP.md (breaking changes egui ~3 mineures/an).
 egui = "0.34.3"
 # egui_taffy: flexbox/grid layout (v0.4). Isolé derrière la feature `layout`.
 # Compat vérifiée : egui_taffy 0.12 dépend de egui 0.34.3.
 egui_taffy = "0.12"
 # Crates internes (chemin) — versionnées ensemble pour la publication coordonnée v1.0.
-lumen-core = { path = "crates/lumen-core", version = "1.0.0" }
-lumen-widgets = { path = "crates/lumen-widgets", version = "1.0.0" }
-lumen-layout = { path = "crates/lumen-layout", version = "1.0.0" }
-lumen-motion = { path = "crates/lumen-motion", version = "1.0.0" }
-lumen-patterns = { path = "crates/lumen-patterns", version = "1.0.0" }
-lumen-themes = { path = "crates/lumen-themes", version = "1.0.0" }
-lumen-icons = { path = "crates/lumen-icons", version = "1.0.0" }
+lumen-ui-core = { path = "crates/lumen-ui-core", version = "1.0.0" }
+lumen-ui-widgets = { path = "crates/lumen-ui-widgets", version = "1.0.0" }
+lumen-ui-layout = { path = "crates/lumen-ui-layout", version = "1.0.0" }
+lumen-ui-motion = { path = "crates/lumen-ui-motion", version = "1.0.0" }
+lumen-ui-patterns = { path = "crates/lumen-ui-patterns", version = "1.0.0" }
+lumen-ui-themes = { path = "crates/lumen-ui-themes", version = "1.0.0" }
+lumen-ui-icons = { path = "crates/lumen-ui-icons", version = "1.0.0" }
 
 # Profil release optimisé pour les exemples / galeries WASM.
 [profile.release]

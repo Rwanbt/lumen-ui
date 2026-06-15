@@ -97,13 +97,13 @@ cargo run -p lumen-ui --example minimal
 
 | Crate | Role | Feature | Status |
 |-------|------|---------|--------|
-| `lumen-core` | Tokens, density/context, `Theme` trait, recipes, `install()`, a11y audit | `theme` | ✅ |
-| `lumen-widgets` | Themed widgets (Button, TextField, Switch, Slider, Card, Tabs, Modal, Toast…) | `widgets` | ✅ |
-| `lumen-layout` | `egui_taffy` flex/grid + responsive breakpoints | `layout` | ✅ |
-| `lumen-motion` | Springs, easings, fade transitions | `motion` | ✅ |
-| `lumen-patterns` | DashboardLayout, Sidebar, LogPanel, CommandPalette… | `patterns` | ✅ |
-| `lumen-themes` | Theme family (`audio_dark`, `high_contrast`) | `themes` | ✅ |
-| `lumen-icons` | Painter-drawn icon set | `icons` | ✅ |
+| `lumen-ui-core` | Tokens, density/context, `Theme` trait, recipes, `install()`, a11y audit | `theme` | ✅ |
+| `lumen-ui-widgets` | Themed widgets (Button, TextField, Switch, Slider, Card, Tabs, Modal, Toast…) | `widgets` | ✅ |
+| `lumen-ui-layout` | `egui_taffy` flex/grid + responsive breakpoints | `layout` | ✅ |
+| `lumen-ui-motion` | Springs, easings, fade transitions | `motion` | ✅ |
+| `lumen-ui-patterns` | DashboardLayout, Sidebar, LogPanel, CommandPalette… | `patterns` | ✅ |
+| `lumen-ui-themes` | Theme family (`audio_dark`, `high_contrast`) | `themes` | ✅ |
+| `lumen-ui-icons` | Painter-drawn icon set | `icons` | ✅ |
 | `lumen-ui` | Façade: re-exports, prelude, feature flags | — | ✅ |
 | `tools/lumen-theme-gen` | CLI: RON palette ⇄ Rust `PaletteTheme` | — | ✅ |
 
