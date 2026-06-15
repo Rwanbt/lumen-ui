@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 06:38** — do not edit manually.
+> **Auto-generated 2026-06-15 06:46** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,8 +13,8 @@ feature. Depends on `egui` + `lumen-core`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 84 | |
-| **Total** | **84** | |
+| `lib.rs` | 103 | |
+| **Total** | **103** | |
 
 ## Rust API
 

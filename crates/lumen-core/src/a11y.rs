@@ -10,6 +10,8 @@
 
 use egui::Color32;
 
+use crate::tokens::Colors;
+
 /// WCAG conformance target for a text/background pair.
 ///
 /// The minimum contrast ratio depends on text size: "large" text (≥ 18 pt, or
@@ -81,6 +83,96 @@ pub fn meets_aa(foreground: Color32, background: Color32) -> bool {
     meets(foreground, background, ContrastLevel::Aa)
 }
 
+/// One foreground/background pair evaluated against a target conformance level.
+#[derive(Clone, Copy, Debug)]
+pub struct ContrastCheck {
+    /// Human-readable name of the pair, e.g. `"text on surface"`.
+    pub label: &'static str,
+    pub foreground: Color32,
+    pub background: Color32,
+    /// Measured ratio (1.0–21.0).
+    pub ratio: f32,
+    /// The bar this pair is held to.
+    pub level: ContrastLevel,
+}
+
+impl ContrastCheck {
+    /// Does the measured ratio clear the required level?
+    #[must_use]
+    pub fn passes(&self) -> bool {
+        self.ratio >= self.level.min_ratio()
+    }
+}
+
+/// Result of auditing a [`Colors`] palette: one [`ContrastCheck`] per
+/// text-bearing semantic pair.
+#[derive(Clone, Debug)]
+pub struct AuditReport {
+    pub checks: Vec<ContrastCheck>,
+}
+
+impl AuditReport {
+    /// True when every checked pair clears its level.
+    #[must_use]
+    pub fn all_pass(&self) -> bool {
+        self.checks.iter().all(ContrastCheck::passes)
+    }
+
+    /// The pairs that failed, for diagnostics.
+    pub fn failures(&self) -> impl Iterator<Item = &ContrastCheck> {
+        self.checks.iter().filter(|c| !c.passes())
+    }
+}
+
+/// Audit a palette's text-bearing pairs against WCAG AA.
+///
+/// Checks every place lumen widgets paint text on a fill: body/label text on the
+/// background and surfaces, muted text, and each semantic `on_*` color over its
+/// fill (button labels, badges). Foreground text is held to AA (4.5:1); large
+/// display text would only need AaLarge, so AA is the stricter, safe bar.
+///
+/// `text_muted` is intentionally held to AA as well: it is used for real content
+/// (captions, secondary labels), not disabled/incidental text exempt from 1.4.3.
+#[must_use]
+pub fn audit_colors(colors: &Colors) -> AuditReport {
+    let aa = ContrastLevel::Aa;
+    let pairs = [
+        ("text on background", colors.text, colors.background),
+        ("text on surface", colors.text, colors.surface),
+        (
+            "text on surface_variant",
+            colors.text,
+            colors.surface_variant,
+        ),
+        (
+            "text_muted on background",
+            colors.text_muted,
+            colors.background,
+        ),
+        ("text_muted on surface", colors.text_muted, colors.surface),
+        ("on_primary on primary", colors.on_primary, colors.primary),
+        (
+            "on_secondary on secondary",
+            colors.on_secondary,
+            colors.secondary,
+        ),
+        ("on_success on success", colors.on_success, colors.success),
+        ("on_warning on warning", colors.on_warning, colors.warning),
+        ("on_danger on danger", colors.on_danger, colors.danger),
+    ];
+    let checks = pairs
+        .into_iter()
+        .map(|(label, fg, bg)| ContrastCheck {
+            label,
+            foreground: fg,
+            background: bg,
+            ratio: contrast_ratio(fg, bg),
+            level: aa,
+        })
+        .collect();
+    AuditReport { checks }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -126,6 +218,49 @@ mod tests {
         // White on a mid-grey: should pass AA-large but we assert the helper plumbing.
         assert!(meets_aa(Color32::WHITE, Color32::BLACK));
         assert!(!meets_aa(Color32::from_gray(180), Color32::WHITE));
+    }
+
+    fn assert_palette_passes_aa(name: &str, colors: &Colors) {
+        let report = audit_colors(colors);
+        let failures: Vec<String> = report
+            .failures()
+            .map(|c| {
+                format!(
+                    "  {} — {:.2}:1 (need {:.1})",
+                    c.label,
+                    c.ratio,
+                    c.level.min_ratio()
+                )
+            })
+            .collect();
+        assert!(
+            report.all_pass(),
+            "{name} fails WCAG AA on:\n{}",
+            failures.join("\n")
+        );
+    }
+
+    #[test]
+    fn dark_theme_passes_wcag_aa() {
+        use crate::{DarkTheme, Theme};
+        assert_palette_passes_aa("DarkTheme", &DarkTheme::new().tokens().colors);
+    }
+
+    #[test]
+    fn light_theme_passes_wcag_aa() {
+        use crate::{LightTheme, Theme};
+        assert_palette_passes_aa("LightTheme", &LightTheme::new().tokens().colors);
+    }
+
+    #[test]
+    fn audit_flags_a_low_contrast_pair() {
+        use crate::{DarkTheme, Theme};
+        // A deliberately broken palette: muted text barely off the background.
+        let mut colors = DarkTheme::new().tokens().colors.clone();
+        colors.text_muted = colors.background;
+        let report = audit_colors(&colors);
+        assert!(!report.all_pass());
+        assert!(report.failures().any(|c| c.label.contains("text_muted")));
     }
 
     #[test]

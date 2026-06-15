@@ -26,7 +26,10 @@ pub mod recipe;
 pub mod theme;
 pub mod tokens;
 
-pub use a11y::{contrast_ratio, meets, meets_aa, relative_luminance, ContrastLevel};
+pub use a11y::{
+    audit_colors, contrast_ratio, meets, meets_aa, relative_luminance, AuditReport, ContrastCheck,
+    ContrastLevel,
+};
 pub use context::{Density, UiContext};
 pub use dark::DarkTheme;
 pub use light::LightTheme;
