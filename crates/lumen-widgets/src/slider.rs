@@ -2,7 +2,7 @@
 
 use std::ops::RangeInclusive;
 
-use egui::{pos2, vec2, Key, Rect, Response, Sense, Ui, Widget};
+use egui::{pos2, vec2, Key, Rect, Response, Sense, Ui, Widget, WidgetInfo};
 use lumen_core::{UiThemeExt, WidgetState};
 
 use crate::focus::focus_ring;
@@ -98,6 +98,10 @@ impl Widget for Slider<'_> {
             recipe.fill,
         );
         painter.circle_filled(pos2(cx, cy), knob_radius, recipe.knob);
+
+        // a11y: expose the value to screen readers / AccessKit (and kittest).
+        let (enabled, value) = (ui.is_enabled(), *self.value);
+        response.widget_info(|| WidgetInfo::slider(enabled, f64::from(value), ""));
 
         focus_ring(
             ui,

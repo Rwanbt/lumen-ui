@@ -1,6 +1,6 @@
 //! [`Checkbox`] — a labelled boolean checkbox.
 
-use egui::{pos2, vec2, Response, Sense, Stroke, StrokeKind, Ui, Widget};
+use egui::{pos2, vec2, Response, Sense, Stroke, StrokeKind, Ui, Widget, WidgetInfo, WidgetType};
 use lumen_core::{UiThemeExt, WidgetState};
 
 use crate::focus::focus_ring;
@@ -61,6 +61,12 @@ impl Widget for Checkbox<'_> {
                 painter.line_segment([p1, p2], stroke);
                 painter.line_segment([p2, p3], stroke);
             }
+
+            // a11y: expose checked state + label to screen readers / AccessKit (and kittest).
+            let (enabled, checked, label) = (ui.is_enabled(), *self.checked, self.label.clone());
+            response.widget_info(|| {
+                WidgetInfo::selected(WidgetType::Checkbox, enabled, checked, label.as_str())
+            });
 
             focus_ring(ui, &response, radius, theme.tokens().colors.primary);
             response | ui.add(Label::new(self.label))
