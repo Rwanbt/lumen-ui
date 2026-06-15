@@ -14,6 +14,14 @@ All notable changes to lumen-ui are documented here. The format is based on
   the density hit-target floor (44 px in Touch) and the focus ring (parity with the other widgets).
   This makes the custom widgets reachable by assistive tech and by `egui_kittest`.
 
+### Tested
+
+- **Functional widget test suite** (`crates/lumen-widgets/tests/widgets.rs`) via `egui_kittest`
+  (headless, AccessKit-driven, no GPU): every widget renders without panic under all 4 built-in
+  themes; `Button` click reaches the handler and a disabled button stays inert; `TextField`
+  accepts typed input; `Switch`/`Checkbox` toggle on click; `Slider` responds to arrow keys when
+  focused. 7 tests, runs in the normal `cargo test` / CI flow.
+
 ## [1.0.0] - 2026-06-15
 
 First **stable** release. The public API is frozen ([docs/api-freeze.md](docs/api-freeze.md)) and
