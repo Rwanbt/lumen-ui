@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/banner.png" alt="lumen-ui — token-driven design system for egui" width="100%">
+
 # lumen-ui
 
 **A token-driven, themeable design system for [egui](https://github.com/emilk/egui).**
