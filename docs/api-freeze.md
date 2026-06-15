@@ -51,7 +51,7 @@ what the façade re-exports per feature.
 
 ## Stability rules
 
-- **Frozen core** (`lumen-core::theme`): any change to the `Theme` trait or a recipe struct's
+- **Frozen core** (`lumen-ui-core::theme`): any change to the `Theme` trait or a recipe struct's
   existing fields requires an ADR and a major version bump.
 - **Recipe structs** are `#[non_exhaustive]`-equivalent in spirit: construct via the theme, read
   fields; new fields may be added (non-breaking) in minor versions.

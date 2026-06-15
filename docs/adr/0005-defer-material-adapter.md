@@ -25,7 +25,7 @@ validation empirique d'une dépendance, comme fait pour `egui_taffy`) :
 que lumen-ui.
 
 La valeur réelle du jalon v0.8 — **l'accessibilité WCAG 2.1 AA sur tous les composants** — est
-livrée intégralement (module `lumen-core::a11y`, audit automatisé en test sur les 4 thèmes
+livrée intégralement (module `lumen-ui-core::a11y`, audit automatisé en test sur les 4 thèmes
 intégrés, focus visible, navigation clavier, cibles tactiles ≥ 44 px).
 
 ## Alternatives rejetées

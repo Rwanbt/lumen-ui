@@ -1,8 +1,8 @@
 # Motion
 
-`lumen-motion` (feature `motion`) provides frame-rate-independent springs, easing tweens, and
+`lumen-ui-motion` (feature `motion`) provides frame-rate-independent springs, easing tweens, and
 transitions. State lives in `ctx.data` keyed by an `Id`, and the context repaints while a value is
-still moving. Widgets already use the minimal-motion helper in `lumen-core`; reach for this crate
+still moving. Widgets already use the minimal-motion helper in `lumen-ui-core`; reach for this crate
 when you want richer, physical motion.
 
 ## Springs

@@ -13,7 +13,7 @@ free relative to egui's own layout + paint cost so theming never becomes the bot
 
 ## Measured (criterion, release)
 
-Run locally with `cargo bench -p lumen-core`. Representative numbers on a desktop x86-64:
+Run locally with `cargo bench -p lumen-ui-core`. Representative numbers on a desktop x86-64:
 
 | Benchmark | Time | Budget | Margin |
 |-----------|------|--------|--------|
@@ -27,8 +27,8 @@ variant/state plus a few color mixes), so this scales linearly and predictably.
 
 ## Methodology
 
-- Benchmarks live in `crates/lumen-core/benches/hot_paths.rs` (criterion, `harness = false`).
+- Benchmarks live in `crates/lumen-ui-core/benches/hot_paths.rs` (criterion, `harness = false`).
 - They are marked `test = false` so the CI `test` job skips them; `clippy --all-targets` still
   lints them. Run them on demand, not in CI, to avoid noisy timing on shared runners.
-- To compare against a baseline: `cargo bench -p lumen-core -- --save-baseline main`, then after a
-  change `cargo bench -p lumen-core -- --baseline main`.
+- To compare against a baseline: `cargo bench -p lumen-ui-core -- --save-baseline main`, then after a
+  change `cargo bench -p lumen-ui-core -- --baseline main`.

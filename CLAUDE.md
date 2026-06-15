@@ -28,16 +28,16 @@ local compilation before commit.** Examples already corrected: `Button` has no
 
 ## Architecture
 
-Workspace from day zero (ADR-0001). Dependencies flow **down** toward `lumen-core` only.
+Workspace from day zero (ADR-0001). Dependencies flow **down** toward `lumen-ui-core` only.
 
 | Crate | Role | Status |
 |-------|------|--------|
-| `lumen-core` | tokens, density/context, `Theme` trait + recipes, `install()`, `anim` | v0.1 ✅ |
-| `lumen-widgets` | themed widgets (`Button`) | v0.1 ✅ |
+| `lumen-ui-core` | tokens, density/context, `Theme` trait + recipes, `install()`, `anim` | v0.1 ✅ |
+| `lumen-ui-widgets` | themed widgets (`Button`) | v0.1 ✅ |
 | `lumen-ui` | façade: re-exports, prelude, feature flags | v0.1 ✅ |
-| `lumen-motion/layout/patterns/icons/themes/material` | created at their roadmap version | v0.4+ |
+| `lumen-ui-motion/layout/patterns/icons/themes/material` | created at their roadmap version | v0.4+ |
 
-`lumen-core::theme` is the **frozen core** — recipe/trait signature changes need an ADR.
+`lumen-ui-core::theme` is the **frozen core** — recipe/trait signature changes need an ADR.
 Full detail: [ARCHITECTURE.md](ARCHITECTURE.md), [docs/glossary.md](docs/glossary.md).
 
 ## Build & verify (run before every push)

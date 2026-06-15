@@ -18,7 +18,7 @@ le codebase.
   un job dédié, le développement local utilise la stable installée.
 - **Pin egui** : version unique déclarée dans `[workspace.dependencies]` (`egui = "0.34.3"`).
 - **Couche d'adaptation unique** : tout contact avec l'API egui est concentré dans
-  `lumen-core` (et les impls minces de widgets). Un bump egui se traite à un seul endroit,
+  `lumen-ui-core` (et les impls minces de widgets). Un bump egui se traite à un seul endroit,
   avec vérification par compilation + clippy `-D warnings` avant commit.
 
 ## Alternatives rejetées

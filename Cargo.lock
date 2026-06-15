@@ -1939,60 +1939,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "953f07c43838f8e6f9758cab68bf5bed85465e7587ebe0b823f1bcd81978ad3a"
 
 [[package]]
-name = "lumen-core"
-version = "1.0.0"
-dependencies = [
- "criterion",
- "egui",
- "serde",
-]
-
-[[package]]
-name = "lumen-icons"
-version = "1.0.0"
-dependencies = [
- "egui",
- "lumen-core",
-]
-
-[[package]]
-name = "lumen-layout"
-version = "1.0.0"
-dependencies = [
- "egui",
- "egui_taffy",
-]
-
-[[package]]
-name = "lumen-motion"
-version = "1.0.0"
-dependencies = [
- "egui",
-]
-
-[[package]]
-name = "lumen-patterns"
-version = "1.0.0"
-dependencies = [
- "egui",
- "lumen-core",
- "lumen-widgets",
-]
-
-[[package]]
 name = "lumen-theme-gen"
 version = "1.0.0"
 dependencies = [
- "lumen-core",
+ "lumen-ui-core",
  "ron",
-]
-
-[[package]]
-name = "lumen-themes"
-version = "1.0.0"
-dependencies = [
- "egui",
- "lumen-core",
 ]
 
 [[package]]
@@ -2001,23 +1952,72 @@ version = "1.0.0"
 dependencies = [
  "eframe",
  "egui",
- "lumen-core",
- "lumen-icons",
- "lumen-layout",
- "lumen-motion",
- "lumen-patterns",
- "lumen-themes",
- "lumen-widgets",
+ "lumen-ui-core",
+ "lumen-ui-icons",
+ "lumen-ui-layout",
+ "lumen-ui-motion",
+ "lumen-ui-patterns",
+ "lumen-ui-themes",
+ "lumen-ui-widgets",
 ]
 
 [[package]]
-name = "lumen-widgets"
+name = "lumen-ui-core"
+version = "1.0.0"
+dependencies = [
+ "criterion",
+ "egui",
+ "serde",
+]
+
+[[package]]
+name = "lumen-ui-icons"
+version = "1.0.0"
+dependencies = [
+ "egui",
+ "lumen-ui-core",
+]
+
+[[package]]
+name = "lumen-ui-layout"
+version = "1.0.0"
+dependencies = [
+ "egui",
+ "egui_taffy",
+]
+
+[[package]]
+name = "lumen-ui-motion"
+version = "1.0.0"
+dependencies = [
+ "egui",
+]
+
+[[package]]
+name = "lumen-ui-patterns"
+version = "1.0.0"
+dependencies = [
+ "egui",
+ "lumen-ui-core",
+ "lumen-ui-widgets",
+]
+
+[[package]]
+name = "lumen-ui-themes"
+version = "1.0.0"
+dependencies = [
+ "egui",
+ "lumen-ui-core",
+]
+
+[[package]]
+name = "lumen-ui-widgets"
 version = "1.0.0"
 dependencies = [
  "egui",
  "egui_kittest",
- "lumen-core",
- "lumen-themes",
+ "lumen-ui-core",
+ "lumen-ui-themes",
 ]
 
 [[package]]

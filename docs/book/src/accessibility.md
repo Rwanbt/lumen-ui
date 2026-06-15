@@ -5,7 +5,7 @@ and the interactive widgets are keyboard-navigable with visible focus and finger
 
 ## Contrast audit
 
-`lumen-core::a11y` is pure WCAG contrast math:
+`lumen-ui-core::a11y` is pure WCAG contrast math:
 
 ```rust,ignore
 use lumen_ui::a11y::{self, ContrastLevel};

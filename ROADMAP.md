@@ -36,7 +36,7 @@ v0.4. **Je tranche contre**, pour trois raisons :
    un design system, cette discipline précoce est un atout, pas un frein.
 
 **Conséquence concrète** : workspace dès le jalon 0, mais on ne crée que les crates
-nécessaires à chaque version. On commence avec `lumen-core` + `lumen-widgets` + façade
+nécessaires à chaque version. On commence avec `lumen-ui-core` + `lumen-ui-widgets` + façade
 `lumen-ui`. Les autres crates naissent quand leur version arrive. **Pas de « grand split ».**
 
 Voir [docs/adr/0001-workspace-from-day-zero.md](docs/adr/0001-workspace-from-day-zero.md).
@@ -70,13 +70,13 @@ Vérifié sur docs.rs (egui 0.34) **et confirmé par compilation locale** lors d
 lumen-ui/                       (workspace dès le jalon 0)
 ├── Cargo.toml                  (workspace : membres + versions partagées)
 ├── crates/
-│   ├── lumen-core/             Tokens, Density/UiContext, trait Theme, recettes, install()
-│   ├── lumen-motion/           Springs, easings, transitions, timelines (v0.5)
-│   ├── lumen-widgets/          Composants (consomment recettes ; motion minimal dès v0.2)
-│   ├── lumen-layout/           Wrappers egui_taffy + breakpoints (v0.4)
-│   ├── lumen-patterns/         Dashboard, Sidebar, Inspector, Settings, LogPanel (v0.6)
-│   ├── lumen-icons/            Set d'icônes (feature icons) (v0.7)
-│   ├── lumen-themes/           Dark, Light, AudioDark, HighContrast (v0.7)
+│   ├── lumen-ui-core/             Tokens, Density/UiContext, trait Theme, recettes, install()
+│   ├── lumen-ui-motion/           Springs, easings, transitions, timelines (v0.5)
+│   ├── lumen-ui-widgets/          Composants (consomment recettes ; motion minimal dès v0.2)
+│   ├── lumen-ui-layout/           Wrappers egui_taffy + breakpoints (v0.4)
+│   ├── lumen-ui-patterns/         Dashboard, Sidebar, Inspector, Settings, LogPanel (v0.6)
+│   ├── lumen-ui-icons/            Set d'icônes (feature icons) (v0.7)
+│   ├── lumen-ui-themes/           Dark, Light, AudioDark, HighContrast (v0.7)
 │   ├── lumen-material/         Adaptateurs egui-material3 (feature material) (v0.8)
 │   └── lumen-ui/               Façade : re-export, prélude, features flags
 ├── tools/lumen-theme-gen/      CLI génération/édition de thèmes (v0.7)
@@ -91,21 +91,21 @@ lumen-ui/                       (workspace dès le jalon 0)
 ```toml
 [features]
 default  = ["theme", "widgets", "themes"]
-tokens   = ["dep:lumen-core"]
+tokens   = ["dep:lumen-ui-core"]
 theme    = ["tokens"]
-motion   = ["theme", "dep:lumen-motion"]
-widgets  = ["theme", "dep:lumen-widgets"]        # motion minimal intégré sans dep lourde
-layout   = ["theme", "dep:lumen-layout"]         # tire egui_taffy
-patterns = ["widgets", "layout", "dep:lumen-patterns"]
-icons    = ["dep:lumen-icons"]
-themes   = ["theme", "dep:lumen-themes"]
+motion   = ["theme", "dep:lumen-ui-motion"]
+widgets  = ["theme", "dep:lumen-ui-widgets"]        # motion minimal intégré sans dep lourde
+layout   = ["theme", "dep:lumen-ui-layout"]         # tire egui_taffy
+patterns = ["widgets", "layout", "dep:lumen-ui-patterns"]
+icons    = ["dep:lumen-ui-icons"]
+themes   = ["theme", "dep:lumen-ui-themes"]
 material = ["widgets", "dep:lumen-material"]      # tire egui-material3
-serde    = ["lumen-core/serde"]
+serde    = ["lumen-ui-core/serde"]
 full     = ["widgets", "motion", "layout", "patterns", "icons", "themes", "serde"]
 ```
 
 > **État au bootstrap** : seules `tokens`, `theme`, `widgets`, `serde`, `full` (réduit)
-> sont branchées, car seules `lumen-core` et `lumen-widgets` existent. Les autres features
+> sont branchées, car seules `lumen-ui-core` et `lumen-ui-widgets` existent. Les autres features
 > sont ajoutées à la façade quand leur crate naît.
 
 ---
@@ -114,7 +114,7 @@ full     = ["widgets", "motion", "layout", "patterns", "icons", "themes", "serde
 
 ### v0.1 — Socle fondateur (1–2 j) — **EN COURS / bootstrap fait**
 
-- `lumen-core` : `Tokens`, `Density`/`UiContext`, trait `Theme` avec **recettes
+- `lumen-ui-core` : `Tokens`, `Density`/`UiContext`, trait `Theme` avec **recettes
   paramétrées par `(variant, state, ctx)`** dès maintenant, `install()`, `UiThemeExt`.
 - `apply_to_ctx` mappe les tokens sur `Style`/`Visuals`/`Spacing`/`Widgets`.
 - Thème `DarkTheme`. Widget `Button` de validation (via `Frame` + `Button`).
@@ -128,7 +128,7 @@ full     = ["widgets", "motion", "layout", "patterns", "icons", "themes", "serde
   RadioGroup, Slider, Label, Heading.
 - États : Normal/Hovered/Active/Disabled, lus sur la frame précédente.
 - **Motion minimal intégré** : interpolation couleur/opacité via `ctx.animate_value_with_time`
-  + helper `lumen_core::anim::lerp_color`. Pas de dep lourde.
+  + helper `lumen_ui_core::anim::lerp_color`. Pas de dep lourde.
 - `examples/gallery.rs` avec switch de thème live.
 - **Sortie** : 10 widgets cohérents, transitions hover/focus fluides, zéro état dans `App`.
 
@@ -141,7 +141,7 @@ full     = ["widgets", "motion", "layout", "patterns", "icons", "themes", "serde
 
 ### v0.4 — Layout CSS & responsive (2–4 sem)
 
-- `lumen-layout` : wrappers sur `egui_taffy` (row/column/grid, `.gap`, `.justify_*`,
+- `lumen-ui-layout` : wrappers sur `egui_taffy` (row/column/grid, `.gap`, `.justify_*`,
   `.align_*`, `.grow`), activation `max_passes = 2`.
 - Breakpoints `Xs..Xl` + `responsive(ui, |bp| …)`.
 - `examples/responsive.rs`.
@@ -149,22 +149,22 @@ full     = ["widgets", "motion", "layout", "patterns", "icons", "themes", "serde
 
 ### v0.5 — Moteur d'animation avancé (3–4 sem)
 
-- `lumen-motion` : springs (stiffness/damping/mass), easings (cubic-bezier), transitions
+- `lumen-ui-motion` : springs (stiffness/damping/mass), easings (cubic-bezier), transitions
   (Fade/Slide/Scale), timelines. Les widgets v0.2 basculent leur motion minimal sur
-  `lumen-motion` **sans changer leur API publique** (tout l'intérêt d'avoir prévu les états
+  `lumen-ui-motion` **sans changer leur API publique** (tout l'intérêt d'avoir prévu les états
   dès v0.1).
 - **Sortie** : transitions fluides 60 fps, < 1 ms/frame.
 
 ### v0.6 — Patterns métier (2–3 sem)
 
-- `lumen-patterns` : DashboardLayout (sidebar/content/inspector), Sidebar, InspectorPanel
+- `lumen-ui-patterns` : DashboardLayout (sidebar/content/inspector), Sidebar, InspectorPanel
   (paramètres audio), SettingsPage, LogPanel, Toolbar, StatusBar, CommandPalette.
 - `examples/dashboard.rs` + `audio_plugin.rs`.
 - **Sortie** : structurer une nouvelle app = < 20 lignes.
 
 ### v0.7 — Thèmes, icônes & outillage (2–3 sem)
 
-- `lumen-themes` (Dark/Light/AudioDark/HighContrast + signature), `lumen-icons`,
+- `lumen-ui-themes` (Dark/Light/AudioDark/HighContrast + signature), `lumen-ui-icons`,
   `tools/lumen-theme-gen` (CLI `.ron` ↔ code, preview live).
 - **Sortie** : créer un thème complet sans écrire de Rust.
 
@@ -196,17 +196,17 @@ full     = ["widgets", "motion", "layout", "patterns", "icons", "themes", "serde
 
 ## C. Détail technique (signatures corrigées pour egui 0.34)
 
-Les signatures de référence vivent désormais dans le code (`crates/lumen-core/`,
-`crates/lumen-widgets/`) qui **compile, passe clippy `-D warnings` et `fmt --check`**.
+Les signatures de référence vivent désormais dans le code (`crates/lumen-ui-core/`,
+`crates/lumen-ui-widgets/`) qui **compile, passe clippy `-D warnings` et `fmt --check`**.
 
-- **C.1 Tokens & contexte** → [`lumen-core/src/tokens.rs`](crates/lumen-core/src/tokens.rs),
-  [`context.rs`](crates/lumen-core/src/context.rs)
-- **C.2 Recettes paramétrées par état** → [`recipe.rs`](crates/lumen-core/src/recipe.rs)
-- **C.3 Trait `Theme` + injection persistante** → [`theme.rs`](crates/lumen-core/src/theme.rs)
-- **C.4 Widget `Button` (Frame + Button)** → [`lumen-widgets/src/button.rs`](crates/lumen-widgets/src/button.rs)
-- **C.5 Motion minimal** → [`anim.rs`](crates/lumen-core/src/anim.rs)
+- **C.1 Tokens & contexte** → [`lumen-ui-core/src/tokens.rs`](crates/lumen-ui-core/src/tokens.rs),
+  [`context.rs`](crates/lumen-ui-core/src/context.rs)
+- **C.2 Recettes paramétrées par état** → [`recipe.rs`](crates/lumen-ui-core/src/recipe.rs)
+- **C.3 Trait `Theme` + injection persistante** → [`theme.rs`](crates/lumen-ui-core/src/theme.rs)
+- **C.4 Widget `Button` (Frame + Button)** → [`lumen-ui-widgets/src/button.rs`](crates/lumen-ui-widgets/src/button.rs)
+- **C.5 Motion minimal** → [`anim.rs`](crates/lumen-ui-core/src/anim.rs)
 - **C.6 Springs (v0.5)** : bascule transparente — les widgets appellent un helper
-  `lumen_motion::value(...)` qui délègue à `animate_value_with_time` en v0.2 et utilise le
+  `lumen_ui_motion::value(...)` qui délègue à `animate_value_with_time` en v0.2 et utilise le
   solveur de ressort en v0.5 ; **même signature, aucun changement d'API publique des widgets**.
 
 ---
@@ -228,7 +228,7 @@ Les signatures de référence vivent désormais dans le code (`crates/lumen-core
 | Risque | Impact | Mitigation |
 |--------|--------|------------|
 | API egui inventée par génération de code | Élevé | Toute signature vérifiée sur docs.rs **et par compilation** avant commit ; CI casse tôt |
-| Breaking changes egui (3 mineures/an) | Élevé | Couche d'adaptation unique dans `lumen-core`, pin strict, matrice compat |
+| Breaking changes egui (3 mineures/an) | Élevé | Couche d'adaptation unique dans `lumen-ui-core`, pin strict, matrice compat |
 | `egui_taffy` instable | Moyen | Isolé feature `layout` + wrapper maison ; v0.4 seulement |
 | Hover/active connus après dessin | Moyen | État lu sur frame N-1 + lissage `animate_value_with_time` (résolu C.4/C.5) |
 | Sur-périmètre | Moyen | Critères de sortie verrouillés ; pas de v0.N+1 sans v0.N validée |

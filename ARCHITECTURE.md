@@ -20,27 +20,27 @@ changes to app logic.
 
 ```
 lumen-ui (façade)
-   └─▶ lumen-widgets ─▶ lumen-core
-   └─▶ lumen-motion  ─▶ lumen-core      (v0.5)
-   └─▶ lumen-layout  ─▶ lumen-core      (v0.4)
-   └─▶ lumen-patterns ─▶ widgets+layout (v0.6)
-                          all ─▶ lumen-core
+   └─▶ lumen-ui-widgets ─▶ lumen-ui-core
+   └─▶ lumen-ui-motion  ─▶ lumen-ui-core      (v0.5)
+   └─▶ lumen-ui-layout  ─▶ lumen-ui-core      (v0.4)
+   └─▶ lumen-ui-patterns ─▶ widgets+layout (v0.6)
+                          all ─▶ lumen-ui-core
 ```
 
-**Rule:** dependencies only flow *down* toward `lumen-core`. `lumen-core` depends on
+**Rule:** dependencies only flow *down* toward `lumen-ui-core`. `lumen-ui-core` depends on
 nothing but `egui`. A widget crate that needs to reach "up" toward the façade is a design
-error — extract the shared concept down into `lumen-core` instead.
+error — extract the shared concept down into `lumen-ui-core` instead.
 
 ## Layers
 
 | Layer | Crate / module | Responsibility |
 |-------|----------------|----------------|
-| Tokens | `lumen-core::tokens` | Raw visual constants (colors, spacing, radius, elevation, motion) |
-| Context | `lumen-core::context` | Ambient `Density` / `UiContext` |
-| Recipe | `lumen-core::recipe` | Resolved per-widget style for one `(variant, state)` |
-| Theme | `lumen-core::theme` + `dark` | Owns tokens; resolves recipes; maps onto egui `Style`/`Visuals` |
-| Motion | `lumen-core::anim` (v0.2) → `lumen-motion` (v0.5) | Time-based interpolation; same call-site API across both |
-| Widgets | `lumen-widgets` | Consume recipes, draw with egui |
+| Tokens | `lumen-ui-core::tokens` | Raw visual constants (colors, spacing, radius, elevation, motion) |
+| Context | `lumen-ui-core::context` | Ambient `Density` / `UiContext` |
+| Recipe | `lumen-ui-core::recipe` | Resolved per-widget style for one `(variant, state)` |
+| Theme | `lumen-ui-core::theme` + `dark` | Owns tokens; resolves recipes; maps onto egui `Style`/`Visuals` |
+| Motion | `lumen-ui-core::anim` (v0.2) → `lumen-ui-motion` (v0.5) | Time-based interpolation; same call-site API across both |
+| Widgets | `lumen-ui-widgets` | Consume recipes, draw with egui |
 | Façade | `lumen-ui` | Re-exports + prelude + feature flags |
 
 ## Data flow & state ownership
@@ -54,12 +54,12 @@ error — extract the shared concept down into `lumen-core` instead.
 
 ## Red zones (touch with care)
 
-1. **`lumen_core::theme` (the `Theme` trait).** This is the most fundamental contract. Recipes
+1. **`lumen_ui_core::theme` (the `Theme` trait).** This is the most fundamental contract. Recipes
    are parameterized by `(variant, state, ctx)` *from v0.1* precisely so the trait does not
    break when new states/variants arrive. Adding a method or changing a recipe signature is a
    breaking change for every theme and widget — gate behind an ADR.
 2. **The egui adaptation surface.** egui ships ~3 minor releases/year with breaking changes.
-   All egui API contact is concentrated in `lumen-core` (and the thin widget impls). Pin egui
+   All egui API contact is concentrated in `lumen-ui-core` (and the thin widget impls). Pin egui
    strictly (`workspace.dependencies`); bump deliberately with a compat-matrix check.
 3. **Frame-N-1 interaction state.** Hover/active are only known after allocation, so widgets
    read the *previous* frame's response. `install()` sets `max_passes = 2` to keep this stable.
@@ -67,9 +67,9 @@ error — extract the shared concept down into `lumen-core` instead.
 
 ## Motion: the transparent swap (v0.2 → v0.5)
 
-In v0.2, widgets interpolate via `lumen_core::anim::lerp_color` (built on
+In v0.2, widgets interpolate via `lumen_ui_core::anim::lerp_color` (built on
 `ctx.animate_value_with_time` — no heavy dependency). In v0.5 the same call sites move to the
-`lumen-motion` spring solver **with no change to any widget's public API**. This is why motion
+`lumen-ui-motion` spring solver **with no change to any widget's public API**. This is why motion
 is "minimal but present" from v0.2 rather than bolted on at v0.5.
 
 ## Performance budgets (verified in CI from v0.5)

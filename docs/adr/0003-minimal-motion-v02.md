@@ -11,8 +11,8 @@ brancher l'animation.
 ## Décision
 
 Intégrer un **motion minimal dès v0.2** : interpolation couleur/opacité via le
-`animate_value_with_time` natif d'egui, exposée par `lumen_core::anim::lerp_color`, **sans
-dépendance lourde**. En v0.5, `lumen-motion` (springs/easings/timelines) remplace
+`animate_value_with_time` natif d'egui, exposée par `lumen_ui_core::anim::lerp_color`, **sans
+dépendance lourde**. En v0.5, `lumen-ui-motion` (springs/easings/timelines) remplace
 l'implémentation derrière la même signature de helper — **aucun changement d'API publique des
 widgets**.
 

@@ -4,10 +4,10 @@
 
 | Theme | Source | Notes |
 |-------|--------|-------|
-| `DarkTheme::new()` | `lumen-core` | default; calm neutral dark |
-| `LightTheme::new()` | `lumen-core` | light counterpart |
-| `audio_dark()` | `lumen-themes` | near-black, teal accent (creative tools) |
-| `high_contrast()` | `lumen-themes` | maximum-contrast, WCAG-friendly |
+| `DarkTheme::new()` | `lumen-ui-core` | default; calm neutral dark |
+| `LightTheme::new()` | `lumen-ui-core` | light counterpart |
+| `audio_dark()` | `lumen-ui-themes` | near-black, teal accent (creative tools) |
+| `high_contrast()` | `lumen-ui-themes` | maximum-contrast, WCAG-friendly |
 
 Install or swap any of them:
 

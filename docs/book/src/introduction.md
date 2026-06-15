@@ -26,13 +26,13 @@ so you can:
 
 | Crate | Role |
 |-------|------|
-| `lumen-core` | tokens, density/context, the `Theme` trait + recipes, `install()`, contrast audit |
-| `lumen-widgets` | themed widgets (Button, TextField, Switch, Slider, Card, …) |
-| `lumen-layout` | fl/grid layout over `egui_taffy`, responsive breakpoints |
-| `lumen-motion` | spring + easing animation |
-| `lumen-patterns` | app-shell patterns (DashboardLayout, Sidebar, LogPanel, CommandPalette) |
-| `lumen-themes` | extra themes (`audio_dark`, `high_contrast`) |
-| `lumen-icons` | painter-drawn icon set |
+| `lumen-ui-core` | tokens, density/context, the `Theme` trait + recipes, `install()`, contrast audit |
+| `lumen-ui-widgets` | themed widgets (Button, TextField, Switch, Slider, Card, …) |
+| `lumen-ui-layout` | fl/grid layout over `egui_taffy`, responsive breakpoints |
+| `lumen-ui-motion` | spring + easing animation |
+| `lumen-ui-patterns` | app-shell patterns (DashboardLayout, Sidebar, LogPanel, CommandPalette) |
+| `lumen-ui-themes` | extra themes (`audio_dark`, `high_contrast`) |
+| `lumen-ui-icons` | painter-drawn icon set |
 | `lumen-ui` | façade: re-exports + prelude + feature flags |
 
 You depend on the **`lumen-ui`** façade and turn on the features you need. Start with

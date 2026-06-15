@@ -7,7 +7,7 @@ and decisions are recorded as
 
 ## Workspace & dependency direction
 
-A Cargo workspace from day zero (ADR-0001). Dependencies flow **down toward `lumen-core` only** —
+A Cargo workspace from day zero (ADR-0001). Dependencies flow **down toward `lumen-ui-core` only** —
 nothing depends "up" toward the façade.
 
 ```text
@@ -15,19 +15,19 @@ nothing depends "up" toward the façade.
    ┌───────────┬───────────┬───────────┐
  widgets    layout      motion      patterns ──► widgets + layout
    │           │           │
-   └───────────┴───────────┴──────────────────► lumen-core
-themes ─► lumen-core      icons ─► egui
+   └───────────┴───────────┴──────────────────► lumen-ui-core
+themes ─► lumen-ui-core      icons ─► egui
 ```
 
 ## The frozen core
 
-`lumen-core::theme` is the **frozen core**. The `Theme` trait's recipe methods are parameterized
+`lumen-ui-core::theme` is the **frozen core**. The `Theme` trait's recipe methods are parameterized
 by `(variant, state, ctx)` from day one (ADR-0002), so new states, variants, or context fields are
 **additive, not breaking**. Changing a recipe or trait signature requires an ADR.
 
 ## egui adaptation layer
 
-All contact with egui's API is concentrated in `lumen-core` (and the thin widget impls), ADR-0004.
+All contact with egui's API is concentrated in `lumen-ui-core` (and the thin widget impls), ADR-0004.
 egui is pinned in the workspace (`0.34.3`); a bump is handled in one place. Every egui signature is
 verified by compilation before commit — the original multi-AI design code hallucinated methods that
 don't exist (`Button::padding`, `Button::shadow`), and the golden rule is to never repeat that.

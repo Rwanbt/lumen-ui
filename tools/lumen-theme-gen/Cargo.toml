@@ -15,5 +15,5 @@ name = "lumen-theme-gen"
 path = "src/main.rs"
 
 [dependencies]
-lumen-core = { workspace = true, features = ["serde"] }
+lumen-ui-core = { workspace = true, features = ["serde"] }
 ron = "0.12"
