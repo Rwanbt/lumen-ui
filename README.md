@@ -10,7 +10,10 @@
 
 </div>
 
-> ⚠️ **Status: v0.1 (foundation).** API is unstable until v1.0. See [ROADMAP.md](ROADMAP.md).
+> **Status: v0.9 (API-freeze candidate).** All planned crates exist and are feature-complete;
+> the public API is frozen pending the v1.0 release. See [ROADMAP.md](ROADMAP.md) and
+> [docs/api-freeze.md](docs/api-freeze.md). Full guide: **[the book](docs/book/)**
+> (`mdbook serve docs/book`).
 
 `lumen-ui` separates *what a widget is* from *how it looks*. Widgets read a **recipe**
 resolved by a **theme** from a set of **design tokens** for a given
@@ -56,26 +59,38 @@ cargo run -p lumen-ui --example minimal
 
 ## Workspace layout
 
-| Crate | Role | Lands in |
-|-------|------|----------|
-| `lumen-core` | Tokens, density/context, `Theme` trait, recipes, `install()` | v0.1 ✅ |
-| `lumen-widgets` | Themed widgets (`Button`, …) | v0.1 ✅ |
-| `lumen-ui` | Façade: re-exports, prelude, feature flags | v0.1 ✅ |
-| `lumen-motion` | Springs, easings, timelines | v0.5 |
-| `lumen-layout` | `egui_taffy` flex/grid + breakpoints | v0.4 |
-| `lumen-patterns` | Dashboard, Sidebar, Inspector… | v0.6 |
-| `lumen-icons` / `lumen-themes` / `lumen-material` | Icons, theme family, Material adapters | v0.7–v0.8 |
+| Crate | Role | Feature | Status |
+|-------|------|---------|--------|
+| `lumen-core` | Tokens, density/context, `Theme` trait, recipes, `install()`, a11y audit | `theme` | ✅ |
+| `lumen-widgets` | Themed widgets (Button, TextField, Switch, Slider, Card, Tabs, Modal, Toast…) | `widgets` | ✅ |
+| `lumen-layout` | `egui_taffy` flex/grid + responsive breakpoints | `layout` | ✅ |
+| `lumen-motion` | Springs, easings, fade transitions | `motion` | ✅ |
+| `lumen-patterns` | DashboardLayout, Sidebar, LogPanel, CommandPalette… | `patterns` | ✅ |
+| `lumen-themes` | Theme family (`audio_dark`, `high_contrast`) | `themes` | ✅ |
+| `lumen-icons` | Painter-drawn icon set | `icons` | ✅ |
+| `lumen-ui` | Façade: re-exports, prelude, feature flags | — | ✅ |
+| `tools/lumen-theme-gen` | CLI: RON palette ⇄ Rust `PaletteTheme` | — | ✅ |
 
-We build a **workspace from day zero** but only create crates as their version arrives —
-no "big split" later. See [docs/adr/0001-workspace-from-day-zero.md](docs/adr/0001-workspace-from-day-zero.md).
+A **workspace from day zero** (no "big split" later);
+[ADR-0001](docs/adr/0001-workspace-from-day-zero.md). Enable everything with `features = ["full"]`.
+
+> A `material` adapter (egui-material3) was planned but **deferred** — that crate targets egui 0.33
+> and pulls ~465 transitive deps; [ADR-0005](docs/adr/0005-defer-material-adapter.md).
+
+## Accessibility
+
+Every built-in theme is **WCAG 2.1 AA audited in CI**. Widgets are keyboard-navigable with a
+visible focus ring and 44 px touch targets in `Density::Touch`. See
+[the a11y chapter](docs/book/src/accessibility.md).
 
 ## Documentation
 
+- **[The book](docs/book/)** — complete guide (getting started → patterns). `mdbook serve docs/book`.
 - [ROADMAP.md](ROADMAP.md) — the locked plan, version by version.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — layers, data flow, ownership, red zones.
-- [CONTRIBUTING.md](CONTRIBUTING.md) — conventions and PR checklist.
-- [docs/glossary.md](docs/glossary.md) — domain vocabulary (token, recipe, density…).
-- [docs/adr/](docs/adr/) — architecture decision records.
+- [docs/api-freeze.md](docs/api-freeze.md) — the v1.0 frozen public surface.
+- [docs/performance.md](docs/performance.md) — hot-path budgets + measured numbers.
+- [CONTRIBUTING.md](CONTRIBUTING.md) · [docs/glossary.md](docs/glossary.md) · [docs/adr/](docs/adr/)
 
 ## License
 

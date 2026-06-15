@@ -8,6 +8,12 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added — v0.9 (in progress)
 
+- **API freeze** (`docs/api-freeze.md`): the v1.0-candidate public surface (per façade feature)
+  is documented and frozen; stability rules + what's intentionally additive vs breaking.
+- **GitHub Pages workflow** (`.github/workflows/pages.yml`, manual dispatch): builds + deploys the
+  mdBook. Dispatch-only because Pages needs the repo public — flip it on, run it, done.
+- **README** refreshed to the v0.9 state (all crates feature-complete, book link, a11y section,
+  `material` deferral note).
 - **mdBook documentation** (`docs/book/`): a complete guide — introduction, getting-started
   (<15 min to a themed app), core concepts, theming, widgets, layout, motion, patterns,
   accessibility, architecture. Built in CI (`mdbook build` fails on broken links).
