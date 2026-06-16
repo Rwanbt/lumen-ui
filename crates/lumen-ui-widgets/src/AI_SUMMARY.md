@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 09:36** — do not edit manually.
+> **Auto-generated 2026-06-16 10:22** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -21,7 +21,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `card.rs` | 28 | |
 | `checkbox.rs` | 63 | |
 | `chip.rs` | 64 | |
-| `circular_progress.rs` | 46 | |
+| `circular_progress.rs` | 47 | |
 | `code.rs` | 34 | |
 | `divider.rs` | 51 | |
 | `dropdown_menu.rs` | 45 | |
@@ -30,12 +30,12 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
 | `kbd.rs` | 34 | |
-| `lib.rs` | 83 | |
+| `lib.rs` | 84 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 37 | |
 | `pagination.rs` | 66 | |
-| `progress.rs` | 31 | |
+| `progress.rs` | 33 | |
 | `radio.rs` | 81 | |
 | `rating.rs` | 50 | |
 | `segmented_control.rs` | 69 | |
@@ -46,13 +46,14 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `stat.rs` | 50 | |
 | `stepper.rs` | 78 | |
 | `switch.rs` | 58 | |
-| `table.rs` | 71 | |
+| `table.rs` | 80 | |
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
 | `textarea.rs` | 64 | |
 | `toast.rs` | 100 | |
-| **Total** | **2172** | |
+| `util.rs` | 26 | |
+| **Total** | **2211** | |
 
 ## Rust API
 - `Accordion` (struct)

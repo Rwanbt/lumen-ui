@@ -3,6 +3,8 @@
 use egui::{vec2, Rect, Response, Sense, Ui, Widget};
 use lumen_ui_core::{ProgressRecipe, UiThemeExt};
 
+use crate::util::sanitize_fraction;
+
 /// A linear progress bar for a known fraction in `[0, 1]`. Track and fill colors
 /// come from the theme via [`ProgressRecipe`]; it spans the available width.
 #[derive(Clone, Copy, Debug)]
@@ -11,11 +13,12 @@ pub struct Progress {
 }
 
 impl Progress {
-    /// `fraction` is clamped to `[0, 1]`.
+    /// `fraction` is clamped to `[0, 1]`; non-finite input (NaN/∞) becomes `0.0`
+    /// (`f32::clamp` would otherwise pass NaN through).
     #[must_use]
     pub fn new(fraction: f32) -> Self {
         Self {
-            fraction: fraction.clamp(0.0, 1.0),
+            fraction: sanitize_fraction(fraction),
         }
     }
 }

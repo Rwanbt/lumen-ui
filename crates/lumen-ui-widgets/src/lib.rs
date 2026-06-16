@@ -47,6 +47,7 @@ mod text;
 mod text_field;
 mod textarea;
 mod toast;
+mod util;
 
 pub use accordion::Accordion;
 pub use alert::Alert;

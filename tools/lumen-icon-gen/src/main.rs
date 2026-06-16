@@ -93,20 +93,30 @@ fn run(in_dir: &str, out_file: &str) -> Result<usize, String> {
 
 /// Extract and concatenate all `d="…"` attribute values from raw SVG text.
 /// Minimal by design (PoC); production uses `usvg` for full correctness.
+///
+/// Requires an attribute boundary (whitespace or `<`) before `d=` so that
+/// `id="…"`, `width="…"` and similar attributes ending in `d` are not mistaken
+/// for a path `d`.
 fn extract_path_data(svg: &str) -> String {
     let mut out = String::new();
-    let mut rest = svg;
-    while let Some(start) = rest.find("d=\"") {
-        let after = &rest[start + 3..];
-        if let Some(end) = after.find('"') {
+    let bytes = svg.as_bytes();
+    let mut search_from = 0;
+    while let Some(rel) = svg[search_from..].find("d=\"") {
+        let start = search_from + rel;
+        let at_boundary =
+            start == 0 || matches!(bytes[start - 1], b' ' | b'\t' | b'\n' | b'\r' | b'<');
+        let value_start = start + 3;
+        let Some(rel_end) = svg[value_start..].find('"') else {
+            break;
+        };
+        let end = value_start + rel_end;
+        if at_boundary {
             if !out.is_empty() {
                 out.push(' ');
             }
-            out.push_str(&after[..end]);
-            rest = &after[end + 1..];
-        } else {
-            break;
+            out.push_str(&svg[value_start..end]);
         }
+        search_from = end + 1;
     }
     out
 }
@@ -308,5 +318,12 @@ mod tests {
     fn extract_path_data_concatenates_multiple_paths() {
         let svg = r#"<svg><path d="M5 12h14"/><path d="M12 5v14"/></svg>"#;
         assert_eq!(extract_path_data(svg), "M5 12h14 M12 5v14");
+    }
+
+    #[test]
+    fn extract_path_data_ignores_id_and_other_attrs() {
+        // `id="x"` ends in `d="x"` but must NOT be captured as path data.
+        let svg = r#"<svg id="logo" width="24"><path id="p1" d="M5 12h14"/></svg>"#;
+        assert_eq!(extract_path_data(svg), "M5 12h14");
     }
 }

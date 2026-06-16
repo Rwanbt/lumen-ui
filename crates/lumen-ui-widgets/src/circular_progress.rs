@@ -5,6 +5,8 @@ use std::f32::consts::{PI, TAU};
 use egui::{vec2, Pos2, Response, Sense, Shape, Stroke, Ui, Widget};
 use lumen_ui_core::{CircularProgressRecipe, UiThemeExt};
 
+use crate::util::sanitize_fraction;
+
 /// Segments used to approximate a full-circle arc; the drawn arc uses a fraction.
 const ARC_SEGMENTS: usize = 48;
 
@@ -16,11 +18,11 @@ pub struct CircularProgress {
 }
 
 impl CircularProgress {
-    /// `fraction` is clamped to `[0, 1]`.
+    /// `fraction` is clamped to `[0, 1]`; non-finite input (NaN/∞) becomes `0.0`.
     #[must_use]
     pub fn new(fraction: f32) -> Self {
         Self {
-            fraction: fraction.clamp(0.0, 1.0),
+            fraction: sanitize_fraction(fraction),
         }
     }
 }

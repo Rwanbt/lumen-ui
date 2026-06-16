@@ -8,6 +8,10 @@ use lumen_ui_core::{TableRecipe, UiThemeExt};
 ///
 /// Scope: static string cells. Sorting, virtualization and per-column widths are
 /// future enhancements; pair with [`crate::Pagination`] for paged data.
+///
+/// `id_source` must be **unique per rendered instance** (it keys the underlying
+/// `egui::Grid` persistent state, e.g. column widths). In a loop, derive it, e.g.
+/// `Table::new(format!("rows-{i}"))`.
 #[derive(Clone, Debug)]
 pub struct Table {
     id_source: String,
@@ -33,8 +37,9 @@ impl Table {
         self
     }
 
-    /// Append a row. Extra cells beyond the column count still render; missing
-    /// cells simply leave the trailing columns empty.
+    /// Append a row. Each row is normalized to the column count at render time:
+    /// extra cells are dropped (they would otherwise wrap onto a phantom grid
+    /// line and misalign), missing cells leave the trailing columns empty.
     #[must_use]
     pub fn row<I, S>(mut self, cells: I) -> Self
     where
@@ -53,9 +58,10 @@ impl Table {
 
     pub fn show(self, ui: &mut Ui) -> Response {
         let recipe = TableRecipe::resolve(ui.theme().tokens(), &ui.ui_ctx());
+        let columns = self.columns.len();
         Grid::new(&self.id_source)
             .striped(self.striped)
-            .num_columns(self.columns.len())
+            .num_columns(columns)
             .spacing(recipe.spacing)
             .show(ui, |ui| {
                 for column in &self.columns {
@@ -69,7 +75,10 @@ impl Table {
                 ui.end_row();
 
                 for row in &self.rows {
-                    for cell in row {
+                    // Exactly one cell per column: drop extras, pad missing — keeps
+                    // the grid aligned regardless of ragged row lengths.
+                    for index in 0..columns {
+                        let cell = row.get(index).map_or("", String::as_str);
                         ui.label(
                             RichText::new(cell)
                                 .color(recipe.cell_color)
