@@ -28,7 +28,8 @@
   EmptyState ; [x] Tooltip/Popover/ContextMenu (préexistants) ; [x] DropdownMenu · HoverCard
   — **JALON CLÔTURÉ**
 - 🟡 **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
-  [ ] DataGrid (tri/virtualisation) · DescriptionList · Timeline · Calendar · Carousel
+  [x] DataGrid (egui_extras `TableBuilder` — tri émis/virtualisation, feature `datagrid`, ADR-0010) ;
+  [ ] DescriptionList · Timeline · Calendar · Carousel
 - 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating ; [ ] Textarea · NumberInput ·
   RangeSlider · Combobox · MultiSelect · DatePicker · TimePicker · ColorPicker · FileUpload · Form
 - ✅ **v1.5 Icônes à l'échelle** — [x] PoC pipeline codegen (ADR-0008) ; [x] set Lucide curé

@@ -13,7 +13,13 @@ categories.workspace = true
 
 [dependencies]
 egui = { workspace = true }
+egui_extras = { workspace = true, optional = true }
 lumen-ui-core = { workspace = true }
+
+[features]
+# DataGrid (egui_extras::TableBuilder) — virtualization, resizable columns, sticky header.
+# See docs/adr/0010-datagrid-egui-extras.md.
+datagrid = ["dep:egui_extras"]
 
 [dev-dependencies]
 # Headless, AccessKit-driven widget tests. No default features (no wgpu/snapshot) — the

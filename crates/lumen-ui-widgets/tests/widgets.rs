@@ -605,3 +605,76 @@ fn dropdown_menu_returns_clicked_item() {
         "selecting a menu item returns its index"
     );
 }
+
+#[cfg(feature = "datagrid")]
+#[test]
+fn data_grid_renders_under_all_themes() {
+    use lumen_ui_widgets::DataGrid;
+    let themes: [Arc<dyn Theme>; 4] = [
+        Arc::new(DarkTheme::new()),
+        Arc::new(LightTheme::new()),
+        Arc::new(audio_dark()),
+        Arc::new(high_contrast()),
+    ];
+    for theme in themes {
+        let mut harness = Harness::new_ui(move |ui| {
+            theme_ctx(ui.ctx(), &theme);
+            DataGrid::new("grid")
+                .sortable_column("Name")
+                .column("Role")
+                .row(["Ada", "Engineer"])
+                .row(["Linus", "Maintainer"])
+                .show(ui);
+        });
+        harness.run(); // a panic here fails the test
+    }
+}
+
+#[cfg(feature = "datagrid")]
+#[test]
+fn data_grid_sorts_on_header_click() {
+    use lumen_ui_widgets::{DataGrid, SortDirection, SortState};
+    let mut harness = Harness::new_ui_state(
+        |ui, sort: &mut Option<SortState>| {
+            theme_ctx(ui.ctx(), &dark());
+            DataGrid::new("users")
+                .sortable_column("Name")
+                .column("Role")
+                .row(["Ada", "Engineer"])
+                .row(["Linus", "Maintainer"])
+                .sort(sort)
+                .show(ui);
+        },
+        None::<SortState>,
+    );
+
+    harness.run();
+    assert!(
+        harness.query_all_by_label("Name").next().is_some(),
+        "the header renders its columns"
+    );
+    assert!(
+        harness.query_all_by_label("Ada").next().is_some(),
+        "a virtualized body cell renders"
+    );
+    assert_eq!(*harness.state(), None, "unsorted by default");
+
+    harness.get_by_label_contains("Name").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(SortState {
+            column: 0,
+            direction: SortDirection::Ascending
+        }),
+        "clicking a sortable header sorts it ascending"
+    );
+
+    harness.get_by_label_contains("Name").click();
+    harness.run();
+    assert_eq!(
+        harness.state().map(|s| s.direction),
+        Some(SortDirection::Descending),
+        "clicking the active sort column toggles direction"
+    );
+}
