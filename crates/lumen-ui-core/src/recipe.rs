@@ -720,3 +720,42 @@ impl MenuRecipe {
         }
     }
 }
+
+/// Base height of a `DataGrid` header row before density scaling, in points.
+const DATA_GRID_BASE_HEADER_HEIGHT: f32 = 26.0;
+/// Base height of a `DataGrid` body row before density scaling, in points.
+const DATA_GRID_BASE_ROW_HEIGHT: f32 = 22.0;
+
+/// Resolved style for a `DataGrid` (virtualized, sortable table).
+///
+/// `header_height` / `row_height` are fixed row heights the grid needs up front
+/// for virtualization (only visible rows are rendered).
+#[derive(Clone, Copy, Debug)]
+pub struct DataGridRecipe {
+    /// Color of header cell text.
+    pub header_color: Color32,
+    /// Color of body cell text.
+    pub cell_color: Color32,
+    pub header_size: f32,
+    pub cell_size: f32,
+    /// Fixed header row height, in points.
+    pub header_height: f32,
+    /// Fixed body row height, in points (drives virtualization windowing).
+    pub row_height: f32,
+}
+
+impl DataGridRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            header_color: tokens.colors.text_muted,
+            cell_color: tokens.colors.text,
+            header_size: tokens.typography.label,
+            cell_size: tokens.typography.body,
+            header_height: DATA_GRID_BASE_HEADER_HEIGHT * scale,
+            row_height: DATA_GRID_BASE_ROW_HEIGHT * scale,
+        }
+    }
+}

@@ -53,6 +53,11 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.
+- `data_grid.rs` — `DataGrid` (+ `SortState`/`SortDirection`), **feature `datagrid`** (optional
+  `egui_extras` dep, ADR-0010). Virtualized body (`TableBuilder::body().rows`), resizable columns,
+  clickable sortable headers that emit a caller-owned `SortState` (caller sorts its data). String
+  cells. `DataGridRecipe` carries fixed header/row heights (needed for virtualization). Contrast
+  with `table.rs` (always-available `Grid`, static/small data, no virtualization).
 
 ## Accessibility (v0.8)
 - Hit targets follow `UiContext::min_interactive_size()` (44 px in Touch — WCAG 2.5.5). Custom

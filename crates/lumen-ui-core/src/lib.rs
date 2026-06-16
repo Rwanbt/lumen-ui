@@ -37,10 +37,10 @@ pub use palette::{PaletteTheme, ThemeMode};
 pub use recipe::{
     AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe, BadgeVariant, BreadcrumbRecipe,
     ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe, CircularProgressRecipe, CodeRecipe,
-    DividerRecipe, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe, LinkRecipe,
-    MenuRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe, SegmentedRecipe, SkeletonRecipe,
-    SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe,
-    TextRecipe, TextRole, ToggleRecipe, WidgetState,
+    DataGridRecipe, DividerRecipe, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe,
+    LinkRecipe, MenuRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe, SegmentedRecipe,
+    SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe,
+    TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};

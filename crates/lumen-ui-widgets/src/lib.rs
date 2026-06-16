@@ -19,6 +19,8 @@ mod checkbox;
 mod chip;
 mod circular_progress;
 mod code;
+#[cfg(feature = "datagrid")]
+mod data_grid;
 mod divider;
 mod dropdown_menu;
 mod empty_state;
@@ -60,6 +62,8 @@ pub use checkbox::Checkbox;
 pub use chip::{Chip, ChipResponse};
 pub use circular_progress::CircularProgress;
 pub use code::Code;
+#[cfg(feature = "datagrid")]
+pub use data_grid::{DataGrid, SortDirection, SortState};
 pub use divider::Divider;
 pub use dropdown_menu::DropdownMenu;
 pub use empty_state::EmptyState;
