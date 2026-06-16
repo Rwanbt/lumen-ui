@@ -15,8 +15,8 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Breadcrumb,
-    Button, Checkbox, Chip, Divider, Kbd, Label, Modal, Pagination, Progress, RadioGroup,
-    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Switch, Tabs, TextField,
+    Button, Checkbox, Chip, Divider, EmptyState, Kbd, Label, Link, Modal, Pagination, Progress,
+    RadioGroup, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Switch, Tabs, TextField,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -74,6 +74,8 @@ fn every_widget_renders_under_all_built_in_themes() {
                 .segment("Week")
                 .show(ui);
             Pagination::new(1, 3).show(ui);
+            ui.add(EmptyState::new("No results").message("Try another filter"));
+            ui.add(Link::new("Learn more"));
         });
 
         // A panic inside `run` fails the test and names the offending theme.

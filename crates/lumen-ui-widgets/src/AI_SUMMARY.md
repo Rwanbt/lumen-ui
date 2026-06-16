@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 08:39** — do not edit manually.
+> **Auto-generated 2026-06-16 08:42** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -22,12 +22,14 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `checkbox.rs` | 63 | |
 | `chip.rs` | 64 | |
 | `divider.rs` | 51 | |
+| `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
 | `kbd.rs` | 34 | |
-| `lib.rs` | 61 | |
+| `lib.rs` | 65 | |
+| `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 29 | |
-| `pagination.rs` | 62 | |
+| `pagination.rs` | 66 | |
 | `progress.rs` | 31 | |
 | `radio.rs` | 81 | |
 | `segmented_control.rs` | 69 | |
@@ -41,7 +43,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
 | `toast.rs` | 100 | |
-| **Total** | **1579** | |
+| **Total** | **1653** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -55,9 +57,11 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Chip` (struct)
 - `ChipResponse` (struct)
 - `Divider` (struct)
+- `EmptyState` (struct)
 - `Heading` (struct)
 - `Kbd` (struct)
 - `Label` (struct)
+- `Link` (struct)
 - `Modal` (struct)
 - `Pagination` (struct)
 - `Progress` (struct)

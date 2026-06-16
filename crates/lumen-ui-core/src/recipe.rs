@@ -451,3 +451,46 @@ impl PaginationRecipe {
         }
     }
 }
+
+/// Resolved style for an `EmptyState` placeholder block.
+#[derive(Clone, Copy, Debug)]
+pub struct EmptyStateRecipe {
+    pub title_color: Color32,
+    pub message_color: Color32,
+    pub title_size: f32,
+    pub message_size: f32,
+    /// Vertical gap between the title and the message, in points.
+    pub gap: f32,
+}
+
+impl EmptyStateRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            title_color: tokens.colors.text,
+            message_color: tokens.colors.text_muted,
+            title_size: tokens.typography.heading,
+            message_size: tokens.typography.body,
+            gap: tokens.spacing.sm * ctx.density_scale(),
+        }
+    }
+}
+
+/// Resolved style for a textual `Link`.
+#[derive(Clone, Copy, Debug)]
+pub struct LinkRecipe {
+    pub color: Color32,
+    pub text_size: f32,
+}
+
+impl LinkRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            color: tokens.colors.primary,
+            text_size: tokens.typography.body,
+        }
+    }
+}
