@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 03:12** — do not edit manually.
+> **Auto-generated 2026-06-16 03:15** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -18,13 +18,13 @@ workspace depends on this crate; it depends only on `egui`.
 | `builder.rs` | 210 | |
 | `context.rs` | 57 | |
 | `dark.rs` | 184 | |
-| `lib.rs` | 37 | |
+| `lib.rs` | 38 | |
 | `light.rs` | 99 | |
 | `palette.rs` | 94 | |
-| `recipe.rs` | 104 | |
+| `recipe.rs` | 158 | |
 | `theme.rs` | 107 | |
 | `tokens.rs` | 138 | |
-| **Total** | **1283** | |
+| **Total** | **1338** | |
 
 ## Rust API
 - `AuditReport` (struct)
@@ -34,13 +34,16 @@ workspace depends on this crate; it depends only on `egui`.
 - `Colors` (struct)
 - `ContrastCheck` (struct)
 - `DarkTheme` (struct)
+- `DividerRecipe` (struct)
 - `Elevation` (struct)
 - `LightTheme` (struct)
 - `Motion` (struct)
 - `PaletteTheme` (struct)
+- `ProgressRecipe` (struct)
 - `Radius` (struct)
 - `SliderRecipe` (struct)
 - `Spacing` (struct)
+- `SpinnerRecipe` (struct)
 - `TextFieldRecipe` (struct)
 - `TextRecipe` (struct)
 - `ToggleRecipe` (struct)

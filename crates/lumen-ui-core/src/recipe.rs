@@ -6,6 +6,16 @@
 
 use egui::{Color32, CornerRadius, Shadow, Stroke, Vec2};
 
+use crate::context::UiContext;
+use crate::tokens::Tokens;
+
+/// Base diameter of a spinner before density scaling, in points.
+const SPINNER_BASE_SIZE: f32 = 24.0;
+/// Base height of a linear progress bar before density scaling, in points.
+const PROGRESS_BASE_HEIGHT: f32 = 8.0;
+/// Thickness of a divider rule, in points.
+const DIVIDER_THICKNESS: f32 = 1.0;
+
 /// Visual variants of a button.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum ButtonVariant {
@@ -124,4 +134,62 @@ pub struct ButtonRecipe {
     pub shadow: Shadow,
     /// Padding — maps to `Frame::inner_margin`, **not** `Button::padding`.
     pub inner_margin: Vec2,
+}
+
+/// Resolved style for an indeterminate spinner.
+#[derive(Clone, Copy, Debug)]
+pub struct SpinnerRecipe {
+    pub color: Color32,
+    pub size: f32,
+}
+
+impl SpinnerRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009): a spinner has no states.
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            color: tokens.colors.primary,
+            size: SPINNER_BASE_SIZE * ctx.density_scale(),
+        }
+    }
+}
+
+/// Resolved style for a linear (determinate) progress bar.
+#[derive(Clone, Copy, Debug)]
+pub struct ProgressRecipe {
+    pub fill: Color32,
+    pub track: Color32,
+    pub height: f32,
+    pub corner_radius: CornerRadius,
+}
+
+impl ProgressRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            fill: tokens.colors.primary,
+            track: tokens.colors.surface_variant,
+            height: PROGRESS_BASE_HEIGHT * ctx.density_scale(),
+            corner_radius: tokens.radius.full,
+        }
+    }
+}
+
+/// Resolved style for a divider / separator rule.
+#[derive(Clone, Copy, Debug)]
+pub struct DividerRecipe {
+    pub color: Color32,
+    pub thickness: f32,
+}
+
+impl DividerRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            color: tokens.colors.border,
+            thickness: DIVIDER_THICKNESS,
+        }
+    }
 }

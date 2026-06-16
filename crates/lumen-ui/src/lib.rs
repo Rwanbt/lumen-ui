@@ -31,9 +31,10 @@ pub use lumen_ui_core as core;
 #[doc(inline)]
 pub use lumen_ui_core::{
     a11y, anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant,
-    CardRecipe, Colors, ContrastLevel, DarkTheme, Density, Elevation, LightTheme, Motion,
-    PaletteTheme, Radius, SliderRecipe, Spacing, TextFieldRecipe, TextRecipe, TextRole, Theme,
-    ThemeMode, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
+    CardRecipe, Colors, ContrastLevel, DarkTheme, Density, DividerRecipe, Elevation, LightTheme,
+    Motion, PaletteTheme, ProgressRecipe, Radius, SliderRecipe, Spacing, SpinnerRecipe,
+    TextFieldRecipe, TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens, Typography,
+    UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]
@@ -48,8 +49,8 @@ pub use lumen_ui_icons::{Icon, IconKind};
 #[doc(inline)]
 pub use lumen_ui_widgets::{
     close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error, toast_success,
-    toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Heading, Label, Modal,
-    RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,
+    toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Divider, Heading, Label,
+    Modal, Progress, RadioGroup, Select, Slider, Spinner, Switch, Tabs, TextField, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -90,7 +91,8 @@ pub mod prelude {
     #[cfg(feature = "widgets")]
     pub use lumen_ui_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
-        toast_success, toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Heading,
-        Label, Modal, RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,
+        toast_success, toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Divider,
+        Heading, Label, Modal, Progress, RadioGroup, Select, Slider, Spinner, Switch, Tabs,
+        TextField, ToastVariant,
     };
 }

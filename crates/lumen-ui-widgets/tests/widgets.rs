@@ -14,8 +14,8 @@ use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
-    close_modal, open_modal, show_toasts, toast_success, Accordion, Button, Checkbox, Label, Modal,
-    RadioGroup, Select, Slider, Switch, Tabs, TextField,
+    close_modal, open_modal, show_toasts, toast_success, Accordion, Button, Checkbox, Divider,
+    Label, Modal, Progress, RadioGroup, Select, Slider, Spinner, Switch, Tabs, TextField,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -52,11 +52,34 @@ fn every_widget_renders_under_all_built_in_themes() {
             ui.add(Switch::new(&mut on));
             ui.add(Checkbox::new(&mut checked, "Accept"));
             ui.add(Slider::new(&mut value, 0.0..=1.0));
+            // Spinner is animated (requests repaint every frame) so it is covered by a
+            // separate `step()` test below; `run()` would never converge with it present.
+            ui.add(Progress::new(value));
+            ui.add(Divider::horizontal());
         });
 
         // A panic inside `run` fails the test and names the offending theme.
         harness.run();
         assert!(!name.is_empty());
+    }
+}
+
+#[test]
+fn spinner_renders_under_all_themes() {
+    // The spinner animates (requests repaint each frame), so drive single frames
+    // with `step()` rather than `run()`, which would never converge.
+    let themes: [Arc<dyn Theme>; 4] = [
+        Arc::new(DarkTheme::new()),
+        Arc::new(LightTheme::new()),
+        Arc::new(audio_dark()),
+        Arc::new(high_contrast()),
+    ];
+    for theme in themes {
+        let mut harness = Harness::new_ui(move |ui| {
+            theme_ctx(ui.ctx(), &theme);
+            ui.add(Spinner::new());
+        });
+        harness.step(); // a panic here fails the test
     }
 }
 
