@@ -1,6 +1,6 @@
 //! [`Badge`] — a small pill-shaped status label.
 
-use egui::{Frame, Margin, Response, RichText, Ui, Widget};
+use egui::{Frame, Response, RichText, Ui, Widget};
 use lumen_ui_core::{BadgeVariant, UiThemeExt};
 
 /// A compact status label. Build it with [`Badge::new`] (neutral) or a variant
@@ -51,10 +51,7 @@ impl Widget for Badge {
         Frame::NONE
             .fill(r.fill)
             .corner_radius(r.corner_radius)
-            .inner_margin(Margin::symmetric(
-                r.inner_margin.x as i8,
-                r.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(r.inner_margin))
             .show(ui, |ui| {
                 ui.label(
                     RichText::new(self.text)

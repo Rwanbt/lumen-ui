@@ -3,7 +3,7 @@
 //! Unlike most widgets, a card *wraps* content, so it exposes [`Card::show`]
 //! (like egui's own containers) rather than implementing `Widget`.
 
-use egui::{Frame, InnerResponse, Margin, Ui};
+use egui::{Frame, InnerResponse, Ui};
 use lumen_ui_core::UiThemeExt;
 
 /// A themed surface: fill, border, corner radius, elevation, and padding all
@@ -25,10 +25,7 @@ impl Card {
             .stroke(r.stroke)
             .corner_radius(r.corner_radius)
             .shadow(r.shadow)
-            .inner_margin(Margin::symmetric(
-                r.inner_margin.x as i8,
-                r.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(r.inner_margin))
             .show(ui, add_contents)
     }
 }

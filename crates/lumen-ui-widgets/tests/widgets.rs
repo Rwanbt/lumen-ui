@@ -462,3 +462,146 @@ fn toast_renders_pushed_message() {
         "a pushed toast renders its message"
     );
 }
+
+// ---------------------------------------------------------------------------
+// Behavioral coverage for the v2 interactive widgets — assert the return value
+// (clicked index / mutated state), not just that they render (added by /review).
+// ---------------------------------------------------------------------------
+
+#[test]
+fn segmented_control_selects_clicked_segment() {
+    let mut harness = Harness::new_ui_state(
+        |ui, selected: &mut usize| {
+            theme_ctx(ui.ctx(), &dark());
+            SegmentedControl::new(selected)
+                .segment("Day")
+                .segment("Week")
+                .show(ui);
+        },
+        0usize,
+    );
+
+    harness.run();
+    assert_eq!(*harness.state(), 0, "first segment selected by default");
+    harness.get_by_label("Week").click();
+    harness.run();
+    assert_eq!(*harness.state(), 1, "clicking a segment selects it");
+}
+
+#[test]
+fn breadcrumb_returns_clicked_ancestor() {
+    let mut harness = Harness::new_ui_state(
+        |ui, clicked: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            if let Some(index) = Breadcrumb::new()
+                .item("Home")
+                .item("Docs")
+                .item("API")
+                .show(ui)
+            {
+                *clicked = Some(index);
+            }
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    harness.get_by_label("Home").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(0),
+        "clicking an ancestor returns its index"
+    );
+}
+
+#[test]
+fn pagination_requests_clicked_page() {
+    let mut harness = Harness::new_ui_state(
+        |ui, requested: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            // current = 1 (0-based) → page label "1" is the clickable page 0.
+            if let Some(page) = Pagination::new(1, 3).show(ui) {
+                *requested = Some(page);
+            }
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    harness.get_by_label("1").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(0),
+        "clicking page '1' requests page index 0"
+    );
+}
+
+#[test]
+fn chip_reports_removed_on_x_click() {
+    let mut harness = Harness::new_ui_state(
+        |ui, removed: &mut bool| {
+            theme_ctx(ui.ctx(), &dark());
+            if Chip::new("tag").removable().show(ui).removed {
+                *removed = true;
+            }
+        },
+        false,
+    );
+
+    harness.run();
+    harness.get_by_label("\u{00d7}").click(); // the × remove affordance
+    harness.run();
+    assert!(*harness.state(), "clicking × reports removed");
+}
+
+#[test]
+fn rating_sets_value_to_clicked_star() {
+    let mut harness = Harness::new_ui_state(
+        |ui, stars: &mut u32| {
+            theme_ctx(ui.ctx(), &dark());
+            Rating::new(stars).show(ui);
+        },
+        3u32,
+    );
+
+    harness.run();
+    // value=3 → stars 1..=3 are filled "★"; click the first filled star → value 1.
+    harness
+        .get_all_by_label("\u{2605}")
+        .next()
+        .expect("a filled star")
+        .click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        1,
+        "clicking the n-th star sets value to n"
+    );
+}
+
+#[test]
+fn dropdown_menu_returns_clicked_item() {
+    let mut harness = Harness::new_ui_state(
+        |ui, chosen: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            let trigger = ui.add(Button::secondary("Menu"));
+            if let Some(index) = DropdownMenu::new().item("New").item("Open").show(&trigger) {
+                *chosen = Some(index);
+            }
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    harness.get_by_label("Menu").click(); // open the popup
+    harness.run();
+    harness.get_by_label("New").click(); // select first item
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(0),
+        "selecting a menu item returns its index"
+    );
+}

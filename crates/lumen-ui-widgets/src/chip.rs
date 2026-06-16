@@ -1,6 +1,6 @@
 //! [`Chip`] — a compact pill/tag, optionally removable.
 
-use egui::{Button, Frame, Margin, Response, RichText, Ui};
+use egui::{Button, Frame, Response, RichText, Ui};
 use lumen_ui_core::{ChipRecipe, UiThemeExt};
 
 /// Glyph used for the remove affordance.
@@ -44,10 +44,7 @@ impl Chip {
         let response = Frame::NONE
             .fill(recipe.fill)
             .corner_radius(recipe.corner_radius)
-            .inner_margin(Margin::symmetric(
-                recipe.inner_margin.x as i8,
-                recipe.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(recipe.inner_margin))
             .show(ui, |ui| {
                 ui.horizontal(|ui| {
                     ui.label(

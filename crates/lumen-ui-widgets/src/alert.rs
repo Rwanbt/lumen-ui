@@ -1,6 +1,6 @@
 //! [`Alert`] — an inline, block-level status banner with a semantic variant.
 
-use egui::{Frame, Margin, Response, RichText, Stroke, Ui, Widget};
+use egui::{Frame, Response, RichText, Stroke, Ui, Widget};
 use lumen_ui_core::{AlertRecipe, AlertVariant, UiThemeExt};
 
 /// Border thickness of an alert, in points.
@@ -59,10 +59,7 @@ impl Widget for Alert {
             .fill(recipe.fill)
             .stroke(Stroke::new(ALERT_BORDER_WIDTH, recipe.accent))
             .corner_radius(recipe.corner_radius)
-            .inner_margin(Margin::symmetric(
-                recipe.inner_margin.x as i8,
-                recipe.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(recipe.inner_margin))
             .show(ui, |ui| {
                 ui.vertical(|ui| {
                     if let Some(title) = &self.title {

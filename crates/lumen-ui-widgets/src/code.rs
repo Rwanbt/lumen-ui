@@ -1,6 +1,6 @@
 //! [`Code`] — an inline monospace code span themed by tokens.
 
-use egui::{Frame, Margin, Response, RichText, Ui, Widget};
+use egui::{Frame, Response, RichText, Ui, Widget};
 use lumen_ui_core::{CodeRecipe, UiThemeExt};
 
 /// An inline code span: monospace text on a subtle `surface_variant` background
@@ -23,10 +23,7 @@ impl Widget for Code {
         Frame::NONE
             .fill(recipe.fill)
             .corner_radius(recipe.corner_radius)
-            .inner_margin(Margin::symmetric(
-                recipe.inner_margin.x as i8,
-                recipe.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(recipe.inner_margin))
             .show(ui, |ui| {
                 ui.label(
                     RichText::new(&self.text)

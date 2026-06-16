@@ -7,7 +7,7 @@
 //!   that drives the recipe is read from the **previous** frame via
 //!   `ctx.read_response(id)`. `install()` sets `max_passes = 2` so this is stable.
 
-use egui::{vec2, Frame, Margin, Response, RichText, Ui, Widget};
+use egui::{vec2, Frame, Response, RichText, Ui, Widget};
 use lumen_ui_core::{anim, ButtonVariant, UiThemeExt, WidgetState};
 
 use crate::focus::focus_ring;
@@ -95,10 +95,7 @@ impl Widget for Button {
 
         // padding + shadow via Frame; fill/stroke/corner_radius on the Button.
         let response = Frame::NONE
-            .inner_margin(Margin::symmetric(
-                recipe.inner_margin.x as i8,
-                recipe.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(recipe.inner_margin))
             .shadow(recipe.shadow)
             .corner_radius(recipe.corner_radius)
             .fill(fill)

@@ -1,6 +1,6 @@
 //! [`Pagination`] — page navigation with prev/next arrows and page numbers.
 
-use egui::{Button, Frame, Margin, RichText, Ui};
+use egui::{Button, Frame, RichText, Ui};
 use lumen_ui_core::{PaginationRecipe, UiThemeExt};
 
 /// Previous-page arrow glyph.
@@ -50,10 +50,7 @@ impl Pagination {
                     Frame::NONE
                         .fill(recipe.active_fill)
                         .corner_radius(recipe.corner_radius)
-                        .inner_margin(Margin::symmetric(
-                            recipe.inner_margin.x as i8,
-                            recipe.inner_margin.y as i8,
-                        ))
+                        .inner_margin(crate::util::margin(recipe.inner_margin))
                         .show(ui, |ui| {
                             ui.label(
                                 RichText::new(&label)

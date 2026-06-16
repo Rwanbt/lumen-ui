@@ -1,6 +1,6 @@
 //! [`Kbd`] — a keyboard-key indicator (e.g. `Ctrl`, `⌘`).
 
-use egui::{Frame, Margin, Response, RichText, Ui, Widget};
+use egui::{Frame, Response, RichText, Ui, Widget};
 use lumen_ui_core::{KbdRecipe, UiThemeExt};
 
 /// A small bordered, monospace key cap. Colors/border come from [`KbdRecipe`].
@@ -23,10 +23,7 @@ impl Widget for Kbd {
             .fill(recipe.fill)
             .stroke(recipe.border)
             .corner_radius(recipe.corner_radius)
-            .inner_margin(Margin::symmetric(
-                recipe.inner_margin.x as i8,
-                recipe.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(recipe.inner_margin))
             .show(ui, |ui| {
                 ui.label(
                     RichText::new(&self.key)

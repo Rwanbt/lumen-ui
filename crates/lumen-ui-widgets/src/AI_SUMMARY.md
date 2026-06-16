@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 10:22** — do not edit manually.
+> **Auto-generated 2026-06-16 10:37** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -52,8 +52,8 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `text_field.rs` | 61 | |
 | `textarea.rs` | 64 | |
 | `toast.rs` | 100 | |
-| `util.rs` | 26 | |
-| **Total** | **2211** | |
+| `util.rs` | 37 | |
+| **Total** | **2222** | |
 
 ## Rust API
 - `Accordion` (struct)

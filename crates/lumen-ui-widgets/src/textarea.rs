@@ -1,6 +1,6 @@
 //! [`Textarea`] — a themed multi-line text input (mirrors [`crate::TextField`]).
 
-use egui::{Frame, Margin, Response, TextEdit, Ui, Widget};
+use egui::{Frame, Response, TextEdit, Ui, Widget};
 use lumen_ui_core::{UiThemeExt, WidgetState};
 
 /// Default visible rows before scrolling.
@@ -56,10 +56,7 @@ impl Widget for Textarea<'_> {
             .fill(recipe.fill)
             .stroke(recipe.border)
             .corner_radius(recipe.corner_radius)
-            .inner_margin(Margin::symmetric(
-                recipe.inner_margin.x as i8,
-                recipe.inner_margin.y as i8,
-            ))
+            .inner_margin(crate::util::margin(recipe.inner_margin))
             .show(ui, |ui| {
                 ui.add(
                     TextEdit::multiline(self.text)
