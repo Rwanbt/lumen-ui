@@ -34,10 +34,10 @@ pub use lumen_ui_core::{
     BadgeVariant, BreadcrumbRecipe, ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe,
     CircularProgressRecipe, CodeRecipe, Colors, ContrastLevel, DarkTheme, Density, DividerRecipe,
     Elevation, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe, LightTheme,
-    LinkRecipe, Motion, PaginationRecipe, PaletteTheme, ProgressRecipe, Radius, RatingRecipe,
-    SegmentedRecipe, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe, StatRecipe,
-    StepperRecipe, TableRecipe, TextFieldRecipe, TextRecipe, TextRole, Theme, ThemeMode,
-    ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
+    LinkRecipe, MenuRecipe, Motion, PaginationRecipe, PaletteTheme, ProgressRecipe, Radius,
+    RatingRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe,
+    StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe, TextRecipe, TextRole, Theme,
+    ThemeMode, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]
@@ -51,12 +51,12 @@ pub use lumen_ui_icons::{Icon, IconKind};
 #[cfg(feature = "widgets")]
 #[doc(inline)]
 pub use lumen_ui_widgets::{
-    close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error, toast_success,
-    toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Card, Checkbox,
-    Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, FormField, Heading,
-    IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
-    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
-    TextField, Textarea, ToastVariant,
+    close_modal, context_menu, hover_card, open_modal, popover, show_toasts, toast, toast_error,
+    toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
+    Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider, DropdownMenu, EmptyState,
+    FormField, Heading, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup,
+    Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table,
+    Tabs, TextField, Textarea, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -96,11 +96,11 @@ pub mod prelude {
     pub use lumen_ui_themes::{audio_dark, high_contrast};
     #[cfg(feature = "widgets")]
     pub use lumen_ui_widgets::{
-        close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
-        toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
-        Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, FormField,
-        Heading, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
-        SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
-        TextField, Textarea, ToastVariant,
+        close_modal, context_menu, hover_card, open_modal, popover, show_toasts, toast,
+        toast_error, toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge,
+        Breadcrumb, Button, Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider,
+        DropdownMenu, EmptyState, FormField, Heading, IconButton, Kbd, Label, Link, Modal,
+        Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider,
+        Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, ToastVariant,
     };
 }

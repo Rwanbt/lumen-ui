@@ -702,3 +702,21 @@ impl FormFieldRecipe {
         }
     }
 }
+
+/// Resolved style for a `DropdownMenu` item list.
+#[derive(Clone, Copy, Debug)]
+pub struct MenuRecipe {
+    pub text_color: Color32,
+    pub text_size: f32,
+}
+
+impl MenuRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            text_color: tokens.colors.text,
+            text_size: tokens.typography.body,
+        }
+    }
+}

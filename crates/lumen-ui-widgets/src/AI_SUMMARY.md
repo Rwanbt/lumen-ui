@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 09:30** — do not edit manually.
+> **Auto-generated 2026-06-16 09:36** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -24,15 +24,16 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `circular_progress.rs` | 46 | |
 | `code.rs` | 34 | |
 | `divider.rs` | 51 | |
+| `dropdown_menu.rs` | 45 | |
 | `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
 | `kbd.rs` | 34 | |
-| `lib.rs` | 81 | |
+| `lib.rs` | 83 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
-| `overlay.rs` | 29 | |
+| `overlay.rs` | 37 | |
 | `pagination.rs` | 66 | |
 | `progress.rs` | 31 | |
 | `radio.rs` | 81 | |
@@ -51,7 +52,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `text_field.rs` | 61 | |
 | `textarea.rs` | 64 | |
 | `toast.rs` | 100 | |
-| **Total** | **2117** | |
+| **Total** | **2172** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -67,6 +68,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `CircularProgress` (struct)
 - `Code` (struct)
 - `Divider` (struct)
+- `DropdownMenu` (struct)
 - `EmptyState` (struct)
 - `FormField` (struct)
 - `Heading` (struct)
@@ -96,6 +98,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 ## Rust Functions
 - `close_modal()`
 - `context_menu()`
+- `hover_card()`
 - `open_modal()`
 - `popover()`
 - `show_toasts()`

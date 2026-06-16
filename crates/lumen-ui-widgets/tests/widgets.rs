@@ -14,10 +14,11 @@ use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
-    close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Breadcrumb,
-    Button, Checkbox, Chip, CircularProgress, Code, Divider, EmptyState, FormField, IconButton,
-    Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select,
-    Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea,
+    close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
+    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, Divider, DropdownMenu, EmptyState,
+    FormField, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
+    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
+    TextField, Textarea,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -94,6 +95,15 @@ fn every_widget_renders_under_all_built_in_themes() {
                 .row(["Linus", "Maintainer"])
                 .show(ui);
             ui.add(IconButton::new(Label::new("+")));
+            let menu_trigger = ui.add(Button::secondary("Menu"));
+            DropdownMenu::new()
+                .item("New")
+                .item("Open")
+                .show(&menu_trigger);
+            let info = ui.add(Label::new("info"));
+            hover_card(info, |ui| {
+                ui.add(Label::new("details"));
+            });
             ui.add(Textarea::new(&mut notes).hint("Notes"));
             FormField::new("Email")
                 .hint("We'll never share it")

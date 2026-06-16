@@ -1,10 +1,11 @@
-//! Anchored overlays: [`tooltip`], [`popover`], and [`context_menu`].
+//! Anchored overlays: [`tooltip`], [`hover_card`], [`popover`], and [`context_menu`].
 //!
 //! Thin, themed helpers over egui's `Response` overlays and the `egui::Popup`
 //! API. They follow the installed theme through the global visuals.
 
 use egui::{InnerResponse, Popup, Response, Ui};
 
+use crate::card::Card;
 use crate::text::Label;
 
 /// Attach a hover tooltip to a response. Returns the (same) response for optional chaining.
@@ -12,6 +13,14 @@ pub fn tooltip(response: Response, text: impl Into<String>) -> Response {
     let text = text.into();
     response.on_hover_ui(|ui| {
         ui.add(Label::new(text));
+    })
+}
+
+/// Attach a rich hover card (themed [`Card`] content) to a response, for more than
+/// the plain text a [`tooltip`] shows. Returns the (same) response for chaining.
+pub fn hover_card(response: Response, add_contents: impl FnOnce(&mut Ui)) -> Response {
+    response.on_hover_ui(|ui| {
+        Card::new().show(ui, add_contents);
     })
 }
 
