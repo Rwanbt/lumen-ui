@@ -388,3 +388,66 @@ impl BreadcrumbRecipe {
         }
     }
 }
+
+/// Resolved style for a `SegmentedControl` (mutually-exclusive button group).
+#[derive(Clone, Copy, Debug)]
+pub struct SegmentedRecipe {
+    /// Fill of the track behind all segments.
+    pub container_fill: Color32,
+    /// Fill of the selected segment.
+    pub selected_fill: Color32,
+    /// Text color of the selected segment.
+    pub selected_text: Color32,
+    /// Text color of unselected segments.
+    pub text: Color32,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+    pub text_size: f32,
+}
+
+impl SegmentedRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            container_fill: tokens.colors.surface_variant,
+            selected_fill: tokens.colors.primary,
+            selected_text: tokens.colors.on_primary,
+            text: tokens.colors.text_muted,
+            corner_radius: tokens.radius.md,
+            inner_margin: Vec2::new(tokens.spacing.md * scale, tokens.spacing.xs * scale),
+            text_size: tokens.typography.label,
+        }
+    }
+}
+
+/// Resolved style for a `Pagination` control.
+#[derive(Clone, Copy, Debug)]
+pub struct PaginationRecipe {
+    /// Fill of the current page indicator.
+    pub active_fill: Color32,
+    /// Text color of the current page indicator.
+    pub active_text: Color32,
+    /// Text color of other (clickable) pages and the prev/next arrows.
+    pub text: Color32,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+    pub text_size: f32,
+}
+
+impl PaginationRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            active_fill: tokens.colors.primary,
+            active_text: tokens.colors.on_primary,
+            text: tokens.colors.text_muted,
+            corner_radius: tokens.radius.sm,
+            inner_margin: Vec2::new(tokens.spacing.sm * scale, tokens.spacing.xs * scale),
+            text_size: tokens.typography.body,
+        }
+    }
+}

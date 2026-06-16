@@ -36,9 +36,9 @@ pub use light::LightTheme;
 pub use palette::{PaletteTheme, ThemeMode};
 pub use recipe::{
     AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe, BadgeVariant, BreadcrumbRecipe,
-    ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe, DividerRecipe, KbdRecipe, ProgressRecipe,
-    SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, TextFieldRecipe, TextRecipe, TextRole,
-    ToggleRecipe, WidgetState,
+    ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe, DividerRecipe, KbdRecipe,
+    PaginationRecipe, ProgressRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, SpinnerRecipe,
+    StatRecipe, TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
