@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 10:37** — do not edit manually.
+> **Auto-generated 2026-06-16 11:23** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,32 +13,32 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | File | LOC | |
 |------|-----|--|
 | `accordion.rs` | 31 | |
-| `alert.rs` | 60 | |
+| `alert.rs` | 57 | |
 | `avatar.rs` | 50 | |
-| `badge.rs` | 52 | |
+| `badge.rs` | 49 | |
 | `breadcrumb.rs` | 58 | |
-| `button.rs` | 105 | |
-| `card.rs` | 28 | |
+| `button.rs` | 102 | |
+| `card.rs` | 25 | |
 | `checkbox.rs` | 63 | |
-| `chip.rs` | 64 | |
+| `chip.rs` | 61 | |
 | `circular_progress.rs` | 47 | |
-| `code.rs` | 34 | |
+| `code.rs` | 31 | |
 | `divider.rs` | 51 | |
 | `dropdown_menu.rs` | 45 | |
 | `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
-| `kbd.rs` | 34 | |
-| `lib.rs` | 84 | |
+| `kbd.rs` | 31 | |
+| `lib.rs` | 86 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 37 | |
-| `pagination.rs` | 66 | |
+| `pagination.rs` | 63 | |
 | `progress.rs` | 33 | |
 | `radio.rs` | 81 | |
 | `rating.rs` | 50 | |
-| `segmented_control.rs` | 69 | |
+| `segmented_control.rs` | 66 | |
 | `select.rs` | 41 | |
 | `skeleton.rs` | 24 | |
 | `slider.rs` | 98 | |
@@ -49,11 +49,12 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `table.rs` | 80 | |
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
-| `text_field.rs` | 61 | |
-| `textarea.rs` | 64 | |
+| `text_field.rs` | 58 | |
+| `textarea.rs` | 61 | |
 | `toast.rs` | 100 | |
+| `tree_view.rs` | 114 | |
 | `util.rs` | 37 | |
-| **Total** | **2222** | |
+| **Total** | **2305** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -94,6 +95,8 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Tabs` (struct)
 - `TextField` (struct)
 - `Textarea` (struct)
+- `TreeNode` (struct)
+- `TreeView` (struct)
 - `ToastVariant` (enum)
 
 ## Rust Functions

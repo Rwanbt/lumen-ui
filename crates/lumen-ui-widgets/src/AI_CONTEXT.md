@@ -53,6 +53,10 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.
+- `tree_view.rs` — `TreeView` + `TreeNode` (hierarchical, collapsible; single selection bound to
+  `&mut Option<usize>` by node id). Branches wrap `egui::CollapsingHeader` (keyed by `id_salt`);
+  leaves are `selectable_label`. `TreeViewRecipe` carries text style + indent; selection highlight
+  uses egui's themed selection visuals.
 
 ## Accessibility (v0.8)
 - Hit targets follow `UiContext::min_interactive_size()` (44 px in Touch — WCAG 2.5.5). Custom
