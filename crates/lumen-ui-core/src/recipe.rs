@@ -787,3 +787,33 @@ impl TreeViewRecipe {
         }
     }
 }
+
+/// Base width of a `Drawer` panel before density scaling, in points.
+const DRAWER_BASE_WIDTH: f32 = 300.0;
+
+/// Resolved style for a `Drawer` (off-canvas side panel over a scrim).
+///
+/// The scrim is theme-independent (provided by `egui::Modal`), so this recipe carries only the
+/// token-derived panel surface, width and padding.
+#[derive(Clone, Copy, Debug)]
+pub struct DrawerRecipe {
+    /// Panel surface fill.
+    pub fill: Color32,
+    /// Panel width, in points.
+    pub width: f32,
+    /// Padding inside the panel.
+    pub inner_margin: Vec2,
+}
+
+impl DrawerRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            fill: tokens.colors.surface,
+            width: DRAWER_BASE_WIDTH * scale,
+            inner_margin: Vec2::new(tokens.spacing.lg * scale, tokens.spacing.lg * scale),
+        }
+    }
+}

@@ -49,6 +49,10 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `ctx.data`, auto-dismiss via egui frame time, rendered in a foreground `Area`.
 - `modal.rs` — `Modal` (+ `open_modal`/`close_modal`); open state in `ctx.data`, wraps
   `egui::Modal` (backdrop + Esc close). `show` returns `None` while closed.
+- `drawer.rs` — `Drawer` (+ `open_drawer`/`close_drawer`, `DrawerSide`): off-canvas side panel over
+  a scrim. Reuses `egui::Modal` (backdrop/input-block/Esc) with its area anchored to a screen edge
+  and the panel drawn full-height (`content_rect().height()`). Open state in `ctx.data`; `show`
+  returns `None` while closed. `DrawerRecipe` (fill/width/inner_margin). Motion instant (slide → v1.6).
 - `select.rs` — `Select<T>` dropdown (`&mut T`) over `egui::ComboBox` + `selectable_value`.
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
