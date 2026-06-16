@@ -7,10 +7,15 @@
 use egui::{Color32, CornerRadius, Shadow, Stroke, Vec2};
 
 use crate::context::UiContext;
+use crate::palette::ThemeMode;
 use crate::tokens::Tokens;
 
 /// Background tint opacity for an alert over the surface, in `0..=255`.
 const ALERT_TINT_ALPHA: u8 = 28;
+/// Base square size of an icon button before density scaling, in points.
+const ICON_BUTTON_BASE_SIZE: f32 = 32.0;
+/// Emphasis amount applied to the icon-button fill while pressed.
+const ICON_BUTTON_ACTIVE_EMPHASIS: f32 = 0.14;
 /// Base diameter of a stepper step circle before density scaling, in points.
 const STEPPER_BASE_CIRCLE: f32 = 24.0;
 /// Base diameter of a circular progress ring before density scaling, in points.
@@ -202,6 +207,35 @@ impl DividerRecipe {
         Self {
             color: tokens.colors.border,
             thickness: DIVIDER_THICKNESS,
+        }
+    }
+}
+
+/// Resolved style for an `IconButton` (square, ghost-style icon trigger).
+///
+/// First recipe to consume [`ThemeMode`] emphasis through the ADR-0009 pure-resolve
+/// path: the pressed fill is derived from `surface_variant` via the theme's emphasis
+/// direction (lighten in dark themes, darken in light).
+#[derive(Clone, Copy, Debug)]
+pub struct IconButtonRecipe {
+    pub size: f32,
+    pub corner_radius: CornerRadius,
+    /// Fill on hover (idle is transparent — ghost style).
+    pub hover_fill: Color32,
+    /// Fill while pressed.
+    pub active_fill: Color32,
+}
+
+impl IconButtonRecipe {
+    /// Pure resolution from tokens + mode (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, mode: ThemeMode, ctx: &UiContext) -> Self {
+        let emphasize = mode.emphasis();
+        Self {
+            size: ICON_BUTTON_BASE_SIZE * ctx.density_scale(),
+            corner_radius: tokens.radius.md,
+            hover_fill: tokens.colors.surface_variant,
+            active_fill: emphasize(tokens.colors.surface_variant, ICON_BUTTON_ACTIVE_EMPHASIS),
         }
     }
 }

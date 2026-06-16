@@ -21,8 +21,9 @@
 - [x] **ADR-0009** — trait `Theme` : `mode()` additif + recettes en fonctions pures (non-breaking)
 
 **Jalons**
-- 🟡 **v1.1 Frozen-core evolution** — [x] `Theme::mode()` ; [x] variants Danger/Warning/Success
-  (Button/Badge/Alert) ; [ ] `IconButton` helper
+- ✅ **v1.1 Frozen-core evolution** — [x] `Theme::mode()` ; [x] variants Danger/Warning/Success
+  (Button/Badge/Alert) ; [x] `IconButton` helper (générique `impl Widget`, premier consommateur
+  de `mode().emphasis()` via ADR-0009) — **JALON CLÔTURÉ**
 - 🟡 **v1.2 Overlays & feedback** — [x] Alert · Progress · CircularProgress · Spinner · Skeleton ·
   EmptyState ; [x] Tooltip/Popover/ContextMenu (préexistants) ; [ ] DropdownMenu · HoverCard
 - 🟡 **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
