@@ -40,7 +40,7 @@ pub use recipe::{
     DataGridRecipe, DividerRecipe, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe,
     LinkRecipe, MenuRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe, SegmentedRecipe,
     SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe,
-    TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
+    TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, TreeViewRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};

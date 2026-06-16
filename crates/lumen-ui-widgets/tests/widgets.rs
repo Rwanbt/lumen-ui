@@ -18,7 +18,7 @@ use lumen_ui_widgets::{
     Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, Divider, DropdownMenu, EmptyState,
     FormField, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
     SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
-    TextField, Textarea,
+    TextField, Textarea, TreeNode, TreeView,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -49,6 +49,7 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut segment = 0usize;
         let mut stars = 3u32;
         let mut notes = String::from("multi\nline");
+        let mut tree_selected: Option<usize> = Some(1);
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -110,6 +111,16 @@ fn every_widget_renders_under_all_built_in_themes() {
                 .show(ui, |ui| {
                     ui.add(Label::new("control"));
                 });
+            TreeView::new(&mut tree_selected)
+                .node(
+                    TreeNode::branch(
+                        0,
+                        "src",
+                        vec![TreeNode::leaf(1, "lib.rs"), TreeNode::leaf(2, "main.rs")],
+                    )
+                    .default_open(true),
+                )
+                .show(ui);
         });
 
         // A panic inside `run` fails the test and names the offending theme.
@@ -676,5 +687,39 @@ fn data_grid_sorts_on_header_click() {
         harness.state().map(|s| s.direction),
         Some(SortDirection::Descending),
         "clicking the active sort column toggles direction"
+    );
+}
+
+#[test]
+fn tree_view_selects_clicked_node() {
+    let mut harness = Harness::new_ui_state(
+        |ui, selected: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            TreeView::new(selected)
+                .node(
+                    TreeNode::branch(
+                        0,
+                        "src",
+                        vec![TreeNode::leaf(1, "lib.rs"), TreeNode::leaf(2, "main.rs")],
+                    )
+                    .default_open(true),
+                )
+                .show(ui);
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    assert_eq!(*harness.state(), None, "nothing selected by default");
+    assert!(
+        harness.query_by_label("main.rs").is_some(),
+        "an open branch reveals its leaves"
+    );
+    harness.get_by_label("main.rs").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(2),
+        "clicking a leaf selects its node id"
     );
 }

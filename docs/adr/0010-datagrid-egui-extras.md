@@ -1,6 +1,16 @@
 # ADR-0010 : DataGrid — adopter `egui_extras::TableBuilder` ou le réécrire à la main ?
 
-**Date** : 2026-06-16 | **Statut** : **Proposé (décision en attente)** | Auteur : session v1.8
+**Date** : 2026-06-16 | **Statut** : **Accepté — Option A** (arbitré 2026-06-16) | Auteur : session v1.8
+
+> **Décision actée** : Option A (`egui_extras::TableBuilder`). Réponses aux questions ouvertes,
+> retenues comme plan (réversibles tant que le code n'est pas écrit) :
+> 1. **Feature-gate `datagrid`** — oui (défaut « zéro dep runtime » préservé).
+> 2. `DataGrid` dans **`lumen-ui-widgets`** sous la feature `datagrid`.
+> 3. Tri : **`SortState` émis**, l'appelant trie ses données.
+> 4. Cellules : **`String` d'abord** (parité `Table`), cellule riche (closure `FnMut(&mut Ui)`)
+>    dans un lot ultérieur.
+>
+> Implémentation différée : on enchaîne d'abord un autre lot v1.8 (Drawer / TreeView / Wizard).
 
 ## Contexte
 
