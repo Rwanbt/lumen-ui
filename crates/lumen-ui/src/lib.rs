@@ -65,7 +65,7 @@ pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, 
 
 #[cfg(feature = "motion")]
 #[doc(inline)]
-pub use lumen_ui_motion::{ease, fade, Easing, Spring};
+pub use lumen_ui_motion::{ease, fade, reduced_motion, set_reduced_motion, Easing, Spring};
 
 #[cfg(feature = "patterns")]
 #[doc(inline)]
@@ -86,7 +86,7 @@ pub mod prelude {
     #[cfg(feature = "layout")]
     pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
     #[cfg(feature = "motion")]
-    pub use lumen_ui_motion::{ease, fade, Easing, Spring};
+    pub use lumen_ui_motion::{ease, fade, reduced_motion, set_reduced_motion, Easing, Spring};
     #[cfg(feature = "patterns")]
     pub use lumen_ui_patterns::{
         open_command_palette, property_row, CommandPalette, DashboardLayout, InspectorPanel,

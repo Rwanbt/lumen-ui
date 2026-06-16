@@ -35,7 +35,9 @@
   **généré et intégré** dans `lumen-ui-icons` (arrow ×4, chevron-left/up depuis `svg/` →
   `generated_icons.rs` via `include!`) — **JALON CLÔTURÉ**. Extensible : ajouter un SVG +
   régénérer. Les icônes à `<circle>` (search…) attendent l'upgrade `usvg` (ADR-0008 §6.3).
-- ⬜ **v1.6 Motion v2** — slide/scale, enter/exit, stagger, FLIP, `prefers-reduced-motion`
+- 🟡 **v1.6 Motion v2** — [x] `prefers-reduced-motion` (`set_reduced_motion`/`reduced_motion` →
+  `ease`/`fade` instantanés) ; [ ] slide/scale, enter/exit, stagger, FLIP (bloqués : egui stable
+  n'expose pas ergonomiquement les transforms de sous-arbre — cf. note `transitions.rs`)
 - ⬜ **v1.7 Layout v2** — grille fractionnaire, template-areas, sticky, container, resizable
 - 🟡 **v1.8 Navigation & patterns** — [x] Breadcrumb · Pagination · Stepper ; [ ] Drawer · TreeView ·
   Form layout · AuthCard · MasterDetail · Wizard · DataTable pattern
