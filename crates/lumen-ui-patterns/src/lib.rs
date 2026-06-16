@@ -10,6 +10,8 @@ mod auth_card;
 mod bars;
 mod command_palette;
 mod dashboard;
+#[cfg(feature = "datagrid")]
+mod data_table;
 mod form;
 mod logpanel;
 mod master_detail;
@@ -21,6 +23,8 @@ pub use auth_card::{AuthCard, AuthCardResponse};
 pub use bars::{StatusBar, Toolbar};
 pub use command_palette::{open_command_palette, CommandPalette};
 pub use dashboard::DashboardLayout;
+#[cfg(feature = "datagrid")]
+pub use data_table::{DataTable, DataTableState};
 pub use form::Form;
 pub use logpanel::{LogEntry, LogLevel, LogPanel};
 pub use master_detail::MasterDetail;

@@ -16,6 +16,11 @@ egui = { workspace = true }
 lumen-ui-core = { workspace = true }
 lumen-ui-widgets = { workspace = true }
 
+[features]
+# DataTable pattern (search + sortable DataGrid + pagination). Pulls in the widgets
+# `datagrid` feature (egui_extras). See docs/adr/0010-datagrid-egui-extras.md.
+datagrid = ["lumen-ui-widgets/datagrid"]
+
 [dev-dependencies]
 # Headless, AccessKit-driven behavioral tests. No default features (no wgpu/snapshot).
 # `install` / `DarkTheme` come from lumen-ui-core (already a normal dependency).

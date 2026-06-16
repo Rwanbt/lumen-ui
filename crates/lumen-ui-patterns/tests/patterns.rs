@@ -343,3 +343,65 @@ fn wizard_advances_and_finishes() {
         "clicking Finish on the last step reports finished"
     );
 }
+
+#[cfg(feature = "datagrid")]
+#[test]
+fn data_table_sorts_and_paginates() {
+    use lumen_ui_patterns::{DataTable, DataTableState};
+
+    let mut harness = Harness::new_ui_state(
+        |ui, state: &mut DataTableState| {
+            theme_ctx(ui.ctx(), &dark());
+            DataTable::new("people")
+                .sortable_column("Name")
+                .column("Role")
+                .row(["Ada", "Engineer"])
+                .row(["Linus", "Maintainer"])
+                .row(["Grace", "Admiral"])
+                .page_size(2)
+                .show(ui, state);
+        },
+        DataTableState::default(),
+    );
+
+    harness.run();
+    // Unsorted insertion order [Ada, Linus, Grace]; page size 2 → page 0 = [Ada, Linus].
+    assert!(
+        harness.query_all_by_label("Ada").next().is_some(),
+        "page 0 shows the first rows"
+    );
+    assert!(
+        harness.query_all_by_label("Grace").next().is_none(),
+        "a row on page 1 is not rendered on page 0"
+    );
+
+    // Sort ascending by Name → [Ada, Grace, Linus]; page 0 = [Ada, Grace].
+    harness.get_by_label_contains("Name").click();
+    harness.run();
+    assert_eq!(
+        harness.state().sort.map(|s| s.column),
+        Some(0),
+        "clicking a sortable header records the sort column"
+    );
+    assert!(
+        harness.query_all_by_label("Grace").next().is_some(),
+        "sorting re-pages: Grace now sits on page 0"
+    );
+    assert!(
+        harness.query_all_by_label("Linus").next().is_none(),
+        "Linus moved to page 1 after sorting"
+    );
+
+    // Paginate to page 2 → [Linus].
+    harness.get_by_label("2").click();
+    harness.run();
+    assert_eq!(
+        harness.state().page,
+        1,
+        "clicking a page number changes the page"
+    );
+    assert!(
+        harness.query_all_by_label("Linus").next().is_some(),
+        "page 1 shows the remaining row"
+    );
+}
