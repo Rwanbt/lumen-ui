@@ -15,8 +15,9 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Breadcrumb,
-    Button, Checkbox, Chip, Divider, EmptyState, Kbd, Label, Link, Modal, Pagination, Progress,
-    RadioGroup, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Switch, Tabs, TextField,
+    Button, Checkbox, Chip, CircularProgress, Divider, EmptyState, Kbd, Label, Link, Modal,
+    Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner,
+    Stat, Switch, Tabs, TextField,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -45,6 +46,7 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut checked = false;
         let mut value = 0.5_f32;
         let mut segment = 0usize;
+        let mut stars = 3u32;
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -76,6 +78,8 @@ fn every_widget_renders_under_all_built_in_themes() {
             Pagination::new(1, 3).show(ui);
             ui.add(EmptyState::new("No results").message("Try another filter"));
             ui.add(Link::new("Learn more"));
+            ui.add(CircularProgress::new(value));
+            Rating::new(&mut stars).show(ui);
         });
 
         // A panic inside `run` fails the test and names the offending theme.

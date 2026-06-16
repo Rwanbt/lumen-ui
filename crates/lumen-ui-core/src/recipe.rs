@@ -11,6 +11,10 @@ use crate::tokens::Tokens;
 
 /// Background tint opacity for an alert over the surface, in `0..=255`.
 const ALERT_TINT_ALPHA: u8 = 28;
+/// Base diameter of a circular progress ring before density scaling, in points.
+const CIRCULAR_PROGRESS_BASE_SIZE: f32 = 36.0;
+/// Ring stroke thickness as a fraction of the ring diameter.
+const CIRCULAR_PROGRESS_THICKNESS_RATIO: f32 = 0.12;
 /// Base diameter of an avatar before density scaling, in points.
 const AVATAR_BASE_SIZE: f32 = 36.0;
 /// Avatar initials font size as a fraction of the avatar diameter.
@@ -491,6 +495,51 @@ impl LinkRecipe {
         Self {
             color: tokens.colors.primary,
             text_size: tokens.typography.body,
+        }
+    }
+}
+
+/// Resolved style for a circular (determinate) progress ring.
+#[derive(Clone, Copy, Debug)]
+pub struct CircularProgressRecipe {
+    pub track: Color32,
+    pub fill: Color32,
+    pub diameter: f32,
+    pub thickness: f32,
+}
+
+impl CircularProgressRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let diameter = CIRCULAR_PROGRESS_BASE_SIZE * ctx.density_scale();
+        Self {
+            track: tokens.colors.surface_variant,
+            fill: tokens.colors.primary,
+            diameter,
+            thickness: diameter * CIRCULAR_PROGRESS_THICKNESS_RATIO,
+        }
+    }
+}
+
+/// Resolved style for a star `Rating` control.
+#[derive(Clone, Copy, Debug)]
+pub struct RatingRecipe {
+    /// Color of a filled star.
+    pub filled: Color32,
+    /// Color of an empty star.
+    pub empty: Color32,
+    pub size: f32,
+}
+
+impl RatingRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            filled: tokens.colors.warning,
+            empty: tokens.colors.text_muted,
+            size: tokens.typography.heading,
         }
     }
 }
