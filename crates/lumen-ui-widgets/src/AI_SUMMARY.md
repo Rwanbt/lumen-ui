@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 12:47** — do not edit manually.
+> **Auto-generated 2026-06-16 13:01** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -25,13 +25,14 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `code.rs` | 31 | |
 | `data_grid.rs` | 207 | |
 | `divider.rs` | 51 | |
+| `drawer.rs` | 85 | |
 | `dropdown_menu.rs` | 45 | |
 | `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
 | `kbd.rs` | 31 | |
-| `lib.rs` | 88 | |
+| `lib.rs` | 90 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 37 | |
@@ -55,7 +56,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `toast.rs` | 100 | |
 | `tree_view.rs` | 114 | |
 | `util.rs` | 37 | |
-| **Total** | **2514** | |
+| **Total** | **2601** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -72,6 +73,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Code` (struct)
 - `DataGrid` (struct)
 - `Divider` (struct)
+- `Drawer` (struct)
 - `DropdownMenu` (struct)
 - `EmptyState` (struct)
 - `FormField` (struct)
@@ -100,13 +102,16 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Textarea` (struct)
 - `TreeNode` (struct)
 - `TreeView` (struct)
+- `DrawerSide` (enum)
 - `SortDirection` (enum)
 - `ToastVariant` (enum)
 
 ## Rust Functions
+- `close_drawer()`
 - `close_modal()`
 - `context_menu()`
 - `hover_card()`
+- `open_drawer()`
 - `open_modal()`
 - `popover()`
 - `show_toasts()`

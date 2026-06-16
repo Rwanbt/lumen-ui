@@ -723,3 +723,60 @@ fn tree_view_selects_clicked_node() {
         "clicking a leaf selects its node id"
     );
 }
+
+#[test]
+fn drawer_renders_under_all_themes() {
+    use lumen_ui_widgets::{open_drawer, Drawer, DrawerSide};
+    let themes: [Arc<dyn Theme>; 4] = [
+        Arc::new(DarkTheme::new()),
+        Arc::new(LightTheme::new()),
+        Arc::new(audio_dark()),
+        Arc::new(high_contrast()),
+    ];
+    for theme in themes {
+        let mut harness = Harness::new_ui(move |ui| {
+            theme_ctx(ui.ctx(), &theme);
+            let ctx = ui.ctx().clone();
+            open_drawer(&ctx, "nav");
+            Drawer::new("nav").side(DrawerSide::Right).show(&ctx, |ui| {
+                ui.add(Label::new("DrawerContent"));
+            });
+        });
+        harness.run(); // a panic here fails the test
+        assert!(harness.query_by_label("DrawerContent").is_some());
+    }
+}
+
+#[test]
+fn drawer_shows_when_open_and_hides_when_closed() {
+    use lumen_ui_widgets::{close_drawer, open_drawer, Drawer};
+    // 0 = request open, 1 = request close, other = idle.
+    let phase = Arc::new(AtomicU32::new(0));
+    let phase_c = phase.clone();
+
+    let mut harness = Harness::new_ui(move |ui| {
+        theme_ctx(ui.ctx(), &dark());
+        let ctx = ui.ctx().clone();
+        match phase_c.load(Ordering::Relaxed) {
+            0 => open_drawer(&ctx, "nav"),
+            1 => close_drawer(&ctx, "nav"),
+            _ => {}
+        }
+        Drawer::new("nav").show(&ctx, |ui| {
+            ui.add(Label::new("Drawer nav"));
+        });
+    });
+
+    harness.run();
+    assert!(
+        harness.query_by_label("Drawer nav").is_some(),
+        "an opened drawer renders its content"
+    );
+
+    phase.store(1, Ordering::Relaxed);
+    harness.run();
+    assert!(
+        harness.query_by_label("Drawer nav").is_none(),
+        "close_drawer hides the content"
+    );
+}

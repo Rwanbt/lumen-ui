@@ -40,9 +40,10 @@
   `ease`/`fade` instantanés) ; [ ] slide/scale, enter/exit, stagger, FLIP (bloqués : egui stable
   n'expose pas ergonomiquement les transforms de sous-arbre — cf. note `transitions.rs`)
 - ⬜ **v1.7 Layout v2** — grille fractionnaire, template-areas, sticky, container, resizable
-- 🟡 **v1.8 Navigation & patterns** — [x] Breadcrumb · Pagination · Stepper ; [x] Form (layout) ·
+- ✅ **v1.8 Navigation & patterns** — [x] Breadcrumb · Pagination · Stepper ; [x] Form (layout) ·
   AuthCard · MasterDetail · Wizard (patterns) · TreeView (widget) · DataTable pattern
-  (search + sortable DataGrid + pagination, feature `datagrid`) ; [ ] Drawer
+  (search + sortable DataGrid + pagination, feature `datagrid`) ; [x] Drawer (off-canvas, scrim,
+  réutilise `egui::Modal`) — **JALON CLÔTURÉ**
 - ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
 - ⬜ **v1.10 Crate `lumen-ui-audio`** — Knob · Fader · VU meter · Waveform · XY pad
 - ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer

@@ -22,6 +22,7 @@ mod code;
 #[cfg(feature = "datagrid")]
 mod data_grid;
 mod divider;
+mod drawer;
 mod dropdown_menu;
 mod empty_state;
 mod focus;
@@ -66,6 +67,7 @@ pub use code::Code;
 #[cfg(feature = "datagrid")]
 pub use data_grid::{DataGrid, SortDirection, SortState};
 pub use divider::Divider;
+pub use drawer::{close_drawer, open_drawer, Drawer, DrawerSide};
 pub use dropdown_menu::DropdownMenu;
 pub use empty_state::EmptyState;
 pub use form_field::FormField;
