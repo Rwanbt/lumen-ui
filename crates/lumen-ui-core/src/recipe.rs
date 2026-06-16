@@ -337,3 +337,54 @@ impl KbdRecipe {
         }
     }
 }
+
+/// Resolved style for a `Stat` (metric) block.
+#[derive(Clone, Copy, Debug)]
+pub struct StatRecipe {
+    pub label_color: Color32,
+    pub value_color: Color32,
+    pub positive_color: Color32,
+    pub negative_color: Color32,
+    pub label_size: f32,
+    pub value_size: f32,
+}
+
+impl StatRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            label_color: tokens.colors.text_muted,
+            value_color: tokens.colors.text,
+            positive_color: tokens.colors.success,
+            negative_color: tokens.colors.danger,
+            label_size: tokens.typography.label,
+            value_size: tokens.typography.display,
+        }
+    }
+}
+
+/// Resolved style for a `Breadcrumb` trail.
+#[derive(Clone, Copy, Debug)]
+pub struct BreadcrumbRecipe {
+    /// Color of clickable ancestor segments.
+    pub link_color: Color32,
+    /// Color of the final (current) segment.
+    pub current_color: Color32,
+    /// Color of the separator glyph between segments.
+    pub separator_color: Color32,
+    pub text_size: f32,
+}
+
+impl BreadcrumbRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            link_color: tokens.colors.text_muted,
+            current_color: tokens.colors.text,
+            separator_color: tokens.colors.text_muted,
+            text_size: tokens.typography.body,
+        }
+    }
+}

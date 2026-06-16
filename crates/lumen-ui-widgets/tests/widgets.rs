@@ -14,9 +14,9 @@ use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
-    close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Button,
-    Checkbox, Chip, Divider, Kbd, Label, Modal, Progress, RadioGroup, Select, Skeleton, Slider,
-    Spinner, Switch, Tabs, TextField,
+    close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Breadcrumb,
+    Button, Checkbox, Chip, Divider, Kbd, Label, Modal, Progress, RadioGroup, Select, Skeleton,
+    Slider, Spinner, Stat, Switch, Tabs, TextField,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -62,6 +62,12 @@ fn every_widget_renders_under_all_built_in_themes() {
             ui.add(Avatar::new("Ada Lovelace"));
             ui.add(Kbd::new("Ctrl"));
             Chip::new("tag").removable().show(ui);
+            ui.add(Stat::new("Revenue", "$12.4k").delta("+8%", true));
+            Breadcrumb::new()
+                .item("Home")
+                .item("Docs")
+                .item("API")
+                .show(ui);
         });
 
         // A panic inside `run` fails the test and names the offending theme.

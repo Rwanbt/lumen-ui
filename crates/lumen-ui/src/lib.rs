@@ -31,11 +31,11 @@ pub use lumen_ui_core as core;
 #[doc(inline)]
 pub use lumen_ui_core::{
     a11y, anim, install, set_theme, AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe,
-    BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe, Colors, ContrastLevel,
-    DarkTheme, Density, DividerRecipe, Elevation, KbdRecipe, LightTheme, Motion, PaletteTheme,
-    ProgressRecipe, Radius, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe, TextFieldRecipe,
-    TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens, Typography, UiContext,
-    UiThemeExt, WidgetState,
+    BadgeVariant, BreadcrumbRecipe, ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe, Colors,
+    ContrastLevel, DarkTheme, Density, DividerRecipe, Elevation, KbdRecipe, LightTheme, Motion,
+    PaletteTheme, ProgressRecipe, Radius, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe,
+    StatRecipe, TextFieldRecipe, TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens,
+    Typography, UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]
@@ -50,9 +50,9 @@ pub use lumen_ui_icons::{Icon, IconKind};
 #[doc(inline)]
 pub use lumen_ui_widgets::{
     close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error, toast_success,
-    toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Button, Card, Checkbox, Chip,
-    ChipResponse, Divider, Heading, Kbd, Label, Modal, Progress, RadioGroup, Select, Skeleton,
-    Slider, Spinner, Switch, Tabs, TextField, ToastVariant,
+    toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Card, Checkbox,
+    Chip, ChipResponse, Divider, Heading, Kbd, Label, Modal, Progress, RadioGroup, Select,
+    Skeleton, Slider, Spinner, Stat, Switch, Tabs, TextField, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -93,8 +93,8 @@ pub mod prelude {
     #[cfg(feature = "widgets")]
     pub use lumen_ui_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
-        toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Button, Card,
-        Checkbox, Chip, ChipResponse, Divider, Heading, Kbd, Label, Modal, Progress, RadioGroup,
-        Select, Skeleton, Slider, Spinner, Switch, Tabs, TextField, ToastVariant,
+        toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
+        Card, Checkbox, Chip, ChipResponse, Divider, Heading, Kbd, Label, Modal, Progress,
+        RadioGroup, Select, Skeleton, Slider, Spinner, Stat, Switch, Tabs, TextField, ToastVariant,
     };
 }
