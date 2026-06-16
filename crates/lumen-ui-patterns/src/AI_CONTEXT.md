@@ -34,3 +34,11 @@ DashboardLayout::new()
 - `logpanel.rs` — `LogPanel` + `LogEntry`/`LogLevel` (severity badges, stick-to-bottom scroll).
 - `command_palette.rs` — `CommandPalette` (+ `open_command_palette`); open state + query in
   `ctx.data`, modal overlay with live filter, returns the chosen command index.
+- `form.rs` — `Form` (field stack + optional actions footer; tokenized gaps; pure widget
+  composition, no recipe).
+- `auth_card.rs` — `AuthCard` (+ `AuthCardResponse`): centered, width-constrained login card
+  composing `Card`/`FormField`/`TextField`/`Button` (+ optional remember `Checkbox` and secondary
+  `Link`). Returns which actions fired (`submitted` / `secondary_clicked`).
+- `master_detail.rs` — `MasterDetail`: resizable left list (themed `Sidebar`, bound to
+  `&mut usize`) + central detail pane via `show_inside`. Detail closure receives the selected
+  index. Same `&mut Ui` convention as `DashboardLayout`.

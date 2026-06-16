@@ -9,8 +9,8 @@ use egui_kittest::kittest::Queryable;
 use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, Theme, UiContext};
 use lumen_ui_patterns::{
-    open_command_palette, CommandPalette, DashboardLayout, InspectorPanel, LogEntry, LogPanel,
-    SettingsPage, Sidebar, StatusBar, Toolbar,
+    open_command_palette, AuthCard, CommandPalette, DashboardLayout, Form, InspectorPanel,
+    LogEntry, LogPanel, MasterDetail, SettingsPage, Sidebar, StatusBar, Toolbar,
 };
 use lumen_ui_widgets::{Button, Label};
 
@@ -188,4 +188,115 @@ fn toolbar_and_status_bar_render_items() {
     harness.run();
     assert!(harness.query_by_label("File").is_some());
     assert!(harness.query_by_label("Ready").is_some());
+}
+
+#[test]
+fn form_routes_action_click() {
+    let mut harness = Harness::new_ui_state(
+        |ui, submitted: &mut bool| {
+            theme_ctx(ui.ctx(), &dark());
+            Form::new()
+                .field(|ui| {
+                    ui.add(Label::new("EmailField"));
+                })
+                .actions(|ui| {
+                    if ui.add(Button::primary("Submit")).clicked() {
+                        *submitted = true;
+                    }
+                })
+                .show(ui);
+        },
+        false,
+    );
+
+    harness.run();
+    assert!(
+        harness.query_by_label("EmailField").is_some(),
+        "the form renders its field rows"
+    );
+    assert!(!*harness.state(), "no action fired before a click");
+    harness.get_by_label("Submit").click();
+    harness.run();
+    assert!(
+        *harness.state(),
+        "clicking a form action routes to bound state"
+    );
+}
+
+#[derive(Default)]
+struct AuthState {
+    email: String,
+    password: String,
+    remember: bool,
+    submitted: bool,
+}
+
+#[test]
+fn auth_card_renders_fields_and_submits() {
+    let mut harness = Harness::new_ui_state(
+        |ui, state: &mut AuthState| {
+            theme_ctx(ui.ctx(), &dark());
+            let response = AuthCard::new("Welcome back", &mut state.email, &mut state.password)
+                .remember(&mut state.remember)
+                .secondary_link("Forgot password?")
+                .show(ui);
+            if response.submitted {
+                state.submitted = true;
+            }
+        },
+        AuthState::default(),
+    );
+
+    harness.run();
+    for label in [
+        "Welcome back",
+        "Email",
+        "Password",
+        "Remember me",
+        "Sign in",
+        "Forgot password?",
+    ] {
+        assert!(
+            // `query_all`: a Checkbox exposes both a role node and a text run for its label.
+            harness.query_all_by_label(label).next().is_some(),
+            "the auth card renders `{label}`"
+        );
+    }
+    assert!(!harness.state().submitted, "no submit before a click");
+    harness.get_by_label("Sign in").click();
+    harness.run();
+    assert!(
+        harness.state().submitted,
+        "clicking submit reports it on the response"
+    );
+}
+
+#[test]
+fn master_detail_selects_and_updates_detail() {
+    let mut harness = Harness::new_ui_state(
+        |ui, selected: &mut usize| {
+            theme_ctx(ui.ctx(), &dark());
+            MasterDetail::new(selected)
+                .item("Inbox")
+                .item("Sent")
+                .show(ui, |ui, index| {
+                    ui.add(Label::new(format!("Detail-{index}")));
+                });
+        },
+        0usize,
+    );
+
+    harness.run();
+    assert_eq!(*harness.state(), 0, "first entry is selected by default");
+    assert!(
+        harness.query_by_label("Detail-0").is_some(),
+        "the detail pane reflects the default selection"
+    );
+    harness.get_by_label("Sent").click();
+    harness.run();
+    assert_eq!(*harness.state(), 1, "clicking a list entry selects it");
+    assert!(
+        harness.query_by_label("Detail-1").is_some(),
+        "the detail pane follows the selection"
+    );
 }

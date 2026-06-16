@@ -6,16 +6,22 @@
 
 #![forbid(unsafe_code)]
 
+mod auth_card;
 mod bars;
 mod command_palette;
 mod dashboard;
+mod form;
 mod logpanel;
+mod master_detail;
 mod rows;
 mod sidebar;
 
+pub use auth_card::{AuthCard, AuthCardResponse};
 pub use bars::{StatusBar, Toolbar};
 pub use command_palette::{open_command_palette, CommandPalette};
 pub use dashboard::DashboardLayout;
+pub use form::Form;
 pub use logpanel::{LogEntry, LogLevel, LogPanel};
+pub use master_detail::MasterDetail;
 pub use rows::{property_row, InspectorPanel, SettingsPage};
 pub use sidebar::Sidebar;
