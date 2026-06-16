@@ -6,11 +6,15 @@
 use std::sync::Arc;
 
 use crate::context::{Density, UiContext};
+use crate::palette::ThemeMode;
 use crate::recipe::{
     BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant, CardRecipe, SliderRecipe,
     TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
 };
 use crate::tokens::Tokens;
+
+/// Luminance above which a background is treated as a light theme. Mid-grey split.
+const LIGHT_MODE_LUMINANCE_THRESHOLD: f32 = 0.5;
 
 const THEME_KEY: &str = "lumen_theme";
 const CONTEXT_KEY: &str = "lumen_ctx";
@@ -22,6 +26,23 @@ const CONTEXT_KEY: &str = "lumen_ctx";
 pub trait Theme: Send + Sync {
     /// Raw design tokens backing this theme.
     fn tokens(&self) -> &Tokens;
+
+    /// Whether this theme is light or dark. Drives the default hover/active
+    /// emphasis direction for recipes resolved via the pure `*::resolve` helpers
+    /// in [`crate::recipe`] (dark themes lighten on hover, light themes darken).
+    ///
+    /// The default classifies by background luminance, so existing themes need no
+    /// change. A theme that carries an explicit mode (e.g. [`crate::PaletteTheme`])
+    /// overrides this to avoid relying on the heuristic.
+    fn mode(&self) -> ThemeMode {
+        if crate::a11y::relative_luminance(self.tokens().colors.background)
+            > LIGHT_MODE_LUMINANCE_THRESHOLD
+        {
+            ThemeMode::Light
+        } else {
+            ThemeMode::Dark
+        }
+    }
 
     /// Resolve the button recipe for a given variant/state under the current context.
     fn button_recipe(

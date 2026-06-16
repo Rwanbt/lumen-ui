@@ -23,7 +23,7 @@ pub enum ThemeMode {
 }
 
 impl ThemeMode {
-    fn emphasis(self) -> builder::Emphasis {
+    pub(crate) fn emphasis(self) -> builder::Emphasis {
         match self {
             ThemeMode::Dark => builder::lighten,
             ThemeMode::Light => builder::darken,
@@ -52,6 +52,10 @@ impl PaletteTheme {
 impl Theme for PaletteTheme {
     fn tokens(&self) -> &Tokens {
         &self.tokens
+    }
+
+    fn mode(&self) -> ThemeMode {
+        self.mode
     }
 
     fn button_recipe(
@@ -89,5 +93,27 @@ impl Theme for PaletteTheme {
 
     fn apply_to_ctx(&self, ctx: &egui::Context) {
         builder::apply_visuals(&self.tokens, self.mode.is_dark(), self.mode.emphasis(), ctx);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{DarkTheme, LightTheme};
+
+    #[test]
+    fn default_mode_classifies_by_background_luminance() {
+        // DarkTheme/LightTheme do not override `mode()`; they rely on the luminance default.
+        assert_eq!(DarkTheme::new().mode(), ThemeMode::Dark);
+        assert_eq!(LightTheme::new().mode(), ThemeMode::Light);
+    }
+
+    #[test]
+    fn palette_theme_honors_explicit_mode() {
+        // A PaletteTheme must report its declared mode regardless of background luminance.
+        let dark_palette = PaletteTheme::new(DarkTheme::new().tokens().clone(), ThemeMode::Dark);
+        let light_palette = PaletteTheme::new(LightTheme::new().tokens().clone(), ThemeMode::Light);
+        assert_eq!(dark_palette.mode(), ThemeMode::Dark);
+        assert_eq!(light_palette.mode(), ThemeMode::Light);
     }
 }

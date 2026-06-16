@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 15:30** — do not edit manually.
+> **Auto-generated 2026-06-16 03:12** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -20,11 +20,11 @@ workspace depends on this crate; it depends only on `egui`.
 | `dark.rs` | 184 | |
 | `lib.rs` | 37 | |
 | `light.rs` | 99 | |
-| `palette.rs` | 75 | |
+| `palette.rs` | 94 | |
 | `recipe.rs` | 104 | |
-| `theme.rs` | 88 | |
+| `theme.rs` | 107 | |
 | `tokens.rs` | 138 | |
-| **Total** | **1245** | |
+| **Total** | **1283** | |
 
 ## Rust API
 - `AuditReport` (struct)
