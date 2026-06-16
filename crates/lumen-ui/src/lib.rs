@@ -30,9 +30,13 @@ pub use lumen_ui_core as core;
 #[cfg(feature = "theme")]
 #[doc(inline)]
 pub use lumen_ui_core::{
-    a11y, anim, install, set_theme, BadgeRecipe, BadgeVariant, ButtonRecipe, ButtonVariant,
-    CardRecipe, Colors, ContrastLevel, DarkTheme, Density, Elevation, LightTheme, Motion,
-    PaletteTheme, Radius, SliderRecipe, Spacing, TextFieldRecipe, TextRecipe, TextRole, Theme,
+    a11y, anim, install, set_theme, AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe,
+    BadgeVariant, BreadcrumbRecipe, ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe,
+    CircularProgressRecipe, CodeRecipe, Colors, ContrastLevel, DarkTheme, Density, DividerRecipe,
+    Elevation, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe, LightTheme,
+    LinkRecipe, MenuRecipe, Motion, PaginationRecipe, PaletteTheme, ProgressRecipe, Radius,
+    RatingRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe,
+    StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe, TextRecipe, TextRole, Theme,
     ThemeMode, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
 };
 
@@ -47,9 +51,12 @@ pub use lumen_ui_icons::{Icon, IconKind};
 #[cfg(feature = "widgets")]
 #[doc(inline)]
 pub use lumen_ui_widgets::{
-    close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error, toast_success,
-    toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Heading, Label, Modal,
-    RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,
+    close_modal, context_menu, hover_card, open_modal, popover, show_toasts, toast, toast_error,
+    toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
+    Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider, DropdownMenu, EmptyState,
+    FormField, Heading, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup,
+    Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table,
+    Tabs, TextField, Textarea, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -58,7 +65,7 @@ pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, 
 
 #[cfg(feature = "motion")]
 #[doc(inline)]
-pub use lumen_ui_motion::{ease, fade, Easing, Spring};
+pub use lumen_ui_motion::{ease, fade, reduced_motion, set_reduced_motion, Easing, Spring};
 
 #[cfg(feature = "patterns")]
 #[doc(inline)]
@@ -79,7 +86,7 @@ pub mod prelude {
     #[cfg(feature = "layout")]
     pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
     #[cfg(feature = "motion")]
-    pub use lumen_ui_motion::{ease, fade, Easing, Spring};
+    pub use lumen_ui_motion::{ease, fade, reduced_motion, set_reduced_motion, Easing, Spring};
     #[cfg(feature = "patterns")]
     pub use lumen_ui_patterns::{
         open_command_palette, property_row, CommandPalette, DashboardLayout, InspectorPanel,
@@ -89,8 +96,11 @@ pub mod prelude {
     pub use lumen_ui_themes::{audio_dark, high_contrast};
     #[cfg(feature = "widgets")]
     pub use lumen_ui_widgets::{
-        close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
-        toast_success, toast_warning, tooltip, Accordion, Badge, Button, Card, Checkbox, Heading,
-        Label, Modal, RadioGroup, Select, Slider, Switch, Tabs, TextField, ToastVariant,
+        close_modal, context_menu, hover_card, open_modal, popover, show_toasts, toast,
+        toast_error, toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge,
+        Breadcrumb, Button, Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider,
+        DropdownMenu, EmptyState, FormField, Heading, IconButton, Kbd, Label, Link, Modal,
+        Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider,
+        Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, ToastVariant,
     };
 }

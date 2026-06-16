@@ -29,6 +29,28 @@ pub use transitions::fade;
 
 use egui::{Context, Id};
 
+const REDUCED_MOTION_KEY: &str = "lumen_reduced_motion";
+
+/// Enable or disable **reduced motion** for the whole context (accessibility:
+/// respects users who prefer minimal animation). When on, [`ease`] — and therefore
+/// [`fade`] and any widget that animates through it — resolves to its target
+/// instantly, with no tween and no repaint request.
+///
+/// Wire this from the host's `prefers-reduced-motion` signal at startup, e.g.
+/// `set_reduced_motion(ctx, ctx.input(|i| i.raw.system_theme).is_some() /* + OS query */)`.
+pub fn set_reduced_motion(ctx: &Context, reduced: bool) {
+    ctx.data_mut(|d| d.insert_persisted(Id::new(REDUCED_MOTION_KEY), reduced));
+}
+
+/// Whether reduced motion is currently enabled (default `false`).
+#[must_use]
+pub fn reduced_motion(ctx: &Context) -> bool {
+    ctx.data_mut(|d| {
+        d.get_persisted::<bool>(Id::new(REDUCED_MOTION_KEY))
+            .unwrap_or(false)
+    })
+}
+
 #[derive(Clone, Copy, Default)]
 struct TweenState {
     from: f32,
@@ -42,6 +64,10 @@ struct TweenState {
 /// Returns the current eased value. When `target` changes, the tween restarts from
 /// the value reached so far. `id` must be stable across frames.
 pub fn ease(ctx: &Context, id: Id, target: f32, duration: f32, easing: Easing) -> f32 {
+    // Accessibility: skip the tween entirely when reduced motion is requested.
+    if reduced_motion(ctx) {
+        return target;
+    }
     let now = ctx.input(|i| i.time);
     let mut state: TweenState = ctx.data_mut(|d| d.get_temp(id).unwrap_or_default());
 
@@ -75,4 +101,37 @@ fn current_value(state: TweenState, now: f64, duration: f32, easing: Easing) -> 
     let elapsed = (now - state.start_time) as f32;
     let t = (elapsed / duration).clamp(0.0, 1.0);
     state.from + (state.to - state.from) * easing.eval(t)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn reduced_motion_defaults_off() {
+        let ctx = Context::default();
+        assert!(!reduced_motion(&ctx));
+    }
+
+    #[test]
+    fn reduced_motion_makes_ease_instant() {
+        let ctx = Context::default();
+        set_reduced_motion(&ctx, true);
+        // With a long duration, a normal tween would return ~`from` (0) on first call;
+        // reduced motion must jump straight to the target instead.
+        let value = ease(&ctx, Id::new("t"), 1.0, 10.0, Easing::EaseOut);
+        assert_eq!(
+            value, 1.0,
+            "reduced motion resolves to the target instantly"
+        );
+    }
+
+    #[test]
+    fn reduced_motion_is_togglable() {
+        let ctx = Context::default();
+        set_reduced_motion(&ctx, true);
+        assert!(reduced_motion(&ctx));
+        set_reduced_motion(&ctx, false);
+        assert!(!reduced_motion(&ctx));
+    }
 }

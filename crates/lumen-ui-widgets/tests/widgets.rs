@@ -14,8 +14,11 @@ use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
-    close_modal, open_modal, show_toasts, toast_success, Accordion, Button, Checkbox, Label, Modal,
-    RadioGroup, Select, Slider, Switch, Tabs, TextField,
+    close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
+    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, Divider, DropdownMenu, EmptyState,
+    FormField, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
+    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
+    TextField, Textarea,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -43,6 +46,9 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut on = true;
         let mut checked = false;
         let mut value = 0.5_f32;
+        let mut segment = 0usize;
+        let mut stars = 3u32;
+        let mut notes = String::from("multi\nline");
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -52,11 +58,82 @@ fn every_widget_renders_under_all_built_in_themes() {
             ui.add(Switch::new(&mut on));
             ui.add(Checkbox::new(&mut checked, "Accept"));
             ui.add(Slider::new(&mut value, 0.0..=1.0));
+            // Spinner is animated (requests repaint every frame) so it is covered by a
+            // separate `step()` test below; `run()` would never converge with it present.
+            ui.add(Progress::new(value));
+            ui.add(Divider::horizontal());
+            ui.add(Alert::warning("Heads up").title("Notice"));
+            ui.add(Skeleton::new(120.0, 16.0));
+            ui.add(Avatar::new("Ada Lovelace"));
+            ui.add(Kbd::new("Ctrl"));
+            Chip::new("tag").removable().show(ui);
+            ui.add(Stat::new("Revenue", "$12.4k").delta("+8%", true));
+            Breadcrumb::new()
+                .item("Home")
+                .item("Docs")
+                .item("API")
+                .show(ui);
+            SegmentedControl::new(&mut segment)
+                .segment("Day")
+                .segment("Week")
+                .show(ui);
+            Pagination::new(1, 3).show(ui);
+            ui.add(EmptyState::new("No results").message("Try another filter"));
+            ui.add(Link::new("Learn more"));
+            ui.add(CircularProgress::new(value));
+            Rating::new(&mut stars).show(ui);
+            ui.add(Code::new("cargo build"));
+            Stepper::new(1)
+                .step("Account")
+                .step("Profile")
+                .step("Done")
+                .show(ui);
+            Table::new("demo-table")
+                .column("Name")
+                .column("Role")
+                .row(["Ada", "Engineer"])
+                .row(["Linus", "Maintainer"])
+                .show(ui);
+            ui.add(IconButton::new(Label::new("+")));
+            let menu_trigger = ui.add(Button::secondary("Menu"));
+            DropdownMenu::new()
+                .item("New")
+                .item("Open")
+                .show(&menu_trigger);
+            let info = ui.add(Label::new("info"));
+            hover_card(info, |ui| {
+                ui.add(Label::new("details"));
+            });
+            ui.add(Textarea::new(&mut notes).hint("Notes"));
+            FormField::new("Email")
+                .hint("We'll never share it")
+                .show(ui, |ui| {
+                    ui.add(Label::new("control"));
+                });
         });
 
         // A panic inside `run` fails the test and names the offending theme.
         harness.run();
         assert!(!name.is_empty());
+    }
+}
+
+#[test]
+fn spinner_renders_under_all_themes() {
+    // The spinner animates (requests repaint each frame), so drive single frames
+    // with `step()` rather than `run()`, which would never converge.
+    let themes: [Arc<dyn Theme>; 4] = [
+        Arc::new(DarkTheme::new()),
+        Arc::new(LightTheme::new()),
+        Arc::new(audio_dark()),
+        Arc::new(high_contrast()),
+    ];
+    for theme in themes {
+        let mut harness = Harness::new_ui(move |ui| {
+            theme_ctx(ui.ctx(), &theme);
+            ui.add(Spinner::new());
+        });
+        harness.step(); // a panic here fails the test
     }
 }
 
@@ -383,5 +460,148 @@ fn toast_renders_pushed_message() {
     assert!(
         harness.query_by_label("Saved").is_some(),
         "a pushed toast renders its message"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Behavioral coverage for the v2 interactive widgets — assert the return value
+// (clicked index / mutated state), not just that they render (added by /review).
+// ---------------------------------------------------------------------------
+
+#[test]
+fn segmented_control_selects_clicked_segment() {
+    let mut harness = Harness::new_ui_state(
+        |ui, selected: &mut usize| {
+            theme_ctx(ui.ctx(), &dark());
+            SegmentedControl::new(selected)
+                .segment("Day")
+                .segment("Week")
+                .show(ui);
+        },
+        0usize,
+    );
+
+    harness.run();
+    assert_eq!(*harness.state(), 0, "first segment selected by default");
+    harness.get_by_label("Week").click();
+    harness.run();
+    assert_eq!(*harness.state(), 1, "clicking a segment selects it");
+}
+
+#[test]
+fn breadcrumb_returns_clicked_ancestor() {
+    let mut harness = Harness::new_ui_state(
+        |ui, clicked: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            if let Some(index) = Breadcrumb::new()
+                .item("Home")
+                .item("Docs")
+                .item("API")
+                .show(ui)
+            {
+                *clicked = Some(index);
+            }
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    harness.get_by_label("Home").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(0),
+        "clicking an ancestor returns its index"
+    );
+}
+
+#[test]
+fn pagination_requests_clicked_page() {
+    let mut harness = Harness::new_ui_state(
+        |ui, requested: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            // current = 1 (0-based) → page label "1" is the clickable page 0.
+            if let Some(page) = Pagination::new(1, 3).show(ui) {
+                *requested = Some(page);
+            }
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    harness.get_by_label("1").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(0),
+        "clicking page '1' requests page index 0"
+    );
+}
+
+#[test]
+fn chip_reports_removed_on_x_click() {
+    let mut harness = Harness::new_ui_state(
+        |ui, removed: &mut bool| {
+            theme_ctx(ui.ctx(), &dark());
+            if Chip::new("tag").removable().show(ui).removed {
+                *removed = true;
+            }
+        },
+        false,
+    );
+
+    harness.run();
+    harness.get_by_label("\u{00d7}").click(); // the × remove affordance
+    harness.run();
+    assert!(*harness.state(), "clicking × reports removed");
+}
+
+#[test]
+fn rating_sets_value_to_clicked_star() {
+    let mut harness = Harness::new_ui_state(
+        |ui, stars: &mut u32| {
+            theme_ctx(ui.ctx(), &dark());
+            Rating::new(stars).show(ui);
+        },
+        3u32,
+    );
+
+    harness.run();
+    // value=3 → stars 1..=3 are filled "★"; click the first filled star → value 1.
+    harness
+        .get_all_by_label("\u{2605}")
+        .next()
+        .expect("a filled star")
+        .click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        1,
+        "clicking the n-th star sets value to n"
+    );
+}
+
+#[test]
+fn dropdown_menu_returns_clicked_item() {
+    let mut harness = Harness::new_ui_state(
+        |ui, chosen: &mut Option<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            let trigger = ui.add(Button::secondary("Menu"));
+            if let Some(index) = DropdownMenu::new().item("New").item("Open").show(&trigger) {
+                *chosen = Some(index);
+            }
+        },
+        None::<usize>,
+    );
+
+    harness.run();
+    harness.get_by_label("Menu").click(); // open the popup
+    harness.run();
+    harness.get_by_label("New").click(); // select first item
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        Some(0),
+        "selecting a menu item returns its index"
     );
 }

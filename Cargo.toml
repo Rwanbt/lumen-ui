@@ -13,6 +13,7 @@ members = [
     "crates/lumen-ui-themes",
     "crates/lumen-ui-icons",
     "tools/lumen-theme-gen",
+    "tools/lumen-icon-gen",
     "crates/lumen-ui",
 ]
 

@@ -1,24 +1,28 @@
-//! [`TextField`] — a themed single-line text input.
+//! [`Textarea`] — a themed multi-line text input (mirrors [`crate::TextField`]).
 
 use egui::{Frame, Response, TextEdit, Ui, Widget};
 use lumen_ui_core::{UiThemeExt, WidgetState};
 
-/// A single-line text input bound to a `&mut String`. The border highlights when
-/// focused (read from the previous frame, like [`crate::Button`]).
+/// Default visible rows before scrolling.
+const DEFAULT_ROWS: usize = 4;
+
+/// A multi-line text input bound to a `&mut String`. Reuses the theme's
+/// [`lumen_ui_core::TextFieldRecipe`]; the border highlights when focused
+/// (read from the previous frame, like [`crate::TextField`]).
 #[derive(Debug)]
-pub struct TextField<'a> {
+pub struct Textarea<'a> {
     text: &'a mut String,
     hint: String,
-    password: bool,
+    rows: usize,
 }
 
-impl<'a> TextField<'a> {
+impl<'a> Textarea<'a> {
     #[must_use]
     pub fn new(text: &'a mut String) -> Self {
         Self {
             text,
             hint: String::new(),
-            password: false,
+            rows: DEFAULT_ROWS,
         }
     }
 
@@ -29,13 +33,13 @@ impl<'a> TextField<'a> {
     }
 
     #[must_use]
-    pub fn password(mut self, password: bool) -> Self {
-        self.password = password;
+    pub fn rows(mut self, rows: usize) -> Self {
+        self.rows = rows;
         self
     }
 }
 
-impl Widget for TextField<'_> {
+impl Widget for Textarea<'_> {
     fn ui(self, ui: &mut Ui) -> Response {
         let id = ui.next_auto_id();
         let was_focused = ui.ctx().read_response(id).is_some_and(|r| r.has_focus());
@@ -55,12 +59,12 @@ impl Widget for TextField<'_> {
             .inner_margin(crate::util::margin(recipe.inner_margin))
             .show(ui, |ui| {
                 ui.add(
-                    TextEdit::singleline(self.text)
+                    TextEdit::multiline(self.text)
                         .id(id)
                         .frame(Frame::NONE)
                         .hint_text(self.hint.as_str())
                         .text_color(recipe.text_color)
-                        .password(self.password)
+                        .desired_rows(self.rows)
                         .desired_width(f32::INFINITY),
                 )
             })

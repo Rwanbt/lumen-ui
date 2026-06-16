@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 15:30** — do not edit manually.
+> **Auto-generated 2026-06-16 09:35** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -18,35 +18,58 @@ workspace depends on this crate; it depends only on `egui`.
 | `builder.rs` | 210 | |
 | `context.rs` | 57 | |
 | `dark.rs` | 184 | |
-| `lib.rs` | 37 | |
+| `lib.rs` | 42 | |
 | `light.rs` | 99 | |
-| `palette.rs` | 75 | |
-| `recipe.rs` | 104 | |
-| `theme.rs` | 88 | |
+| `palette.rs` | 94 | |
+| `recipe.rs` | 607 | ⚠️ |
+| `theme.rs` | 107 | |
 | `tokens.rs` | 138 | |
-| **Total** | **1245** | |
+| **Total** | **1791** | |
 
 ## Rust API
+- `AlertRecipe` (struct)
 - `AuditReport` (struct)
+- `AvatarRecipe` (struct)
 - `BadgeRecipe` (struct)
+- `BreadcrumbRecipe` (struct)
 - `ButtonRecipe` (struct)
 - `CardRecipe` (struct)
+- `ChipRecipe` (struct)
+- `CircularProgressRecipe` (struct)
+- `CodeRecipe` (struct)
 - `Colors` (struct)
 - `ContrastCheck` (struct)
 - `DarkTheme` (struct)
+- `DividerRecipe` (struct)
 - `Elevation` (struct)
+- `EmptyStateRecipe` (struct)
+- `FormFieldRecipe` (struct)
+- `IconButtonRecipe` (struct)
+- `KbdRecipe` (struct)
 - `LightTheme` (struct)
+- `LinkRecipe` (struct)
+- `MenuRecipe` (struct)
 - `Motion` (struct)
+- `PaginationRecipe` (struct)
 - `PaletteTheme` (struct)
+- `ProgressRecipe` (struct)
 - `Radius` (struct)
+- `RatingRecipe` (struct)
+- `SegmentedRecipe` (struct)
+- `SkeletonRecipe` (struct)
 - `SliderRecipe` (struct)
 - `Spacing` (struct)
+- `SpinnerRecipe` (struct)
+- `StatRecipe` (struct)
+- `StepperRecipe` (struct)
+- `TableRecipe` (struct)
 - `TextFieldRecipe` (struct)
 - `TextRecipe` (struct)
 - `ToggleRecipe` (struct)
 - `Tokens` (struct)
 - `Typography` (struct)
 - `UiContext` (struct)
+- `AlertVariant` (enum)
 - `BadgeVariant` (enum)
 - `ButtonVariant` (enum)
 - `ContrastLevel` (enum)

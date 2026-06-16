@@ -38,6 +38,13 @@ impl eframe::App for App {
             (Icon::minus(), "minus"),
             (Icon::search(), "search"),
             (Icon::menu(), "menu"),
+            // Generated from Lucide SVGs via tools/lumen-icon-gen (ADR-0008):
+            (Icon::arrow_right(), "arrow_right"),
+            (Icon::arrow_left(), "arrow_left"),
+            (Icon::arrow_up(), "arrow_up"),
+            (Icon::arrow_down(), "arrow_down"),
+            (Icon::chevron_left(), "chevron_left"),
+            (Icon::chevron_up(), "chevron_up"),
         ];
         for (icon, name) in icons {
             ui.horizontal(|ui| {
