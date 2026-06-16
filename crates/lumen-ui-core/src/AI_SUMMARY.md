@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 03:15** — do not edit manually.
+> **Auto-generated 2026-06-16 03:23** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -21,12 +21,13 @@ workspace depends on this crate; it depends only on `egui`.
 | `lib.rs` | 38 | |
 | `light.rs` | 99 | |
 | `palette.rs` | 94 | |
-| `recipe.rs` | 158 | |
+| `recipe.rs` | 213 | |
 | `theme.rs` | 107 | |
 | `tokens.rs` | 138 | |
-| **Total** | **1338** | |
+| **Total** | **1393** | |
 
 ## Rust API
+- `AlertRecipe` (struct)
 - `AuditReport` (struct)
 - `BadgeRecipe` (struct)
 - `ButtonRecipe` (struct)
@@ -41,6 +42,7 @@ workspace depends on this crate; it depends only on `egui`.
 - `PaletteTheme` (struct)
 - `ProgressRecipe` (struct)
 - `Radius` (struct)
+- `SkeletonRecipe` (struct)
 - `SliderRecipe` (struct)
 - `Spacing` (struct)
 - `SpinnerRecipe` (struct)
@@ -50,6 +52,7 @@ workspace depends on this crate; it depends only on `egui`.
 - `Tokens` (struct)
 - `Typography` (struct)
 - `UiContext` (struct)
+- `AlertVariant` (enum)
 - `BadgeVariant` (enum)
 - `ButtonVariant` (enum)
 - `ContrastLevel` (enum)

@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 03:17** — do not edit manually.
+> **Auto-generated 2026-06-16 03:24** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,18 +13,20 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | File | LOC | |
 |------|-----|--|
 | `accordion.rs` | 31 | |
+| `alert.rs` | 60 | |
 | `badge.rs` | 52 | |
 | `button.rs` | 105 | |
 | `card.rs` | 28 | |
 | `checkbox.rs` | 63 | |
 | `divider.rs` | 51 | |
 | `focus.rs` | 27 | |
-| `lib.rs` | 43 | |
+| `lib.rs` | 47 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 29 | |
 | `progress.rs` | 31 | |
 | `radio.rs` | 81 | |
 | `select.rs` | 41 | |
+| `skeleton.rs` | 23 | |
 | `slider.rs` | 98 | |
 | `spinner.rs` | 25 | |
 | `switch.rs` | 58 | |
@@ -32,10 +34,11 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
 | `toast.rs` | 100 | |
-| **Total** | **1090** | |
+| **Total** | **1177** | |
 
 ## Rust API
 - `Accordion` (struct)
+- `Alert` (struct)
 - `Badge` (struct)
 - `Button` (struct)
 - `Card` (struct)
@@ -47,6 +50,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Progress` (struct)
 - `RadioGroup` (struct)
 - `Select` (struct)
+- `Skeleton` (struct)
 - `Slider` (struct)
 - `Spinner` (struct)
 - `Switch` (struct)

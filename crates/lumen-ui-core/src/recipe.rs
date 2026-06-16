@@ -9,6 +9,8 @@ use egui::{Color32, CornerRadius, Shadow, Stroke, Vec2};
 use crate::context::UiContext;
 use crate::tokens::Tokens;
 
+/// Background tint opacity for an alert over the surface, in `0..=255`.
+const ALERT_TINT_ALPHA: u8 = 28;
 /// Base diameter of a spinner before density scaling, in points.
 const SPINNER_BASE_SIZE: f32 = 24.0;
 /// Base height of a linear progress bar before density scaling, in points.
@@ -190,6 +192,69 @@ impl DividerRecipe {
         Self {
             color: tokens.colors.border,
             thickness: DIVIDER_THICKNESS,
+        }
+    }
+}
+
+/// Semantic flavor of an inline alert / banner.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum AlertVariant {
+    Info,
+    Success,
+    Warning,
+    Danger,
+}
+
+/// Resolved style for an inline alert. `fill` is a low-opacity tint of `accent`
+/// so it reads as a colored banner over the surface; `accent` colors the border
+/// and the (optional) title.
+#[derive(Clone, Copy, Debug)]
+pub struct AlertRecipe {
+    pub fill: Color32,
+    pub accent: Color32,
+    pub text_color: Color32,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+}
+
+impl AlertRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, variant: AlertVariant, ctx: &UiContext) -> Self {
+        let c = &tokens.colors;
+        let accent = match variant {
+            AlertVariant::Info => c.primary,
+            AlertVariant::Success => c.success,
+            AlertVariant::Warning => c.warning,
+            AlertVariant::Danger => c.danger,
+        };
+        let fill =
+            Color32::from_rgba_unmultiplied(accent.r(), accent.g(), accent.b(), ALERT_TINT_ALPHA);
+        let scale = ctx.density_scale();
+        Self {
+            fill,
+            accent,
+            text_color: c.text,
+            corner_radius: tokens.radius.md,
+            inner_margin: Vec2::new(tokens.spacing.md * scale, tokens.spacing.sm * scale),
+        }
+    }
+}
+
+/// Resolved style for a skeleton loading placeholder.
+#[derive(Clone, Copy, Debug)]
+pub struct SkeletonRecipe {
+    pub fill: Color32,
+    pub corner_radius: CornerRadius,
+}
+
+impl SkeletonRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            fill: tokens.colors.surface_variant,
+            corner_radius: tokens.radius.sm,
         }
     }
 }

@@ -14,8 +14,9 @@ use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
-    close_modal, open_modal, show_toasts, toast_success, Accordion, Button, Checkbox, Divider,
-    Label, Modal, Progress, RadioGroup, Select, Slider, Spinner, Switch, Tabs, TextField,
+    close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Button, Checkbox,
+    Divider, Label, Modal, Progress, RadioGroup, Select, Skeleton, Slider, Spinner, Switch, Tabs,
+    TextField,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -56,6 +57,8 @@ fn every_widget_renders_under_all_built_in_themes() {
             // separate `step()` test below; `run()` would never converge with it present.
             ui.add(Progress::new(value));
             ui.add(Divider::horizontal());
+            ui.add(Alert::warning("Heads up").title("Notice"));
+            ui.add(Skeleton::new(120.0, 16.0));
         });
 
         // A panic inside `run` fails the test and names the offending theme.

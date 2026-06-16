@@ -9,6 +9,7 @@
 #![warn(missing_debug_implementations)]
 
 mod accordion;
+mod alert;
 mod badge;
 mod button;
 mod card;
@@ -20,6 +21,7 @@ mod overlay;
 mod progress;
 mod radio;
 mod select;
+mod skeleton;
 mod slider;
 mod spinner;
 mod switch;
@@ -29,6 +31,7 @@ mod text_field;
 mod toast;
 
 pub use accordion::Accordion;
+pub use alert::Alert;
 pub use badge::Badge;
 pub use button::Button;
 pub use card::Card;
@@ -39,6 +42,7 @@ pub use overlay::{context_menu, popover, tooltip};
 pub use progress::Progress;
 pub use radio::RadioGroup;
 pub use select::Select;
+pub use skeleton::Skeleton;
 pub use slider::Slider;
 pub use spinner::Spinner;
 pub use switch::Switch;
