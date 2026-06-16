@@ -15,9 +15,9 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Breadcrumb,
-    Button, Checkbox, Chip, CircularProgress, Code, Divider, EmptyState, Kbd, Label, Link, Modal,
-    Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner,
-    Stat, Stepper, Switch, Table, Tabs, TextField,
+    Button, Checkbox, Chip, CircularProgress, Code, Divider, EmptyState, FormField, Kbd, Label,
+    Link, Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton,
+    Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -47,6 +47,7 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut value = 0.5_f32;
         let mut segment = 0usize;
         let mut stars = 3u32;
+        let mut notes = String::from("multi\nline");
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -92,6 +93,12 @@ fn every_widget_renders_under_all_built_in_themes() {
                 .row(["Ada", "Engineer"])
                 .row(["Linus", "Maintainer"])
                 .show(ui);
+            ui.add(Textarea::new(&mut notes).hint("Notes"));
+            FormField::new("Email")
+                .hint("We'll never share it")
+                .show(ui, |ui| {
+                    ui.add(Label::new("control"));
+                });
         });
 
         // A panic inside `run` fails the test and names the offending theme.

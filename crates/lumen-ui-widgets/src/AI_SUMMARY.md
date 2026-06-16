@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 09:03** — do not edit manually.
+> **Auto-generated 2026-06-16 09:15** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -26,8 +26,9 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `divider.rs` | 51 | |
 | `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
+| `form_field.rs` | 62 | |
 | `kbd.rs` | 34 | |
-| `lib.rs` | 75 | |
+| `lib.rs` | 79 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 29 | |
@@ -47,8 +48,9 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
+| `textarea.rs` | 64 | |
 | `toast.rs` | 100 | |
-| **Total** | **1942** | |
+| **Total** | **2072** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -65,6 +67,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Code` (struct)
 - `Divider` (struct)
 - `EmptyState` (struct)
+- `FormField` (struct)
 - `Heading` (struct)
 - `Kbd` (struct)
 - `Label` (struct)
@@ -85,6 +88,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Table` (struct)
 - `Tabs` (struct)
 - `TextField` (struct)
+- `Textarea` (struct)
 - `ToastVariant` (enum)
 
 ## Rust Functions

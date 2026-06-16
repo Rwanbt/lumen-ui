@@ -10,6 +10,44 @@
 
 ---
 
+## Avancement (mis à jour 2026-06-16) — branche `feat/v2-catalogue`
+
+> Slice horizontale de widgets à faible risque réalisée en autonomie, plus la fondation et le PoC
+> icônes. La progression est transverse (v1.1–v1.5, v1.8), pas jalon-par-jalon.
+> Légende : ✅ fait · 🟡 partiel · ⬜ à faire.
+
+**Pré-requis**
+- [x] **ADR-0008** — icônes SVG→painter par codegen (tranché + PoC `tools/lumen-icon-gen` prouvé)
+- [x] **ADR-0009** — trait `Theme` : `mode()` additif + recettes en fonctions pures (non-breaking)
+
+**Jalons**
+- 🟡 **v1.1 Frozen-core evolution** — [x] `Theme::mode()` ; [x] variants Danger/Warning/Success
+  (Button/Badge/Alert) ; [ ] `IconButton` helper
+- 🟡 **v1.2 Overlays & feedback** — [x] Alert · Progress · CircularProgress · Spinner · Skeleton ·
+  EmptyState ; [x] Tooltip/Popover/ContextMenu (préexistants) ; [ ] DropdownMenu · HoverCard
+- 🟡 **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
+  [ ] DataGrid (tri/virtualisation) · DescriptionList · Timeline · Calendar · Carousel
+- 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating ; [ ] Textarea · NumberInput ·
+  RangeSlider · Combobox · MultiSelect · DatePicker · TimePicker · ColorPicker · FileUpload · Form
+- 🟡 **v1.5 Icônes à l'échelle** — [x] PoC pipeline codegen (ADR-0008) ; [ ] set Lucide curé
+  intégré dans `lumen-ui-icons`
+- ⬜ **v1.6 Motion v2** — slide/scale, enter/exit, stagger, FLIP, `prefers-reduced-motion`
+- ⬜ **v1.7 Layout v2** — grille fractionnaire, template-areas, sticky, container, resizable
+- 🟡 **v1.8 Navigation & patterns** — [x] Breadcrumb · Pagination · Stepper ; [ ] Drawer · TreeView ·
+  Form layout · AuthCard · MasterDetail · Wizard · DataTable pattern
+- ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
+- ⬜ **v1.10 Crate `lumen-ui-audio`** — Knob · Fader · VU meter · Waveform · XY pad
+- ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer
+
+**Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,
+Kbd, Stat, Breadcrumb, SegmentedControl, Pagination, EmptyState, Link, CircularProgress, Rating,
+Stepper, Code, Table. (Chacun : recette pure `XxxRecipe::resolve` + couverture test multi-thèmes.)
+
+**Décisions restantes (hors autonomie)** : DataGrid → ADR `egui_extras` ; pickers/combobox →
+conception d'état ; crate audio → validation sur app réelle.
+
+---
+
 ## 0. Pré-requis architecturaux (à trancher AVANT le catalogue)
 
 Deux décisions bloquent l'expansion. Chacune mérite un ADR.

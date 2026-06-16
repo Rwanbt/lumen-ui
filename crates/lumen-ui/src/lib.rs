@@ -33,11 +33,11 @@ pub use lumen_ui_core::{
     a11y, anim, install, set_theme, AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe,
     BadgeVariant, BreadcrumbRecipe, ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe,
     CircularProgressRecipe, CodeRecipe, Colors, ContrastLevel, DarkTheme, Density, DividerRecipe,
-    Elevation, EmptyStateRecipe, KbdRecipe, LightTheme, LinkRecipe, Motion, PaginationRecipe,
-    PaletteTheme, ProgressRecipe, Radius, RatingRecipe, SegmentedRecipe, SkeletonRecipe,
-    SliderRecipe, Spacing, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe,
-    TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens, Typography, UiContext,
-    UiThemeExt, WidgetState,
+    Elevation, EmptyStateRecipe, FormFieldRecipe, KbdRecipe, LightTheme, LinkRecipe, Motion,
+    PaginationRecipe, PaletteTheme, ProgressRecipe, Radius, RatingRecipe, SegmentedRecipe,
+    SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe,
+    TextFieldRecipe, TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens, Typography,
+    UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]
@@ -53,9 +53,10 @@ pub use lumen_ui_icons::{Icon, IconKind};
 pub use lumen_ui_widgets::{
     close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error, toast_success,
     toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Card, Checkbox,
-    Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, Heading, Kbd, Label, Link,
-    Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider,
-    Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, ToastVariant,
+    Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, FormField, Heading, Kbd,
+    Label, Link, Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select,
+    Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea,
+    ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -97,9 +98,9 @@ pub mod prelude {
     pub use lumen_ui_widgets::{
         close_modal, context_menu, open_modal, popover, show_toasts, toast, toast_error,
         toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
-        Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, Heading,
-        Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl,
-        Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField,
-        ToastVariant,
+        Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, FormField,
+        Heading, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
+        SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
+        TextField, Textarea, ToastVariant,
     };
 }

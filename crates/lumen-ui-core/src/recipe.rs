@@ -641,3 +641,30 @@ impl TableRecipe {
         }
     }
 }
+
+/// Resolved style for a `FormField` wrapper (label + control + hint/error).
+#[derive(Clone, Copy, Debug)]
+pub struct FormFieldRecipe {
+    pub label_color: Color32,
+    pub hint_color: Color32,
+    pub error_color: Color32,
+    pub label_size: f32,
+    pub hint_size: f32,
+    /// Vertical gap between label, control and the hint/error line.
+    pub gap: f32,
+}
+
+impl FormFieldRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            label_color: tokens.colors.text,
+            hint_color: tokens.colors.text_muted,
+            error_color: tokens.colors.danger,
+            label_size: tokens.typography.label,
+            hint_size: tokens.typography.label,
+            gap: tokens.spacing.xs * ctx.density_scale(),
+        }
+    }
+}
