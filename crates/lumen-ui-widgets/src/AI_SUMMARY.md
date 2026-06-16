@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 08:53** — do not edit manually.
+> **Auto-generated 2026-06-16 08:57** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -21,12 +21,13 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `card.rs` | 28 | |
 | `checkbox.rs` | 63 | |
 | `chip.rs` | 64 | |
-| `circular_progress.rs` | 43 | |
+| `circular_progress.rs` | 46 | |
+| `code.rs` | 34 | |
 | `divider.rs` | 51 | |
 | `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
 | `kbd.rs` | 34 | |
-| `lib.rs` | 69 | |
+| `lib.rs` | 73 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 29 | |
@@ -40,12 +41,13 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `slider.rs` | 98 | |
 | `spinner.rs` | 25 | |
 | `stat.rs` | 50 | |
+| `stepper.rs` | 76 | |
 | `switch.rs` | 58 | |
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
 | `toast.rs` | 100 | |
-| **Total** | **1750** | |
+| **Total** | **1867** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -59,6 +61,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Chip` (struct)
 - `ChipResponse` (struct)
 - `CircularProgress` (struct)
+- `Code` (struct)
 - `Divider` (struct)
 - `EmptyState` (struct)
 - `Heading` (struct)
@@ -76,6 +79,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Slider` (struct)
 - `Spinner` (struct)
 - `Stat` (struct)
+- `Stepper` (struct)
 - `Switch` (struct)
 - `Tabs` (struct)
 - `TextField` (struct)

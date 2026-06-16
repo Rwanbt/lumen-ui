@@ -11,6 +11,8 @@ use crate::tokens::Tokens;
 
 /// Background tint opacity for an alert over the surface, in `0..=255`.
 const ALERT_TINT_ALPHA: u8 = 28;
+/// Base diameter of a stepper step circle before density scaling, in points.
+const STEPPER_BASE_CIRCLE: f32 = 24.0;
 /// Base diameter of a circular progress ring before density scaling, in points.
 const CIRCULAR_PROGRESS_BASE_SIZE: f32 = 36.0;
 /// Ring stroke thickness as a fraction of the ring diameter.
@@ -540,6 +542,74 @@ impl RatingRecipe {
             filled: tokens.colors.warning,
             empty: tokens.colors.text_muted,
             size: tokens.typography.heading,
+        }
+    }
+}
+
+/// Resolved style for a `Stepper` (multi-step progress indicator).
+#[derive(Clone, Copy, Debug)]
+pub struct StepperRecipe {
+    /// Circle fill for reached (done/active) steps.
+    pub active_fill: Color32,
+    /// Number color on reached steps.
+    pub active_text: Color32,
+    /// Circle fill for upcoming steps.
+    pub inactive_fill: Color32,
+    /// Number color on upcoming steps.
+    pub inactive_text: Color32,
+    /// Connector color before a reached step.
+    pub connector_done: Color32,
+    /// Connector color before an upcoming step.
+    pub connector_todo: Color32,
+    /// Label color for reached steps.
+    pub label_active: Color32,
+    /// Label color for upcoming steps.
+    pub label_inactive: Color32,
+    pub circle_size: f32,
+    pub text_size: f32,
+}
+
+impl StepperRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let c = &tokens.colors;
+        Self {
+            active_fill: c.primary,
+            active_text: c.on_primary,
+            inactive_fill: c.surface_variant,
+            inactive_text: c.text_muted,
+            connector_done: c.primary,
+            connector_todo: c.border,
+            label_active: c.text,
+            label_inactive: c.text_muted,
+            circle_size: STEPPER_BASE_CIRCLE * ctx.density_scale(),
+            text_size: tokens.typography.label,
+        }
+    }
+}
+
+/// Resolved style for an inline `Code` span.
+#[derive(Clone, Copy, Debug)]
+pub struct CodeRecipe {
+    pub fill: Color32,
+    pub text_color: Color32,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+    pub text_size: f32,
+}
+
+impl CodeRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            fill: tokens.colors.surface_variant,
+            text_color: tokens.colors.text,
+            corner_radius: tokens.radius.sm,
+            inner_margin: Vec2::new(tokens.spacing.xs * scale, tokens.spacing.xs * scale),
+            text_size: tokens.typography.body,
         }
     }
 }
