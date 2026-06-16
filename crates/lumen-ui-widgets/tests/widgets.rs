@@ -17,7 +17,7 @@ use lumen_ui_widgets::{
     close_modal, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar, Breadcrumb,
     Button, Checkbox, Chip, CircularProgress, Code, Divider, EmptyState, Kbd, Label, Link, Modal,
     Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner,
-    Stat, Stepper, Switch, Tabs, TextField,
+    Stat, Stepper, Switch, Table, Tabs, TextField,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -85,6 +85,12 @@ fn every_widget_renders_under_all_built_in_themes() {
                 .step("Account")
                 .step("Profile")
                 .step("Done")
+                .show(ui);
+            Table::new("demo-table")
+                .column("Name")
+                .column("Role")
+                .row(["Ada", "Engineer"])
+                .row(["Linus", "Maintainer"])
                 .show(ui);
         });
 

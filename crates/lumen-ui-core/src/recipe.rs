@@ -613,3 +613,31 @@ impl CodeRecipe {
         }
     }
 }
+
+/// Resolved style for a `Table`.
+#[derive(Clone, Copy, Debug)]
+pub struct TableRecipe {
+    /// Color of header cell text.
+    pub header_color: Color32,
+    /// Color of body cell text.
+    pub cell_color: Color32,
+    pub header_size: f32,
+    pub cell_size: f32,
+    /// Spacing between cells (x = columns, y = rows).
+    pub spacing: Vec2,
+}
+
+impl TableRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            header_color: tokens.colors.text_muted,
+            cell_color: tokens.colors.text,
+            header_size: tokens.typography.label,
+            cell_size: tokens.typography.body,
+            spacing: Vec2::new(tokens.spacing.md * scale, tokens.spacing.sm * scale),
+        }
+    }
+}

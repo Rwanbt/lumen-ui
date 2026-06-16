@@ -35,9 +35,9 @@ pub use lumen_ui_core::{
     CircularProgressRecipe, CodeRecipe, Colors, ContrastLevel, DarkTheme, Density, DividerRecipe,
     Elevation, EmptyStateRecipe, KbdRecipe, LightTheme, LinkRecipe, Motion, PaginationRecipe,
     PaletteTheme, ProgressRecipe, Radius, RatingRecipe, SegmentedRecipe, SkeletonRecipe,
-    SliderRecipe, Spacing, SpinnerRecipe, StatRecipe, StepperRecipe, TextFieldRecipe, TextRecipe,
-    TextRole, Theme, ThemeMode, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt,
-    WidgetState,
+    SliderRecipe, Spacing, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe,
+    TextRecipe, TextRole, Theme, ThemeMode, ToggleRecipe, Tokens, Typography, UiContext,
+    UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]
@@ -55,7 +55,7 @@ pub use lumen_ui_widgets::{
     toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Card, Checkbox,
     Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, Heading, Kbd, Label, Link,
     Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl, Select, Skeleton, Slider,
-    Spinner, Stat, Stepper, Switch, Tabs, TextField, ToastVariant,
+    Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -99,6 +99,7 @@ pub mod prelude {
         toast_success, toast_warning, tooltip, Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
         Card, Checkbox, Chip, ChipResponse, CircularProgress, Code, Divider, EmptyState, Heading,
         Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating, SegmentedControl,
-        Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Tabs, TextField, ToastVariant,
+        Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField,
+        ToastVariant,
     };
 }

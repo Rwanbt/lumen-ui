@@ -39,7 +39,7 @@ pub use recipe::{
     ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe, CircularProgressRecipe, CodeRecipe,
     DividerRecipe, EmptyStateRecipe, KbdRecipe, LinkRecipe, PaginationRecipe, ProgressRecipe,
     RatingRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe,
-    StepperRecipe, TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
+    StepperRecipe, TableRecipe, TextFieldRecipe, TextRecipe, TextRole, ToggleRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};

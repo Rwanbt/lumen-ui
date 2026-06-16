@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 08:57** — do not edit manually.
+> **Auto-generated 2026-06-16 09:03** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -27,7 +27,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `empty_state.rs` | 43 | |
 | `focus.rs` | 27 | |
 | `kbd.rs` | 34 | |
-| `lib.rs` | 73 | |
+| `lib.rs` | 75 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 29 | |
@@ -41,13 +41,14 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `slider.rs` | 98 | |
 | `spinner.rs` | 25 | |
 | `stat.rs` | 50 | |
-| `stepper.rs` | 76 | |
+| `stepper.rs` | 78 | |
 | `switch.rs` | 58 | |
+| `table.rs` | 71 | |
 | `tabs.rs` | 46 | |
 | `text.rs` | 63 | |
 | `text_field.rs` | 61 | |
 | `toast.rs` | 100 | |
-| **Total** | **1867** | |
+| **Total** | **1942** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -81,6 +82,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Stat` (struct)
 - `Stepper` (struct)
 - `Switch` (struct)
+- `Table` (struct)
 - `Tabs` (struct)
 - `TextField` (struct)
 - `ToastVariant` (enum)
