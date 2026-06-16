@@ -45,3 +45,7 @@ DashboardLayout::new()
 - `wizard.rs` — `Wizard` (+ `WizardResponse`): multi-step flow bound to `&mut usize`; composes
   `Stepper` + body closure (gets the active index) + Back/Next/Finish `Button`s. Last step shows
   Finish (reports `finished`) instead of Next. Pure composition, no recipe.
+- `data_table.rs` — `DataTable` (+ `DataTableState`), **feature `datagrid`** (pulls in
+  `lumen-ui-widgets/datagrid`). Composes a search `TextField` + sortable `DataGrid` + `Pagination`,
+  and owns the filter/sort/paginate logic over string rows. Stateless: query/sort/page live in the
+  caller's `DataTableState`. Filtering + sorting apply to the whole dataset before paging.
