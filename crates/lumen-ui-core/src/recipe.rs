@@ -11,6 +11,10 @@ use crate::tokens::Tokens;
 
 /// Background tint opacity for an alert over the surface, in `0..=255`.
 const ALERT_TINT_ALPHA: u8 = 28;
+/// Base diameter of an avatar before density scaling, in points.
+const AVATAR_BASE_SIZE: f32 = 36.0;
+/// Avatar initials font size as a fraction of the avatar diameter.
+const AVATAR_FONT_RATIO: f32 = 0.4;
 /// Base diameter of a spinner before density scaling, in points.
 const SPINNER_BASE_SIZE: f32 = 24.0;
 /// Base height of a linear progress bar before density scaling, in points.
@@ -255,6 +259,81 @@ impl SkeletonRecipe {
         Self {
             fill: tokens.colors.surface_variant,
             corner_radius: tokens.radius.sm,
+        }
+    }
+}
+
+/// Resolved style for an avatar (circular initials badge).
+#[derive(Clone, Copy, Debug)]
+pub struct AvatarRecipe {
+    pub bg: Color32,
+    pub text_color: Color32,
+    pub size: f32,
+    pub font_size: f32,
+}
+
+impl AvatarRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let size = AVATAR_BASE_SIZE * ctx.density_scale();
+        Self {
+            bg: tokens.colors.primary,
+            text_color: tokens.colors.on_primary,
+            size,
+            font_size: size * AVATAR_FONT_RATIO,
+        }
+    }
+}
+
+/// Resolved style for a chip / tag (pill, optionally removable).
+#[derive(Clone, Copy, Debug)]
+pub struct ChipRecipe {
+    pub fill: Color32,
+    pub text_color: Color32,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+    pub text_size: f32,
+}
+
+impl ChipRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            fill: tokens.colors.surface_variant,
+            text_color: tokens.colors.text,
+            corner_radius: tokens.radius.full,
+            inner_margin: Vec2::new(tokens.spacing.sm * scale, tokens.spacing.xs * scale),
+            text_size: tokens.typography.label,
+        }
+    }
+}
+
+/// Resolved style for a `Kbd` keyboard-key indicator.
+#[derive(Clone, Copy, Debug)]
+pub struct KbdRecipe {
+    pub fill: Color32,
+    pub text_color: Color32,
+    pub border: Stroke,
+    pub corner_radius: CornerRadius,
+    pub inner_margin: Vec2,
+    pub text_size: f32,
+}
+
+impl KbdRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            fill: tokens.colors.surface_variant,
+            text_color: tokens.colors.text_muted,
+            border: Stroke::new(1.0, tokens.colors.border),
+            corner_radius: tokens.radius.sm,
+            inner_margin: Vec2::new(tokens.spacing.sm * scale, tokens.spacing.xs * scale),
+            text_size: tokens.typography.label,
         }
     }
 }

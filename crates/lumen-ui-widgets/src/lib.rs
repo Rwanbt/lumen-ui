@@ -10,12 +10,15 @@
 
 mod accordion;
 mod alert;
+mod avatar;
 mod badge;
 mod button;
 mod card;
 mod checkbox;
+mod chip;
 mod divider;
 mod focus;
+mod kbd;
 mod modal;
 mod overlay;
 mod progress;
@@ -32,11 +35,14 @@ mod toast;
 
 pub use accordion::Accordion;
 pub use alert::Alert;
+pub use avatar::Avatar;
 pub use badge::Badge;
 pub use button::Button;
 pub use card::Card;
 pub use checkbox::Checkbox;
+pub use chip::{Chip, ChipResponse};
 pub use divider::Divider;
+pub use kbd::Kbd;
 pub use modal::{close_modal, open_modal, Modal};
 pub use overlay::{context_menu, popover, tooltip};
 pub use progress::Progress;
