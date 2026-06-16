@@ -1,0 +1,19 @@
+[package]
+name = "lumen-icon-gen"
+description = "PoC (ADR-0008): generate lumen-ui-icons painter code from SVG path data."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+publish = false
+
+[[bin]]
+name = "lumen-icon-gen"
+path = "src/main.rs"
+
+[dependencies]
+# Tool-only dependency (never reaches the published lumen-ui-icons crate) — see ADR-0008.
+svgtypes = "0.13"
