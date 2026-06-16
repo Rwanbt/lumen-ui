@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 15:30** — do not edit manually.
+> **Auto-generated 2026-06-16 11:10** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -12,21 +12,28 @@ Depends on `egui` + `lumen-ui-core` + `lumen-ui-widgets`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
+| `auth_card.rs` | 103 | |
 | `bars.rs` | 31 | |
 | `command_palette.rs` | 70 | |
 | `dashboard.rs` | 65 | |
-| `lib.rs` | 17 | |
+| `form.rs` | 54 | |
+| `lib.rs` | 23 | |
 | `logpanel.rs` | 64 | |
+| `master_detail.rs` | 71 | |
 | `rows.rs` | 49 | |
 | `sidebar.rs` | 36 | |
-| **Total** | **332** | |
+| **Total** | **566** | |
 
 ## Rust API
+- `AuthCard` (struct)
+- `AuthCardResponse` (struct)
 - `CommandPalette` (struct)
 - `DashboardLayout` (struct)
+- `Form` (struct)
 - `InspectorPanel` (struct)
 - `LogEntry` (struct)
 - `LogPanel` (struct)
+- `MasterDetail` (struct)
 - `SettingsPage` (struct)
 - `Sidebar` (struct)
 - `StatusBar` (struct)
