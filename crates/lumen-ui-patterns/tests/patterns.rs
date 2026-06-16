@@ -10,7 +10,7 @@ use egui_kittest::Harness;
 use lumen_ui_core::{install, DarkTheme, Theme, UiContext};
 use lumen_ui_patterns::{
     open_command_palette, AuthCard, CommandPalette, DashboardLayout, Form, InspectorPanel,
-    LogEntry, LogPanel, MasterDetail, SettingsPage, Sidebar, StatusBar, Toolbar,
+    LogEntry, LogPanel, MasterDetail, SettingsPage, Sidebar, StatusBar, Toolbar, Wizard,
 };
 use lumen_ui_widgets::{Button, Label};
 
@@ -298,5 +298,48 @@ fn master_detail_selects_and_updates_detail() {
     assert!(
         harness.query_by_label("Detail-1").is_some(),
         "the detail pane follows the selection"
+    );
+}
+
+#[test]
+fn wizard_advances_and_finishes() {
+    // 0 = first step. Wizard advances on Next and reports `finished` on the last step.
+    let mut harness = Harness::new_ui_state(
+        |ui, state: &mut (usize, bool)| {
+            theme_ctx(ui.ctx(), &dark());
+            let response =
+                Wizard::new(&mut state.0)
+                    .step("Account")
+                    .step("Done")
+                    .show(ui, |ui, index| {
+                        ui.add(Label::new(format!("Body-{index}")));
+                    });
+            if response.finished {
+                state.1 = true;
+            }
+        },
+        (0usize, false),
+    );
+
+    harness.run();
+    assert_eq!(harness.state().0, 0, "starts on the first step");
+    assert!(
+        harness.query_by_label("Body-0").is_some(),
+        "the body reflects the active step"
+    );
+    harness.get_by_label("Next").click();
+    harness.run();
+    assert_eq!(harness.state().0, 1, "Next advances to the following step");
+    assert!(
+        !harness.state().1,
+        "the wizard is not finished before the last step's Finish"
+    );
+
+    // On the last step, the primary action is Finish, not Next.
+    harness.get_by_label("Finish").click();
+    harness.run();
+    assert!(
+        harness.state().1,
+        "clicking Finish on the last step reports finished"
     );
 }

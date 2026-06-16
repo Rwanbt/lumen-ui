@@ -58,6 +58,10 @@ ui.add(Button::ghost("Cancel").enabled(false));
   clickable sortable headers that emit a caller-owned `SortState` (caller sorts its data). String
   cells. `DataGridRecipe` carries fixed header/row heights (needed for virtualization). Contrast
   with `table.rs` (always-available `Grid`, static/small data, no virtualization).
+- `tree_view.rs` — `TreeView` + `TreeNode` (hierarchical, collapsible; single selection bound to
+  `&mut Option<usize>` by node id). Branches wrap `egui::CollapsingHeader` (keyed by `id_salt`);
+  leaves are `selectable_label`. `TreeViewRecipe` carries text style + indent; selection highlight
+  uses egui's themed selection visuals.
 
 ## Accessibility (v0.8)
 - Hit targets follow `UiContext::min_interactive_size()` (44 px in Touch — WCAG 2.5.5). Custom

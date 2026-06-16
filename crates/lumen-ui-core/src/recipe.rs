@@ -759,3 +759,31 @@ impl DataGridRecipe {
         }
     }
 }
+
+/// Resolved style for a `TreeView` (hierarchical, collapsible nodes).
+///
+/// Selection highlight is left to egui's themed selection visuals (set by
+/// `install`); this recipe carries only the node text style and indent step.
+#[derive(Clone, Copy, Debug)]
+pub struct TreeViewRecipe {
+    /// Text color of a node row.
+    pub text_color: Color32,
+    /// Text color of a selected node row.
+    pub selected_color: Color32,
+    pub text_size: f32,
+    /// Horizontal indent applied per nesting level, in points.
+    pub indent: f32,
+}
+
+impl TreeViewRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            text_color: tokens.colors.text,
+            selected_color: tokens.colors.primary,
+            text_size: tokens.typography.body,
+            indent: tokens.spacing.md * ctx.density_scale(),
+        }
+    }
+}

@@ -49,6 +49,7 @@ mod text;
 mod text_field;
 mod textarea;
 mod toast;
+mod tree_view;
 mod util;
 
 pub use accordion::Accordion;
@@ -91,3 +92,4 @@ pub use text::{Heading, Label};
 pub use text_field::TextField;
 pub use textarea::Textarea;
 pub use toast::{show_toasts, toast, toast_error, toast_success, toast_warning, ToastVariant};
+pub use tree_view::{TreeNode, TreeView};

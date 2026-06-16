@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-16 11:50** — do not edit manually.
+> **Auto-generated 2026-06-16 12:41** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -31,7 +31,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
 | `kbd.rs` | 31 | |
-| `lib.rs` | 86 | |
+| `lib.rs` | 88 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `overlay.rs` | 37 | |
@@ -53,8 +53,9 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `text_field.rs` | 58 | |
 | `textarea.rs` | 61 | |
 | `toast.rs` | 100 | |
+| `tree_view.rs` | 114 | |
 | `util.rs` | 37 | |
-| **Total** | **2398** | |
+| **Total** | **2514** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -97,6 +98,8 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Tabs` (struct)
 - `TextField` (struct)
 - `Textarea` (struct)
+- `TreeNode` (struct)
+- `TreeView` (struct)
 - `SortDirection` (enum)
 - `ToastVariant` (enum)
 

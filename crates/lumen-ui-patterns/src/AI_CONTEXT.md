@@ -42,3 +42,6 @@ DashboardLayout::new()
 - `master_detail.rs` — `MasterDetail`: resizable left list (themed `Sidebar`, bound to
   `&mut usize`) + central detail pane via `show_inside`. Detail closure receives the selected
   index. Same `&mut Ui` convention as `DashboardLayout`.
+- `wizard.rs` — `Wizard` (+ `WizardResponse`): multi-step flow bound to `&mut usize`; composes
+  `Stepper` + body closure (gets the active index) + Back/Next/Finish `Button`s. Last step shows
+  Finish (reports `finished`) instead of Next. Pure composition, no recipe.

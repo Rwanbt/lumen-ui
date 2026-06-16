@@ -41,7 +41,7 @@
   n'expose pas ergonomiquement les transforms de sous-arbre — cf. note `transitions.rs`)
 - ⬜ **v1.7 Layout v2** — grille fractionnaire, template-areas, sticky, container, resizable
 - 🟡 **v1.8 Navigation & patterns** — [x] Breadcrumb · Pagination · Stepper ; [x] Form (layout) ·
-  AuthCard · MasterDetail (patterns) ; [ ] Drawer · TreeView · Wizard · DataTable pattern
+  AuthCard · MasterDetail · Wizard (patterns) · TreeView (widget) ; [ ] Drawer · DataTable pattern
 - ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
 - ⬜ **v1.10 Crate `lumen-ui-audio`** — Knob · Fader · VU meter · Waveform · XY pad
 - ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer

@@ -15,6 +15,7 @@ mod logpanel;
 mod master_detail;
 mod rows;
 mod sidebar;
+mod wizard;
 
 pub use auth_card::{AuthCard, AuthCardResponse};
 pub use bars::{StatusBar, Toolbar};
@@ -25,3 +26,4 @@ pub use logpanel::{LogEntry, LogLevel, LogPanel};
 pub use master_detail::MasterDetail;
 pub use rows::{property_row, InspectorPanel, SettingsPage};
 pub use sidebar::Sidebar;
+pub use wizard::{Wizard, WizardResponse};
