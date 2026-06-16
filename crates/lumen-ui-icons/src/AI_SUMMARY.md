@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-15 15:30** — do not edit manually.
+> **Auto-generated 2026-06-16 09:53** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -12,8 +12,9 @@ A small set of crisp vector icons drawn with the egui painter (no font asset to 
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 122 | |
-| **Total** | **122** | |
+| `generated_icons.rs` | 60 | |
+| `lib.rs` | 149 | |
+| **Total** | **209** | |
 
 ## Rust API
 - `Icon` (struct)

@@ -15,6 +15,10 @@ use egui::{pos2, Color32, Pos2, Rect, Response, Sense, Stroke, Ui, Vec2, Widget}
 use lumen_ui_core::UiThemeExt;
 
 /// Which glyph an [`Icon`] draws.
+///
+/// The first group is painted by hand; the second group (arrows + extra chevrons)
+/// is **generated from Lucide SVGs** by `tools/lumen-icon-gen` (ADR-0008) into
+/// `generated_icons.rs`, included below.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum IconKind {
     Check,
@@ -25,6 +29,13 @@ pub enum IconKind {
     Minus,
     Search,
     Menu,
+    // Generated from Lucide (ISC) via the codegen pipeline:
+    ArrowRight,
+    ArrowLeft,
+    ArrowUp,
+    ArrowDown,
+    ChevronLeft,
+    ChevronUp,
 }
 
 /// A themed vector icon. Build with a constructor (e.g. [`Icon::check`]), then
@@ -79,6 +90,16 @@ icon_ctor!(plus, Plus);
 icon_ctor!(minus, Minus);
 icon_ctor!(search, Search);
 icon_ctor!(menu, Menu);
+icon_ctor!(arrow_right, ArrowRight);
+icon_ctor!(arrow_left, ArrowLeft);
+icon_ctor!(arrow_up, ArrowUp);
+icon_ctor!(arrow_down, ArrowDown);
+icon_ctor!(chevron_left, ChevronLeft);
+icon_ctor!(chevron_up, ChevronUp);
+
+// Painter functions for the Lucide-derived icons (ADR-0008). The generated `fn
+// paint_<name>` live in this module's scope, so they resolve the `at` helper below.
+include!("generated_icons.rs");
 
 impl Widget for Icon {
     fn ui(self, ui: &mut Ui) -> Response {
@@ -136,5 +157,12 @@ fn paint(kind: IconKind, painter: &egui::Painter, rect: Rect, stroke: Stroke) {
             seg(0.20, 0.50, 0.80, 0.50);
             seg(0.20, 0.68, 0.80, 0.68);
         }
+        // Generated Lucide icons (ADR-0008): dispatch to the codegen painter fns.
+        IconKind::ArrowRight => paint_arrow_right(painter, rect, stroke),
+        IconKind::ArrowLeft => paint_arrow_left(painter, rect, stroke),
+        IconKind::ArrowUp => paint_arrow_up(painter, rect, stroke),
+        IconKind::ArrowDown => paint_arrow_down(painter, rect, stroke),
+        IconKind::ChevronLeft => paint_chevron_left(painter, rect, stroke),
+        IconKind::ChevronUp => paint_chevron_up(painter, rect, stroke),
     }
 }
