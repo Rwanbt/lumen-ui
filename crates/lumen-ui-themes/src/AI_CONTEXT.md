@@ -26,3 +26,8 @@ lumen_ui::set_theme(ctx, std::sync::Arc::new(lumen_ui_themes::high_contrast()));
   (all return `PaletteTheme`). **Every theme has a `*_passes_wcag_aa` test** (`audit_colors`):
   preset palettes are tuned (darkened danger, dark-on-yellow `on_warning`, brightened text) so all
   10 audited pairs clear AA — keep that invariant when adding a preset.
+  v1.9 tooling: `ThemeBuilder::new(bg, accent).mode(..).build()` derives a full AA-oriented palette
+  (surfaces/border via `mix` from bg→text, `text`/`on_*` via `readable_on` near-white/near-black,
+  mode inferred from bg luminance) — best-effort (mid-tone seeds can't satisfy AA both ways).
+  `system_mode(ctx)` maps `ctx.system_theme()` → `ThemeMode` (dark when unknown) for auto
+  `prefers-color-scheme`.

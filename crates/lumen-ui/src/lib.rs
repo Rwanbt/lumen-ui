@@ -42,7 +42,9 @@ pub use lumen_ui_core::{
 
 #[cfg(feature = "themes")]
 #[doc(inline)]
-pub use lumen_ui_themes::{audio_dark, high_contrast, nord, solarized_dark};
+pub use lumen_ui_themes::{
+    audio_dark, high_contrast, nord, solarized_dark, system_mode, ThemeBuilder,
+};
 
 #[cfg(feature = "icons")]
 #[doc(inline)]
@@ -108,7 +110,9 @@ pub mod prelude {
         LogEntry, LogLevel, LogPanel, SettingsPage, Sidebar, StatusBar, Toolbar,
     };
     #[cfg(feature = "themes")]
-    pub use lumen_ui_themes::{audio_dark, high_contrast, nord, solarized_dark};
+    pub use lumen_ui_themes::{
+        audio_dark, high_contrast, nord, solarized_dark, system_mode, ThemeBuilder,
+    };
     #[cfg(feature = "widgets")]
     pub use lumen_ui_widgets::{
         close_drawer, close_modal, context_menu, hover_card, open_drawer, open_modal, popover,
