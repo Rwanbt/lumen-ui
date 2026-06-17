@@ -65,7 +65,7 @@ pub use lumen_ui_widgets::{
 #[doc(inline)]
 pub use lumen_ui_layout::{
     responsive, Align, AspectRatio, Breakpoint, Container, Flex, FlexUiExt, Grid, Justify,
-    ResizableSplit,
+    ResizableSplit, Scroll, Stack, StackUi,
 };
 
 #[cfg(feature = "motion")]

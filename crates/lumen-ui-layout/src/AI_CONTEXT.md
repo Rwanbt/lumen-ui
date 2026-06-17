@@ -40,3 +40,8 @@ let columns = responsive(ui, |bp| if bp <= Breakpoint::Sm { 1 } else { 3 });
   fraction persists in egui memory (keyed by id). Divider color comes from egui visuals (the crate
   has no `lumen-ui-core` dep), drag cursor via `CursorIcon::Resize*`. `clamp_fraction` (pure, tested)
   keeps both panes above `min_fraction`. Fills the available size — constrain the cross axis.
+  `Scroll::{vertical,horizontal,both}` — ergonomic wrapper over `egui::ScrollArea` (defaults to
+  `auto_shrink([false;2])`, optional `max_width`/`max_height`); scrollbars themed by egui visuals.
+  `Stack::{vertical,horizontal}` (`.gap`, `.separators`) → `StackUi::item` — a pure-egui list that
+  inserts a uniform gap or a themed `ui.separator()` (auto-oriented) between items. The private
+  `Axis` enum is shared by `ResizableSplit` and `Stack`.

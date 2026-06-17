@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 11:48** — do not edit manually.
+> **Auto-generated 2026-06-17 11:55** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -12,8 +12,8 @@ Depends only on `egui` + `egui_taffy` — not on `lumen-ui-core`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 432 | |
-| **Total** | **432** | |
+| `lib.rs` | 565 | ⚠️ |
+| **Total** | **565** | |
 
 ## Rust API
 - `AspectRatio` (struct)
@@ -21,6 +21,9 @@ Depends only on `egui` + `egui_taffy` — not on `lumen-ui-core`.
 - `Flex` (struct)
 - `Grid` (struct)
 - `ResizableSplit` (struct)
+- `Scroll` (struct)
+- `Stack` (struct)
+- `StackUi` (struct)
 - `Align` (enum)
 - `Breakpoint` (enum)
 - `Justify` (enum)
