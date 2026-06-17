@@ -52,7 +52,9 @@
   AuthCard · MasterDetail · Wizard (patterns) · TreeView (widget) · DataTable pattern
   (search + sortable DataGrid + pagination, feature `datagrid`) ; [x] Drawer (off-canvas, scrim,
   réutilise `egui::Modal`) — **JALON CLÔTURÉ**
-- ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
+- 🟡 **v1.9 Thèmes v2 & outillage** — [x] presets **Nord** + **Solarized dark** (PaletteTheme,
+  audités WCAG AA) ; `.ron` partiel via `tools/lumen-theme-gen` + feature core `serde` ; [ ] theme
+  builder/dérivation · rampes sémantiques · auto `prefers-color-scheme`
 - ✅ **v1.10 Crate `lumen-ui-audio`** — [x] Knob (rotatif 270°) · Fader (vertical) · VuMeter (zones
   + peak-hold) · LevelBar · Waveform (enveloppe min/max) · XyPad (contrôle 2D) · Transport
   (play/pause/stop/record, icônes painter) — **JALON CLÔTURÉ** (set de contrôles). Différé : Spectrum

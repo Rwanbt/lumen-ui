@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 12:27** — do not edit manually.
+> **Auto-generated 2026-06-17 12:35** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,11 +13,13 @@ feature. Depends on `egui` + `lumen-ui-core`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 103 | |
-| **Total** | **103** | |
+| `lib.rs` | 156 | |
+| **Total** | **156** | |
 
 ## Rust API
 
 ## Rust Functions
 - `audio_dark()`
 - `high_contrast()`
+- `nord()`
+- `solarized_dark()`

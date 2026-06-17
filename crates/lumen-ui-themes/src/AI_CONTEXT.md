@@ -22,4 +22,7 @@ lumen_ui::set_theme(ctx, std::sync::Arc::new(lumen_ui_themes::high_contrast()));
 ```
 
 ## Modules
-- `lib.rs` — `audio_dark()`, `high_contrast()` (return `PaletteTheme`).
+- `lib.rs` — `audio_dark()`, `high_contrast()`, and v1.9 presets `nord()` + `solarized_dark()`
+  (all return `PaletteTheme`). **Every theme has a `*_passes_wcag_aa` test** (`audit_colors`):
+  preset palettes are tuned (darkened danger, dark-on-yellow `on_warning`, brightened text) so all
+  10 audited pairs clear AA — keep that invariant when adding a preset.
