@@ -36,3 +36,7 @@ let columns = responsive(ui, |bp| if bp <= Breakpoint::Sm { 1 } else { 3 });
   auto margins, via `set_max_width`) and `AspectRatio::{new,widescreen,square}` (ratio-sized box
   via `allocate_ui`). Their layout math is in pure helpers (`container_layout`, `aspect_box`) with
   unit tests — no recipe (structural, not themed).
+  `ResizableSplit::{horizontal,vertical}` — two panes with a draggable divider; the first pane's
+  fraction persists in egui memory (keyed by id). Divider color comes from egui visuals (the crate
+  has no `lumen-ui-core` dep), drag cursor via `CursorIcon::Resize*`. `clamp_fraction` (pure, tested)
+  keeps both panes above `min_fraction`. Fills the available size — constrain the cross axis.
