@@ -12,8 +12,42 @@
 
 use egui::Color32;
 use lumen_ui_core::{
-    Colors, Elevation, Motion, PaletteTheme, Radius, Spacing, ThemeMode, Tokens, Typography,
+    contrast_ratio, relative_luminance, Colors, Elevation, Motion, PaletteTheme, Radius, Spacing,
+    ThemeMode, Tokens, Typography,
 };
+
+/// Near-white used as a derived foreground when the background is dark.
+const NEAR_WHITE: Color32 = Color32::from_rgb(0xf2, 0xf4, 0xf6);
+/// Near-black used as a derived foreground when the background is light.
+const NEAR_BLACK: Color32 = Color32::from_rgb(0x0c, 0x0e, 0x10);
+/// Luminance threshold separating "dark" from "light" backgrounds.
+const DARK_LUMINANCE_MAX: f32 = 0.5;
+
+/// Linearly interpolate two colors per RGB channel (`t` in `0..=1`).
+fn mix(a: Color32, b: Color32, t: f32) -> Color32 {
+    let t = t.clamp(0.0, 1.0);
+    let chan = |x: u8, y: u8| (f32::from(x) + (f32::from(y) - f32::from(x)) * t).round() as u8;
+    Color32::from_rgb(chan(a.r(), b.r()), chan(a.g(), b.g()), chan(a.b(), b.b()))
+}
+
+/// Pick near-white or near-black for the best contrast over `background`.
+fn readable_on(background: Color32) -> Color32 {
+    if contrast_ratio(NEAR_WHITE, background) >= contrast_ratio(NEAR_BLACK, background) {
+        NEAR_WHITE
+    } else {
+        NEAR_BLACK
+    }
+}
+
+/// The `ThemeMode` that matches the OS preference reported by egui, defaulting to dark when the
+/// system theme is unknown (e.g. headless). Use to drive `prefers-color-scheme`-style theming.
+#[must_use]
+pub fn system_mode(ctx: &egui::Context) -> ThemeMode {
+    match ctx.system_theme() {
+        Some(egui::Theme::Light) => ThemeMode::Light,
+        _ => ThemeMode::Dark,
+    }
+}
 
 fn tokens(colors: Colors) -> Tokens {
     Tokens {
@@ -126,6 +160,79 @@ pub fn solarized_dark() -> PaletteTheme {
     PaletteTheme::new(tokens(colors), ThemeMode::Dark)
 }
 
+/// Derives a complete, WCAG-AA-oriented [`PaletteTheme`] from just a **background** and an
+/// **accent** color: surfaces/borders are interpolated from the background toward a readable
+/// foreground, the text and every `on_*` color are picked (near-white/near-black) for contrast,
+/// and the semantic colors use sensible defaults. The mode is inferred from the background's
+/// luminance unless set with [`ThemeBuilder::mode`].
+///
+/// For typical (clearly dark or light) backgrounds the result clears AA; very mid-tone backgrounds
+/// can't satisfy contrast both ways, so audit the result with `lumen_ui_core::audit_colors` if you
+/// feed unusual seeds.
+#[derive(Clone, Copy, Debug)]
+pub struct ThemeBuilder {
+    background: Color32,
+    accent: Color32,
+    mode: Option<ThemeMode>,
+}
+
+impl ThemeBuilder {
+    /// Start from a background and an accent (primary) color.
+    #[must_use]
+    pub fn new(background: Color32, accent: Color32) -> Self {
+        Self {
+            background,
+            accent,
+            mode: None,
+        }
+    }
+
+    /// Force the emphasis mode (otherwise inferred from the background luminance).
+    #[must_use]
+    pub fn mode(mut self, mode: ThemeMode) -> Self {
+        self.mode = Some(mode);
+        self
+    }
+
+    /// Build the derived theme.
+    #[must_use]
+    pub fn build(self) -> PaletteTheme {
+        let mode = self.mode.unwrap_or(
+            if relative_luminance(self.background) < DARK_LUMINANCE_MAX {
+                ThemeMode::Dark
+            } else {
+                ThemeMode::Light
+            },
+        );
+        let bg = self.background;
+        let text = readable_on(bg);
+        // Fixed semantic hues (dark enough that derived on_* text clears AA).
+        let success = Color32::from_rgb(0x3f, 0xb9, 0x50);
+        let warning = Color32::from_rgb(0xe0, 0xa4, 0x2b);
+        let danger = Color32::from_rgb(0xc7, 0x3e, 0x43);
+        let surface_variant = mix(bg, text, 0.11);
+        let colors = Colors {
+            background: bg,
+            surface: mix(bg, text, 0.05),
+            surface_variant,
+            primary: self.accent,
+            on_primary: readable_on(self.accent),
+            secondary: surface_variant,
+            on_secondary: text,
+            success,
+            on_success: readable_on(success),
+            warning,
+            on_warning: readable_on(warning),
+            danger,
+            on_danger: readable_on(danger),
+            text,
+            text_muted: mix(text, bg, 0.35),
+            border: mix(bg, text, 0.22),
+        };
+        PaletteTheme::new(tokens(colors), mode)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -177,5 +284,31 @@ mod tests {
     #[test]
     fn solarized_dark_passes_wcag_aa() {
         assert_aa("solarized_dark", &solarized_dark());
+    }
+
+    #[test]
+    fn builder_derives_aa_themes_from_seeds() {
+        // A dark seed and a light seed both yield AA-passing palettes.
+        let dark = ThemeBuilder::new(
+            Color32::from_rgb(0x10, 0x12, 0x16),
+            Color32::from_rgb(0x6c, 0x8c, 0xff),
+        )
+        .build();
+        assert_aa("builder/dark", &dark);
+
+        let light = ThemeBuilder::new(
+            Color32::from_rgb(0xf7, 0xf8, 0xfa),
+            Color32::from_rgb(0x14, 0x52, 0xcc), // a deep accent so on_primary clears AA
+        )
+        .build();
+        assert_aa("builder/light", &light);
+    }
+
+    #[test]
+    fn builder_infers_mode_from_background_luminance() {
+        let dark = ThemeBuilder::new(Color32::from_rgb(0x10, 0x12, 0x16), Color32::WHITE).build();
+        assert_eq!(dark.mode(), ThemeMode::Dark);
+        let light = ThemeBuilder::new(Color32::from_rgb(0xf7, 0xf8, 0xfa), Color32::BLACK).build();
+        assert_eq!(light.mode(), ThemeMode::Light);
     }
 }
