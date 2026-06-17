@@ -53,7 +53,9 @@
   (search + sortable DataGrid + pagination, feature `datagrid`) ; [x] Drawer (off-canvas, scrim,
   réutilise `egui::Modal`) — **JALON CLÔTURÉ**
 - ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
-- ⬜ **v1.10 Crate `lumen-ui-audio`** — Knob · Fader · VU meter · Waveform · XY pad
+- 🟡 **v1.10 Crate `lumen-ui-audio`** — [x] crate scaffoldée · Knob (rotatif 270°, `KnobRecipe`) ·
+  Fader (vertical, réutilise `SliderRecipe`) ; [ ] VU/Peak meter · LevelBar · Waveform · XY pad ·
+  Transport. À valider sur une vraie app (Seno / plugin CLAP).
 - ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,

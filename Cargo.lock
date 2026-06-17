@@ -2001,6 +2001,7 @@ version = "1.0.0"
 dependencies = [
  "eframe",
  "egui",
+ "lumen-ui-audio",
  "lumen-ui-core",
  "lumen-ui-icons",
  "lumen-ui-layout",
@@ -2008,6 +2009,15 @@ dependencies = [
  "lumen-ui-patterns",
  "lumen-ui-themes",
  "lumen-ui-widgets",
+]
+
+[[package]]
+name = "lumen-ui-audio"
+version = "1.0.0"
+dependencies = [
+ "egui",
+ "egui_kittest",
+ "lumen-ui-core",
 ]
 
 [[package]]
