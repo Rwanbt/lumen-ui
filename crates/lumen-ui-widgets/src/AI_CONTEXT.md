@@ -66,6 +66,17 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `&mut Option<usize>` by node id). Branches wrap `egui::CollapsingHeader` (keyed by `id_salt`);
   leaves are `selectable_label`. `TreeViewRecipe` carries text style + indent; selection highlight
   uses egui's themed selection visuals.
+- `number_input.rs` — `NumberInput` (`&mut f64`, range, `.step`): an `egui::DragValue` flanked by
+  −/+ stepper buttons that move the value by `step` (clamped). Steppers are custom painter rects
+  with `WidgetInfo::labeled(Button, "increment"/"decrement")` for a11y + testability.
+  `NumberInputRecipe` styles the stepper buttons + gap (the DragValue uses egui visuals).
+- `range_slider.rs` — `RangeSlider` (two `&mut f32` low/high + range): two-handle track. The handle
+  nearest the pointer is grabbed and stored in `ctx.data` keyed by the response id so handles can't
+  swap mid-drag; `low ≤ high` invariant enforced each frame. **Reuses `SliderRecipe`** (ADR-0009).
+- `color_picker.rs` — `ColorPicker` (`&mut Color32`, `.with_alpha()`): a themed swatch (drawn from
+  `ColorPickerRecipe`) that opens egui's own HSV picker (`color_picker::color_picker_color32`) in a
+  `Popup::menu`. The deep picker module is reused as-is (not reimplemented); swatch carries
+  `WidgetInfo::labeled(Button, "color picker")`.
 
 ## Accessibility (v0.8)
 - Hit targets follow `UiContext::min_interactive_size()` (44 px in Touch — WCAG 2.5.5). Custom

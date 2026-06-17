@@ -30,8 +30,9 @@
 - 🟡 **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
   [x] DataGrid (egui_extras `TableBuilder` — tri émis/virtualisation, feature `datagrid`, ADR-0010) ;
   [ ] DescriptionList · Timeline · Calendar · Carousel
-- 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating ; [ ] Textarea · NumberInput ·
-  RangeSlider · Combobox · MultiSelect · DatePicker · TimePicker · ColorPicker · FileUpload · Form
+- 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating · Textarea · NumberInput (DragValue +
+  −/+ steppers) · RangeSlider (2 poignées, réutilise `SliderRecipe`) · ColorPicker (swatch thémé →
+  picker egui) · Form (layout, v1.8) ; [ ] Combobox · MultiSelect · DatePicker · TimePicker · FileUpload
 - ✅ **v1.5 Icônes à l'échelle** — [x] PoC pipeline codegen (ADR-0008) ; [x] set Lucide curé
   **généré et intégré** dans `lumen-ui-icons` (arrow ×4, chevron-left/up depuis `svg/` →
   `generated_icons.rs` via `include!`) — **JALON CLÔTURÉ**. Extensible : ajouter un SVG +

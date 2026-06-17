@@ -788,6 +788,68 @@ impl TreeViewRecipe {
     }
 }
 
+/// Base square size of a `NumberInput` stepper button before density scaling, in points.
+const NUMBER_INPUT_BASE_BUTTON: f32 = 24.0;
+/// Base square size of a `ColorPicker` swatch trigger before density scaling, in points.
+const COLOR_PICKER_BASE_SIZE: f32 = 24.0;
+
+/// Resolved style for a `NumberInput` (a `DragValue` flanked by −/+ stepper buttons).
+///
+/// The numeric field itself is drawn by egui's `DragValue` (themed through the visuals
+/// `install` derives from the tokens); this recipe styles only the stepper buttons and gap.
+#[derive(Clone, Copy, Debug)]
+pub struct NumberInputRecipe {
+    /// Fill of the −/+ stepper buttons.
+    pub button_fill: Color32,
+    /// Glyph color of the −/+ stepper buttons.
+    pub button_text: Color32,
+    pub corner_radius: CornerRadius,
+    /// Square size of each stepper button, in points.
+    pub button_size: f32,
+    /// Horizontal gap between the buttons and the numeric field, in points.
+    pub gap: f32,
+}
+
+impl NumberInputRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            button_fill: tokens.colors.surface_variant,
+            button_text: tokens.colors.text,
+            corner_radius: tokens.radius.sm,
+            button_size: NUMBER_INPUT_BASE_BUTTON * scale,
+            gap: tokens.spacing.xs * scale,
+        }
+    }
+}
+
+/// Resolved style for a `ColorPicker` swatch trigger.
+///
+/// The picker popup itself is egui's deep color-picker module (themed by `install`); this
+/// recipe styles only the clickable swatch that opens it.
+#[derive(Clone, Copy, Debug)]
+pub struct ColorPickerRecipe {
+    /// Square size of the swatch, in points.
+    pub size: f32,
+    pub corner_radius: CornerRadius,
+    /// Border around the swatch.
+    pub border: Stroke,
+}
+
+impl ColorPickerRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            size: COLOR_PICKER_BASE_SIZE * ctx.density_scale(),
+            corner_radius: tokens.radius.sm,
+            border: Stroke::new(1.0, tokens.colors.border),
+        }
+    }
+}
+
 /// Base width of a `Drawer` panel before density scaling, in points.
 const DRAWER_BASE_WIDTH: f32 = 300.0;
 
