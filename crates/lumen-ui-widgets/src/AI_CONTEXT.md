@@ -76,6 +76,12 @@ ui.add(Button::ghost("Cancel").enabled(false));
   selects a day. The *displayed* month lives in `ctx.data` (paged by header ‹/› arrows) and is
   independent of the selection until a day is clicked. Uses the core `date` math (ADR-0011); day
   cells + arrows are painter-drawn with `WidgetInfo::labeled` (a11y + tests). `CalendarRecipe`.
+- `date_picker.rs` — `DatePicker` (`id`, `&mut Date`): a `Button` labelled with the date that opens
+  a `Calendar` in a `Popup::menu` (`CloseOnClickOutside`). Closes itself once the day changes
+  (`Popup::close_id(id.with("popup"))`) so the calendar's month arrows keep it open. No recipe
+  (composes Button + Calendar).
+- `time_picker.rs` — `TimePicker` (`&mut Time`): two `egui::DragValue`s (hour `0..=23`, minute
+  `0..=59`, zero-padded) separated by a colon. No recipe (egui visuals); returns the union response.
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.
