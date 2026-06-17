@@ -943,3 +943,41 @@ impl TimelineRecipe {
         }
     }
 }
+
+/// Base size of a `Carousel` navigation arrow before density scaling, in points.
+const CAROUSEL_BASE_ARROW_SIZE: f32 = 28.0;
+/// Base diameter of a `Carousel` position dot before density scaling, in points.
+const CAROUSEL_BASE_DOT_SIZE: f32 = 8.0;
+
+/// Resolved style for a `Carousel` (one slide at a time with prev/next + dot indicators).
+#[derive(Clone, Copy, Debug)]
+pub struct CarouselRecipe {
+    /// Glyph color of the prev/next arrows.
+    pub arrow_color: Color32,
+    /// Fill of the dot for the current slide.
+    pub dot_active: Color32,
+    /// Fill of the dots for the other slides.
+    pub dot_inactive: Color32,
+    /// Square size of each navigation arrow, in points.
+    pub arrow_size: f32,
+    /// Diameter of each position dot, in points.
+    pub dot_size: f32,
+    /// Horizontal gap between dots, in points.
+    pub gap: f32,
+}
+
+impl CarouselRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            arrow_color: tokens.colors.text,
+            dot_active: tokens.colors.primary,
+            dot_inactive: tokens.colors.border,
+            arrow_size: CAROUSEL_BASE_ARROW_SIZE * scale,
+            dot_size: CAROUSEL_BASE_DOT_SIZE * scale,
+            gap: tokens.spacing.xs * scale,
+        }
+    }
+}

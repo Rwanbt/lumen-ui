@@ -68,6 +68,10 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `timeline.rs` — `Timeline` vertical chronological events: a dot per event linked by a connector
   line, title (+ optional detail) to the right. Single-pass: each connector is drawn from the
   previous dot to the current one (robust to row heights). `TimelineRecipe` (dot/line/text styles).
+- `carousel.rs` — `Carousel` (`&mut usize` current index, `len`): one slide at a time via an
+  `add_slide(ui, index)` closure, framed by prev/next arrows that **wrap** around the ends, with a
+  dot indicator row below. Arrows are painter glyphs with `WidgetInfo::labeled(Button,
+  "previous"/"next")` for a11y + tests. `CarouselRecipe` (arrow/dot styles).
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.

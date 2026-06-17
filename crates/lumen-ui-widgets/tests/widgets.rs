@@ -15,7 +15,7 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
-    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, ColorPicker, Combobox,
+    Breadcrumb, Button, Carousel, Checkbox, Chip, CircularProgress, Code, ColorPicker, Combobox,
     DescriptionList, Divider, DropdownMenu, EmptyState, FormField, IconButton, Kbd, Label, Link,
     Modal, MultiSelect, NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating,
     SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
@@ -56,6 +56,7 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut color = egui::Color32::from_rgb(120, 80, 200);
         let mut lang = 1usize;
         let mut tags: Vec<usize> = vec![1];
+        let mut slide = 0usize;
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -131,6 +132,9 @@ fn every_widget_renders_under_all_built_in_themes() {
                 .event("Created")
                 .event_detailed("Shipped", "v1.0")
                 .show(ui);
+            Carousel::new("car", &mut slide, 3).show(ui, |ui, index| {
+                ui.add(Label::new(format!("Slide {index}")));
+            });
             FormField::new("Email")
                 .hint("We'll never share it")
                 .show(ui, |ui| {
@@ -450,6 +454,29 @@ fn multi_select_toggles_membership() {
         vec![1],
         "toggling an active option removes it"
     );
+}
+
+#[test]
+fn carousel_navigates_with_wraparound() {
+    let mut harness = Harness::new_ui_state(
+        |ui, index: &mut usize| {
+            theme_ctx(ui.ctx(), &dark());
+            Carousel::new("car", index, 3).show(ui, |ui, i| {
+                ui.add(Label::new(format!("slide {i}")));
+            });
+        },
+        0usize,
+    );
+
+    harness.run();
+    // "previous" from the first slide wraps to the last.
+    harness.get_by_label("previous").click();
+    harness.run();
+    assert_eq!(*harness.state(), 2, "previous wraps 0 -> last");
+    // "next" from the last slide wraps back to the first.
+    harness.get_by_label("next").click();
+    harness.run();
+    assert_eq!(*harness.state(), 0, "next wraps last -> 0");
 }
 
 #[test]
