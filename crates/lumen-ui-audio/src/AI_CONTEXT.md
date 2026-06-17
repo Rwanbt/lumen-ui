@@ -27,12 +27,15 @@ ui.add(Waveform::new(&samples));        // samples in -1.0..=1.0
 ```
 
 ## Modules
-- `vu_meter.rs` — `VuMeter::new(level).peak(p)` (levels `0..=1`): vertical meter; the fill is split
-  into low/mid/high colored zones with an optional peak-hold line. Uses `MeterRecipe`.
+- `vu_meter.rs` — `VuMeter::new(level).peak(p)` (levels `0..=1`): vertical meter. **Default: one
+  color chosen by the current level** (`zone_color`) — the software-meter look; `.segmented()`
+  switches to stacked LED zones. Tick marks at the zone thresholds + optional peak-hold line.
+  Uses `MeterRecipe` (incl. `tick`).
 - `level_bar.rs` — `LevelBar::new(level)`: horizontal bar whose fill is colored by the level's zone.
-  Uses `MeterRecipe`.
-- `waveform.rs` — `Waveform::new(&[f32])` (samples in `-1..=1`): per-column **min/max envelope**, so
-  it stays correct for buffers far larger than the pixel width. Uses `WaveformRecipe`.
+- `waveform.rs` — `Waveform::new(&[f32])` (samples in `-1..=1`): per-column **min/max envelope**
+  rendered as a **filled `epaint::Mesh` body + top/bottom outline** (Seno/Dynama/Spectra house
+  style). Default **symmetric** (`|amp|` mirrored); `.signed()` draws the true min/max envelope.
+  Uses `WaveformRecipe` (incl. translucent `fill`).
 - `lib.rs` — shared zone thresholds (`ZONE_LOW_MAX` 0.6, `ZONE_MID_MAX` 0.85) + `zone_color`.
 
 ## Reference implementations (real projects)
