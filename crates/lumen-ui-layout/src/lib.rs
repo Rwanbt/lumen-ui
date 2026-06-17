@@ -233,6 +233,86 @@ impl FlexUiExt for Tui {
     }
 }
 
+/// Compute the inner width and the centering left margin for a [`Container`].
+fn container_layout(available: f32, max_width: f32) -> (f32, f32) {
+    let width = available.min(max_width);
+    let margin = ((available - width) / 2.0).max(0.0);
+    (width, margin)
+}
+
+/// A horizontally-centered content column capped at a maximum width (CSS `max-width` + auto
+/// margins). Below the cap it fills the available width; above it, the content is centered.
+/// Build with [`Container::new`], then [`Container::show`].
+#[derive(Clone, Copy, Debug)]
+pub struct Container {
+    max_width: f32,
+}
+
+impl Container {
+    #[must_use]
+    pub fn new(max_width: f32) -> Self {
+        Self { max_width }
+    }
+
+    /// Lay out `content` centered within the maximum width. Returns the closure's value.
+    pub fn show<R>(self, ui: &mut Ui, content: impl FnOnce(&mut Ui) -> R) -> R {
+        let (width, margin) = container_layout(ui.available_width(), self.max_width);
+        ui.horizontal(|ui| {
+            if margin > 0.0 {
+                ui.add_space(margin);
+            }
+            ui.vertical(|ui| {
+                ui.set_max_width(width);
+                content(ui)
+            })
+            .inner
+        })
+        .inner
+    }
+}
+
+/// Compute the `(width, height)` of an [`AspectRatio`] box from the available width.
+fn aspect_box(available_width: f32, ratio: f32) -> (f32, f32) {
+    let r = ratio.max(f32::EPSILON);
+    (available_width, available_width / r)
+}
+
+/// Reserve a box of a fixed `width:height` ratio (width taken from the available width) and run
+/// `content` inside it — for media, previews and placeholders. Build with [`AspectRatio::new`]
+/// (or [`AspectRatio::widescreen`] / [`AspectRatio::square`]), then [`AspectRatio::show`].
+#[derive(Clone, Copy, Debug)]
+pub struct AspectRatio {
+    ratio: f32,
+}
+
+impl AspectRatio {
+    /// A box whose width is `ratio` times its height (e.g. `16.0 / 9.0`).
+    #[must_use]
+    pub fn new(ratio: f32) -> Self {
+        Self {
+            ratio: ratio.max(f32::EPSILON),
+        }
+    }
+
+    /// 16:9.
+    #[must_use]
+    pub fn widescreen() -> Self {
+        Self::new(16.0 / 9.0)
+    }
+
+    /// 1:1.
+    #[must_use]
+    pub fn square() -> Self {
+        Self::new(1.0)
+    }
+
+    /// Lay out `content` inside the ratio-sized box. Returns the closure's value.
+    pub fn show<R>(self, ui: &mut Ui, content: impl FnOnce(&mut Ui) -> R) -> R {
+        let (width, height) = aspect_box(ui.available_width(), self.ratio);
+        ui.allocate_ui(egui::vec2(width, height), content).inner
+    }
+}
+
 /// Responsive breakpoints (CSS-ish). Resolved from available width.
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 pub enum Breakpoint {
@@ -264,7 +344,7 @@ pub fn responsive<R>(ui: &Ui, f: impl FnOnce(Breakpoint) -> R) -> R {
 
 #[cfg(test)]
 mod tests {
-    use super::Breakpoint;
+    use super::{aspect_box, container_layout, Breakpoint};
 
     #[test]
     fn breakpoints_classify_widths() {
@@ -274,5 +354,21 @@ mod tests {
         assert_eq!(Breakpoint::from_width(1200.0), Breakpoint::Lg);
         assert_eq!(Breakpoint::from_width(1600.0), Breakpoint::Xl);
         assert!(Breakpoint::Xs < Breakpoint::Xl);
+    }
+
+    #[test]
+    fn container_fills_below_cap_and_centers_above() {
+        // Below the cap: full width, no margin.
+        assert_eq!(container_layout(500.0, 960.0), (500.0, 0.0));
+        // Above the cap: clamped width, centered (equal margins).
+        assert_eq!(container_layout(1200.0, 960.0), (960.0, 120.0));
+    }
+
+    #[test]
+    fn aspect_box_derives_height_from_ratio() {
+        assert_eq!(aspect_box(1600.0, 16.0 / 9.0), (1600.0, 900.0));
+        assert_eq!(aspect_box(300.0, 1.0), (300.0, 300.0));
+        // A non-positive ratio is clamped to avoid div-by-zero (finite height).
+        assert!(aspect_box(100.0, 0.0).1.is_finite());
     }
 }
