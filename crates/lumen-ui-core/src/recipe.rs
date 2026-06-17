@@ -1137,6 +1137,41 @@ impl XyPadRecipe {
     }
 }
 
+/// Base size of a `Transport` button before density scaling, in points.
+const TRANSPORT_BASE_SIZE: f32 = 32.0;
+
+/// Resolved style for a `Transport` control bar (audio crate).
+#[derive(Clone, Copy, Debug)]
+pub struct TransportRecipe {
+    /// Button background.
+    pub button: Color32,
+    /// Icon color for play/pause/stop.
+    pub glyph: Color32,
+    /// Record icon color while armed/recording.
+    pub record_active: Color32,
+    pub corner_radius: CornerRadius,
+    /// Square size of each button, in points.
+    pub size: f32,
+    /// Gap between buttons, in points.
+    pub gap: f32,
+}
+
+impl TransportRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        Self {
+            button: tokens.colors.surface_variant,
+            glyph: tokens.colors.text,
+            record_active: tokens.colors.danger,
+            corner_radius: tokens.radius.sm,
+            size: TRANSPORT_BASE_SIZE * scale,
+            gap: tokens.spacing.xs * scale,
+        }
+    }
+}
+
 /// Base minimum height of a `FileUpload` drop zone before density scaling, in points.
 const FILE_UPLOAD_BASE_HEIGHT: f32 = 80.0;
 /// Tint opacity of the drop zone fill while files hover over it, in `0..=255`.
