@@ -50,7 +50,7 @@ pub use lumen_ui_icons::{Icon, IconKind};
 
 #[cfg(feature = "audio")]
 #[doc(inline)]
-pub use lumen_ui_audio::{Fader, Knob};
+pub use lumen_ui_audio::{Fader, Knob, LevelBar, VuMeter};
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
@@ -86,7 +86,7 @@ pub use lumen_ui_patterns::{
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "audio")]
-    pub use lumen_ui_audio::{Fader, Knob};
+    pub use lumen_ui_audio::{Fader, Knob, LevelBar, VuMeter};
     #[cfg(feature = "theme")]
     pub use lumen_ui_core::{
         install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Date, Density, LightTheme,

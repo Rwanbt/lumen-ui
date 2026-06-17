@@ -28,7 +28,13 @@ ui.add(Fader::new(&mut gain_db, -60.0..=6.0));
   `arc_points` → `Shape::line`. `KnobRecipe` (track/fill/indicator/size). a11y: `WidgetInfo::slider`.
 - `fader.rs` — `Fader` (`&mut f32`, range): a vertical fader (max at top); click/drag sets the value.
   Reuses `SliderRecipe` (track/fill/knob). a11y: `WidgetInfo::slider`.
+- `vu_meter.rs` — `VuMeter::new(level).peak(p)` (levels are `0..=1` fractions of full scale): a
+  vertical meter; the fill is split into low/mid/high colored zones with an optional peak-hold line.
+  Display-only. Uses `MeterRecipe`.
+- `level_bar.rs` — `LevelBar::new(level)`: a horizontal bar whose fill is colored by the zone the
+  level falls in. Display-only. Uses `MeterRecipe`.
+- `lib.rs` — shared zone thresholds (`ZONE_LOW_MAX` 0.6, `ZONE_MID_MAX` 0.85) + `zone_color`.
 
 ## Roadmap (v1.10, in progress)
-Done: Knob, Fader. Next: VU/Peak meter, LevelBar, Waveform, Spectrum, XY pad, Transport. To be
-validated on a real app (Seno / a CLAP plugin) before the milestone closes.
+Done: Knob, Fader, VuMeter, LevelBar. Next: Waveform, Spectrum, XY pad, Transport. To be validated
+on a real app (Seno / a CLAP plugin) before the milestone closes.

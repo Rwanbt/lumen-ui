@@ -19,6 +19,29 @@
 
 mod fader;
 mod knob;
+mod level_bar;
+mod vu_meter;
 
 pub use fader::Fader;
 pub use knob::Knob;
+pub use level_bar::LevelBar;
+pub use vu_meter::VuMeter;
+
+use egui::Color32;
+use lumen_ui_core::MeterRecipe;
+
+/// Upper bound of the low (safe) meter zone, as a fraction of full scale.
+pub(crate) const ZONE_LOW_MAX: f32 = 0.6;
+/// Upper bound of the mid (caution) meter zone, as a fraction of full scale.
+pub(crate) const ZONE_MID_MAX: f32 = 0.85;
+
+/// Color for a level `t` (`0..=1`) under the three-zone meter scheme.
+pub(crate) fn zone_color(t: f32, recipe: &MeterRecipe) -> Color32 {
+    if t <= ZONE_LOW_MAX {
+        recipe.low
+    } else if t <= ZONE_MID_MAX {
+        recipe.mid
+    } else {
+        recipe.high
+    }
+}
