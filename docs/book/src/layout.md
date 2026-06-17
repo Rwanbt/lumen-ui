@@ -60,4 +60,37 @@ let columns = responsive(ui, |bp| match bp {
 Grid::new(columns).gap(8.0).fill_width().show(ui, "grid", |t| { /* … */ });
 ```
 
-See `cargo run -p lumen-ui --example responsive`. Next: [Motion](motion.md).
+See `cargo run -p lumen-ui --example responsive`.
+
+## v2 primitives (pure egui)
+
+Beyond Flex/Grid, lumen-ui-layout adds sizing and structure primitives that need no taffy:
+
+```rust,ignore
+use lumen_ui::prelude::*;
+
+// Container — CSS max-width + auto margins (centers above the cap, fills below).
+Container::new(960.0).show(ui, |ui| { /* page content */ });
+
+// AspectRatio — a ratio-sized box for media/previews.
+AspectRatio::widescreen().show(ui, |ui| { /* 16:9 */ });
+
+// ResizableSplit — two panes with a draggable divider (fraction persisted in egui memory).
+ResizableSplit::horizontal("split").show(ui, |left| { /* … */ }, |right| { /* … */ });
+
+// Stack — a plain list with a uniform gap or themed separators between items.
+Stack::vertical().gap(8.0).separators(true).show(ui, |s| {
+    s.item(|ui| { ui.add(Label::new("one")); });
+    s.item(|ui| { ui.add(Label::new("two")); });
+});
+
+// Scroll — an ergonomic ScrollArea wrapper (fills the space; optional max size).
+Scroll::vertical().max_height(240.0).show(ui, |ui| { /* long content */ });
+
+// GridTemplate — explicit, mixed column tracks (CSS grid-template-columns).
+GridTemplate::columns([Track::Px(120.0), Track::Fr(1.0), Track::Auto])
+    .gap(8.0)
+    .show(ui, "grid", |t| { /* cells, row-major */ });
+```
+
+Next: [Audio](audio.md).
