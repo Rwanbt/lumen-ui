@@ -77,4 +77,31 @@ Every one of these resolves its styling from the installed theme — swap the th
 restyle. They also follow density and show a focus ring on keyboard focus (see
 [Accessibility](accessibility.md)).
 
-Next: [Layout](layout.md).
+## v2 catalogue
+
+More inputs, pickers and data displays, all bound with `&mut` (the date types live in
+`lumen-ui-core`):
+
+```rust,ignore
+use lumen_ui::prelude::*;
+
+// Inputs
+ui.add(NumberInput::new(&mut amount, 0.0..=10.0));        // DragValue + −/+ steppers
+ui.add(RangeSlider::new(&mut low, &mut high, 0.0..=1.0)); // two handles
+ui.add(ColorPicker::new(&mut color));                     // themed swatch → egui picker
+Combobox::new("lang", &mut lang).option(0, "Rust").option(1, "Go").show(ui); // searchable
+MultiSelect::new("tags", &mut tags).option(0, "bug").option(1, "feat").show(ui); // &mut Vec<T>
+
+// Dates & files
+Calendar::new("cal", &mut date).show(ui);                 // month grid, &mut Date
+DatePicker::new("dp", &mut date).show(ui);                // button → Calendar popup
+TimePicker::new(&mut time).show(ui);                      // &mut Time, h:m
+let dropped = FileUpload::new().show(ui).dropped;         // native drag-drop, no rfd
+
+// Data display
+DescriptionList::new("info").item("Status", "Active").show(ui);
+Timeline::new().event("Created").event_detailed("Shipped", "v1.0").show(ui);
+Carousel::new("car", &mut slide, photos.len()).show(ui, |ui, i| { /* slide i */ });
+```
+
+For DAW-style controls (Knob, Fader, meters, …) see [Audio](audio.md). Next: [Layout](layout.md).

@@ -77,4 +77,31 @@ cargo run -p lumen-theme-gen -- template > brand.ron
 cargo run -p lumen-theme-gen -- gen brand.ron > src/brand_theme.rs
 ```
 
+## Presets, derivation & auto color-scheme (v2)
+
+`lumen-ui-themes` (feature `themes`) ships ready-made palettes and tools — all WCAG-AA audited:
+
+```rust,ignore
+use lumen_ui::prelude::*;
+use std::sync::Arc;
+
+// Presets
+set_theme(ctx, Arc::new(nord()));
+set_theme(ctx, Arc::new(solarized_dark()));
+
+// Derive a whole AA-oriented palette from just a background + accent.
+let brand = ThemeBuilder::new(
+    egui::Color32::from_rgb(0x14, 0x10, 0x1c),
+    egui::Color32::from_rgb(0xc9, 0x7b, 0xff),
+).build();
+set_theme(ctx, Arc::new(brand));
+
+// Follow the OS light/dark preference (auto prefers-color-scheme).
+let mode = system_mode(ctx); // ThemeMode::Dark | Light
+```
+
+The `ThemeBuilder` picks `text` and every `on_*` color (near-white/near-black) for contrast and
+infers the mode from the background's luminance — best-effort, so audit unusual seeds with
+`lumen_ui::core::audit_colors`.
+
 Next: [Widgets](widgets.md).
