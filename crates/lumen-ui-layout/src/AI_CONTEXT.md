@@ -45,3 +45,7 @@ let columns = responsive(ui, |bp| if bp <= Breakpoint::Sm { 1 } else { 3 });
   `Stack::{vertical,horizontal}` (`.gap`, `.separators`) → `StackUi::item` — a pure-egui list that
   inserts a uniform gap or a themed `ui.separator()` (auto-oriented) between items. The private
   `Axis` enum is shared by `ResizableSplit` and `Stack`.
+  `GridTemplate::columns([Track…])` — explicit mixed column tracks (`Track::{Fr,Auto,Px,MinMax}`)
+  via taffy (CSS `grid-template-columns`), beyond `Grid`'s equal columns; cells added row-major via
+  `FlexUiExt::item`. Deferred (egui/taffy ergonomics, like v1.6 motion): `Sticky` (no scroll-aware
+  pin primitive) and grid-template-areas (named areas not surfaced by egui_taffy).

@@ -23,7 +23,7 @@
 use std::hash::Hash;
 
 use egui::{vec2, CursorIcon, Id, Response, ScrollArea, Sense, Ui};
-use egui_taffy::taffy::prelude::{fr, length};
+use egui_taffy::taffy::prelude::{auto, fr, length, minmax};
 use egui_taffy::taffy::{self, Display, FlexDirection};
 use egui_taffy::{tui, Tui, TuiBuilderLogic};
 
@@ -185,6 +185,86 @@ impl Grid {
         taffy::Style {
             display: Display::Grid,
             grid_template_columns: vec![fr(1.0); self.columns],
+            gap: length(self.gap),
+            align_items: Some(taffy::AlignItems::Stretch),
+            justify_items: Some(taffy::AlignItems::Stretch),
+            ..Default::default()
+        }
+    }
+
+    /// Lay out the cells. `id_source` must be stable and unique in the parent `Ui`.
+    pub fn show(self, ui: &mut Ui, id_source: impl Hash, content: impl FnOnce(&mut Tui)) {
+        let style = self.style();
+        let init = tui(ui, Id::new(id_source));
+        let init = if self.fill_width {
+            init.reserve_available_width()
+        } else {
+            init
+        };
+        init.style(style).show(content);
+    }
+}
+
+/// One explicit column track for a [`GridTemplate`] (CSS `grid-template-columns` component).
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Track {
+    /// Flexible fraction of the leftover space (CSS `<n>fr`).
+    Fr(f32),
+    /// Sized to its content (CSS `auto`).
+    Auto,
+    /// Fixed size, in points.
+    Px(f32),
+    /// At least `min` points, growing up to `max_fr` fractions (CSS `minmax(<min>px, <max>fr)`).
+    MinMax { min: f32, max_fr: f32 },
+}
+
+/// A grid with **explicit, mixed column tracks** (`fr` / `auto` / `px` / `minmax`) — the CSS
+/// `grid-template-columns` analogue, beyond [`Grid`]'s equal columns. Cells are added row-major via
+/// [`FlexUiExt::item`]. Build with [`GridTemplate::columns`], then [`GridTemplate::show`].
+#[derive(Clone, Debug)]
+pub struct GridTemplate {
+    columns: Vec<Track>,
+    gap: f32,
+    fill_width: bool,
+}
+
+impl GridTemplate {
+    /// Define the column tracks, left to right.
+    #[must_use]
+    pub fn columns(tracks: impl Into<Vec<Track>>) -> Self {
+        Self {
+            columns: tracks.into(),
+            gap: 0.0,
+            fill_width: false,
+        }
+    }
+
+    #[must_use]
+    pub fn gap(mut self, gap: f32) -> Self {
+        self.gap = gap;
+        self
+    }
+
+    #[must_use]
+    pub fn fill_width(mut self) -> Self {
+        self.fill_width = true;
+        self
+    }
+
+    fn style(&self) -> taffy::Style {
+        let columns = self
+            .columns
+            .iter()
+            .map(|track| match *track {
+                Track::Fr(f) => fr(f),
+                Track::Auto => auto(),
+                Track::Px(p) => length(p),
+                Track::MinMax { min, max_fr } => minmax(length(min), fr(max_fr)),
+            })
+            .collect();
+        taffy::Style {
+            display: Display::Grid,
+            grid_template_columns: columns,
             gap: length(self.gap),
             align_items: Some(taffy::AlignItems::Stretch),
             justify_items: Some(taffy::AlignItems::Stretch),

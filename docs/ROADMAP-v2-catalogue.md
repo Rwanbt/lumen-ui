@@ -44,10 +44,10 @@
 - 🟡 **v1.6 Motion v2** — [x] `prefers-reduced-motion` (`set_reduced_motion`/`reduced_motion` →
   `ease`/`fade` instantanés) ; [ ] slide/scale, enter/exit, stagger, FLIP (bloqués : egui stable
   n'expose pas ergonomiquement les transforms de sous-arbre — cf. note `transitions.rs`)
-- 🟡 **v1.7 Layout v2** — [x] Container (max-width + auto-margins) · AspectRatio (16:9/1:1/ratio) ·
-  ResizableSplit/SplitPane (diviseur draggable) · Stack (col/row + séparateurs) · Scroll (wrapper
-  `ScrollArea` ergonomique) (primitives pures egui, sans taffy) ; [ ] grille fractionnaire
-  (fr/auto/minmax) · template-areas · Sticky
+- ✅ **v1.7 Layout v2** — [x] Container · AspectRatio · ResizableSplit/SplitPane · Stack (+ séparateurs) ·
+  Scroll (wrapper `ScrollArea`) (pures egui) · GridTemplate (`fr`/`auto`/`px`/`minmax` via taffy) —
+  **JALON CLÔTURÉ**. Différés (ergonomie egui/taffy, cf. v1.6) : Sticky (pas de primitive de pin
+  scroll-aware) · grid-template-areas (zones nommées non exposées par egui_taffy)
 - ✅ **v1.8 Navigation & patterns** — [x] Breadcrumb · Pagination · Stepper ; [x] Form (layout) ·
   AuthCard · MasterDetail · Wizard (patterns) · TreeView (widget) · DataTable pattern
   (search + sortable DataGrid + pagination, feature `datagrid`) ; [x] Drawer (off-canvas, scrim,
