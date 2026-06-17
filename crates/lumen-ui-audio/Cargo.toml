@@ -16,4 +16,7 @@ egui = { workspace = true }
 lumen-ui-core = { workspace = true }
 
 [dev-dependencies]
-egui_kittest = "0.34.3"
+# `wgpu` + `snapshot` power the GPU pixel-snapshot test (tests/snapshot.rs, #[ignore]).
+# Dev-deps are not built by `cargo check`, so this does not affect the MSRV job; the snapshot
+# test only runs in the dedicated `snapshots` workflow (Linux + software adapter).
+egui_kittest = { version = "0.34.3", features = ["wgpu", "snapshot"] }

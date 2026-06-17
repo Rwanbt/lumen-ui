@@ -64,9 +64,11 @@
 - 🟡 **v2.0 Consolidation** — [x] CHANGELOG `[Unreleased]` (expansion v2 catalogue) · exemple
   `catalogue` (audio + presets live) · audit WCAG AA (test par thème, dont presets) · matrice compat
   egui 0.34.x / MSRV 1.92 (inchangée) · **mdBook étendu au catalogue v2** (chapitre Audio + sections
-  v2 Widgets/Layout/Theming) ; [ ] galerie WASM exhaustive déployée · snapshots `egui_kittest`
-  (nécessite **wgpu en CI** — décision infra, gardé léger jusqu'ici) · gel SemVer formel à la
-  prochaine release.
+  v2 Widgets/Layout/Theming) · **snapshots `egui_kittest`+wgpu** (infra : test `#[ignore]` rendu via
+  l'adaptateur logiciel Mesa, workflow `snapshots.yml` en `workflow_dispatch` — hors matrice
+  principale ; références générées/vérifiées dans le **même env CI Linux** pour le déterminisme
+  cross-backend) ; [ ] générer+committer les PNG de référence via la CI puis passer la vérif sur PR ·
+  galerie WASM exhaustive déployée · gel SemVer formel à la prochaine release.
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,
 Kbd, Stat, Breadcrumb, SegmentedControl, Pagination, EmptyState, Link, CircularProgress, Rating,
