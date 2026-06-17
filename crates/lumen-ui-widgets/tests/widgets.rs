@@ -15,11 +15,11 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
-    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, ColorPicker, Combobox, Divider,
-    DropdownMenu, EmptyState, FormField, IconButton, Kbd, Label, Link, Modal, MultiSelect,
-    NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select,
-    Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TreeNode,
-    TreeView,
+    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, ColorPicker, Combobox,
+    DescriptionList, Divider, DropdownMenu, EmptyState, FormField, IconButton, Kbd, Label, Link,
+    Modal, MultiSelect, NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating,
+    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
+    TextField, Textarea, Timeline, TreeNode, TreeView,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -122,6 +122,14 @@ fn every_widget_renders_under_all_built_in_themes() {
             MultiSelect::new("tags", &mut tags)
                 .option(0usize, "bug")
                 .option(1usize, "feat")
+                .show(ui);
+            DescriptionList::new("dl")
+                .item("Status", "Active")
+                .item("Owner", "Ada")
+                .show(ui);
+            Timeline::new()
+                .event("Created")
+                .event_detailed("Shipped", "v1.0")
                 .show(ui);
             FormField::new("Email")
                 .hint("We'll never share it")
@@ -442,6 +450,45 @@ fn multi_select_toggles_membership() {
         vec![1],
         "toggling an active option removes it"
     );
+}
+
+#[test]
+fn description_list_exposes_terms_and_definitions() {
+    let mut harness = Harness::new_ui(|ui| {
+        theme_ctx(ui.ctx(), &dark());
+        DescriptionList::new("info")
+            .item("Status", "Active")
+            .item("Owner", "Ada")
+            .show(ui);
+    });
+
+    harness.run();
+    // Both terms and their definitions reach the a11y tree as labelled text.
+    for label in ["Status", "Active", "Owner", "Ada"] {
+        assert!(
+            harness.query_by_label(label).is_some(),
+            "description list should expose {label:?}"
+        );
+    }
+}
+
+#[test]
+fn timeline_exposes_event_titles_and_details() {
+    let mut harness = Harness::new_ui(|ui| {
+        theme_ctx(ui.ctx(), &dark());
+        Timeline::new()
+            .event("Created")
+            .event_detailed("Shipped", "v1.0")
+            .show(ui);
+    });
+
+    harness.run();
+    for label in ["Created", "Shipped", "v1.0"] {
+        assert!(
+            harness.query_by_label(label).is_some(),
+            "timeline should expose {label:?}"
+        );
+    }
 }
 
 // ---------------------------------------------------------------------------

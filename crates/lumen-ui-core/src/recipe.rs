@@ -879,3 +879,67 @@ impl DrawerRecipe {
         }
     }
 }
+
+/// Resolved style for a `DescriptionList` (term/definition pairs).
+#[derive(Clone, Copy, Debug)]
+pub struct DescriptionListRecipe {
+    /// Color of the term (the label of each pair).
+    pub term_color: Color32,
+    /// Color of the definition (the value of each pair).
+    pub definition_color: Color32,
+    pub term_size: f32,
+    pub definition_size: f32,
+    /// Vertical gap between rows, in points.
+    pub row_gap: f32,
+}
+
+impl DescriptionListRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            term_color: tokens.colors.text_muted,
+            definition_color: tokens.colors.text,
+            term_size: tokens.typography.label,
+            definition_size: tokens.typography.body,
+            row_gap: tokens.spacing.xs * ctx.density_scale(),
+        }
+    }
+}
+
+/// Base radius of a `Timeline` event dot before density scaling, in points.
+const TIMELINE_BASE_DOT_RADIUS: f32 = 5.0;
+/// Thickness of the `Timeline` connector line, in points.
+const TIMELINE_LINE_WIDTH: f32 = 2.0;
+
+/// Resolved style for a `Timeline` (vertical chronological events).
+#[derive(Clone, Copy, Debug)]
+pub struct TimelineRecipe {
+    /// Fill of each event dot.
+    pub dot_color: Color32,
+    /// Color of the connector line between dots.
+    pub line_color: Color32,
+    pub title_color: Color32,
+    pub detail_color: Color32,
+    pub title_size: f32,
+    pub detail_size: f32,
+    pub dot_radius: f32,
+    pub line_width: f32,
+}
+
+impl TimelineRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            dot_color: tokens.colors.primary,
+            line_color: tokens.colors.border,
+            title_color: tokens.colors.text,
+            detail_color: tokens.colors.text_muted,
+            title_size: tokens.typography.body,
+            detail_size: tokens.typography.label,
+            dot_radius: TIMELINE_BASE_DOT_RADIUS * ctx.density_scale(),
+            line_width: TIMELINE_LINE_WIDTH,
+        }
+    }
+}
