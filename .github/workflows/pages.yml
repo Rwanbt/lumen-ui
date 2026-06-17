@@ -1,11 +1,13 @@
-name: Pages (mdBook)
+name: Pages (mdBook + WASM gallery)
 
 # Manual trigger only. GitHub Pages requires the repository to be public (or Pages
-# enabled on the plan). To publish the book:
+# enabled on the plan). To publish:
 #   1. Make the repo public (or enable Pages on a paid plan).
 #   2. Settings → Pages → Build and deployment → Source: "GitHub Actions".
 #   3. Run this workflow from the Actions tab.
 # Keeping it dispatch-only means it never fails automatically while Pages is off.
+#
+# The deployed site serves the mdBook at the root and the interactive WASM gallery at /gallery/.
 on:
   workflow_dispatch:
 
@@ -18,6 +20,9 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  TRUNK_VERSION: "0.21.7"
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -26,17 +31,39 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install mdbook
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install mdbook + trunk
         run: |
           set -e
           mkdir -p "$HOME/.local/bin"
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.5.3/mdbook-v0.5.3-x86_64-unknown-linux-gnu.tar.gz \
             | tar -xz -C "$HOME/.local/bin"
+          curl -sSL "https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz" \
+            | tar -xz -C "$HOME/.local/bin"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-      - run: mdbook build docs/book
+
+      - name: Build the book
+        run: mdbook build docs/book
+
+      - name: Build the WASM gallery
+        # Pages serves this repo under /lumen-ui/, so the gallery lives at /lumen-ui/gallery/.
+        run: trunk build --release web/index.html --dist web/dist --public-url /lumen-ui/gallery/
+
+      - name: Assemble the site (book at root, gallery under /gallery/)
+        run: |
+          set -e
+          rm -rf _site
+          cp -r docs/book/book _site
+          mkdir -p _site/gallery
+          cp -r web/dist/* _site/gallery/
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/book/book
+          path: _site
       - id: deploy
         uses: actions/deploy-pages@v4

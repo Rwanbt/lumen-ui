@@ -68,8 +68,10 @@
   l'adaptateur logiciel Mesa, workflow `snapshots.yml` en `workflow_dispatch` — hors matrice
   principale ; références générées/vérifiées dans le **même env CI Linux** pour le déterminisme
   cross-backend) · **référence générée par la CI Linux et committée**, vérification **gatée sur PR**
-  (paths audio) — snapshots **opérationnels** ; [ ] galerie WASM exhaustive déployée · gel SemVer
-  formel à la prochaine release.
+  (paths audio) — snapshots **opérationnels** · **galerie WASM** (`web/`, projet Trunk détaché,
+  natif + wasm, compile-check wasm en CI ; `pages.yml` build book + galerie et déploie sur Pages —
+  **déploiement = dispatch manuel par l'owner**, Pages public requis) ; [ ] gel SemVer formel à la
+  prochaine release.
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,
 Kbd, Stat, Breadcrumb, SegmentedControl, Pagination, EmptyState, Link, CircularProgress, Rating,

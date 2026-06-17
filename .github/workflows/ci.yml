@@ -66,6 +66,8 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       # Façade libs only — examples pull eframe which needs a JS canvas runner on wasm.
       - run: cargo build -p lumen-ui-core -p lumen-ui-widgets -p lumen-ui --target wasm32-unknown-unknown
+      # Compile-check the WASM gallery crate (separate workspace; Trunk packages it in pages.yml).
+      - run: cargo build --manifest-path web/Cargo.toml --target wasm32-unknown-unknown
 
   docs:
     name: mdbook build
