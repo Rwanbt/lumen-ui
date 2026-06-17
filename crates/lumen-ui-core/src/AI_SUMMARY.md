@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 11:23** — do not edit manually.
+> **Auto-generated 2026-06-17 11:33** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -22,10 +22,10 @@ workspace depends on this crate; it depends only on `egui`.
 | `lib.rs` | 45 | |
 | `light.rs` | 99 | |
 | `palette.rs` | 94 | |
-| `recipe.rs` | 868 | ⚠️ |
+| `recipe.rs` | 908 | ⚠️ |
 | `theme.rs` | 107 | |
 | `tokens.rs` | 138 | |
-| **Total** | **2209** | |
+| **Total** | **2249** | |
 
 ## Rust API
 - `AlertRecipe` (struct)
@@ -51,6 +51,7 @@ workspace depends on this crate; it depends only on `egui`.
 - `DrawerRecipe` (struct)
 - `Elevation` (struct)
 - `EmptyStateRecipe` (struct)
+- `FileUploadRecipe` (struct)
 - `FormFieldRecipe` (struct)
 - `IconButtonRecipe` (struct)
 - `KbdRecipe` (struct)

@@ -40,11 +40,11 @@ pub use recipe::{
     AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe, BadgeVariant, BreadcrumbRecipe,
     ButtonRecipe, ButtonVariant, CalendarRecipe, CardRecipe, CarouselRecipe, ChipRecipe,
     CircularProgressRecipe, CodeRecipe, ColorPickerRecipe, DataGridRecipe, DescriptionListRecipe,
-    DividerRecipe, DrawerRecipe, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe,
-    LinkRecipe, MenuRecipe, NumberInputRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe,
-    SegmentedRecipe, SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe,
-    TableRecipe, TextFieldRecipe, TextRecipe, TextRole, TimelineRecipe, ToggleRecipe,
-    TreeViewRecipe, WidgetState,
+    DividerRecipe, DrawerRecipe, EmptyStateRecipe, FileUploadRecipe, FormFieldRecipe,
+    IconButtonRecipe, KbdRecipe, LinkRecipe, MenuRecipe, NumberInputRecipe, PaginationRecipe,
+    ProgressRecipe, RatingRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, SpinnerRecipe,
+    StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe, TextRecipe, TextRole, TimelineRecipe,
+    ToggleRecipe, TreeViewRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};
