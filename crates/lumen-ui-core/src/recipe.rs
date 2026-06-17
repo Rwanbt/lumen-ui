@@ -1024,6 +1024,35 @@ impl CalendarRecipe {
     }
 }
 
+/// Base diameter of a `Knob` before density scaling, in points.
+const KNOB_BASE_SIZE: f32 = 44.0;
+
+/// Resolved style for a rotary `Knob` (audio crate).
+#[derive(Clone, Copy, Debug)]
+pub struct KnobRecipe {
+    /// The unfilled part of the value arc.
+    pub track: Color32,
+    /// The filled part of the value arc (from the minimum to the current value).
+    pub fill: Color32,
+    /// The pointer line indicating the current value.
+    pub indicator: Color32,
+    /// Diameter, in points.
+    pub size: f32,
+}
+
+impl KnobRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            track: tokens.colors.surface_variant,
+            fill: tokens.colors.primary,
+            indicator: tokens.colors.text,
+            size: KNOB_BASE_SIZE * ctx.density_scale(),
+        }
+    }
+}
+
 /// Base minimum height of a `FileUpload` drop zone before density scaling, in points.
 const FILE_UPLOAD_BASE_HEIGHT: f32 = 80.0;
 /// Tint opacity of the drop zone fill while files hover over it, in `0..=255`.

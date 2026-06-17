@@ -12,6 +12,7 @@ members = [
     "crates/lumen-ui-patterns",
     "crates/lumen-ui-themes",
     "crates/lumen-ui-icons",
+    "crates/lumen-ui-audio",
     "tools/lumen-theme-gen",
     "tools/lumen-icon-gen",
     "crates/lumen-ui",
@@ -48,6 +49,7 @@ lumen-ui-motion = { path = "crates/lumen-ui-motion", version = "1.0.0" }
 lumen-ui-patterns = { path = "crates/lumen-ui-patterns", version = "1.0.0" }
 lumen-ui-themes = { path = "crates/lumen-ui-themes", version = "1.0.0" }
 lumen-ui-icons = { path = "crates/lumen-ui-icons", version = "1.0.0" }
+lumen-ui-audio = { path = "crates/lumen-ui-audio", version = "1.0.0" }
 
 # Profil release optimisé pour les exemples / galeries WASM.
 [profile.release]

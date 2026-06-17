@@ -21,6 +21,7 @@ lumen-ui-motion = { workspace = true, optional = true }
 lumen-ui-patterns = { workspace = true, optional = true }
 lumen-ui-themes = { workspace = true, optional = true }
 lumen-ui-icons = { workspace = true, optional = true }
+lumen-ui-audio = { workspace = true, optional = true }
 
 # Drapeaux de features — voir ROADMAP.md §A. Les crates motion/layout/patterns/icons/
 # themes/material naissent à leur version respective ; leurs features sont déclarées ici
@@ -63,5 +64,6 @@ motion = ["dep:lumen-ui-motion"]
 patterns = ["widgets", "dep:lumen-ui-patterns"]
 themes = ["theme", "dep:lumen-ui-themes"]
 icons = ["theme", "dep:lumen-ui-icons"]
+audio = ["theme", "dep:lumen-ui-audio"]
 serde = ["lumen-ui-core/serde"]
-full = ["widgets", "datagrid", "layout", "motion", "patterns", "themes", "icons", "serde"]
+full = ["widgets", "datagrid", "layout", "motion", "patterns", "themes", "icons", "audio", "serde"]
