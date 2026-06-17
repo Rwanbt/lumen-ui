@@ -53,6 +53,10 @@ required-features = ["patterns"]
 name = "icons"
 required-features = ["icons"]
 
+[[example]]
+name = "catalogue"
+required-features = ["widgets", "audio", "themes"]
+
 [features]
 default = ["theme", "widgets", "themes"]
 tokens = ["dep:lumen-ui-core"]

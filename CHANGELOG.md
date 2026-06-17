@@ -16,6 +16,18 @@ All notable changes to lumen-ui are documented here. The format is based on
 
 ### Added
 
+- **v2 catalogue expansion** (token-driven, all WCAG-aware, every egui signature verified against
+  the local 0.34.3 source). New widgets in `lumen-ui-widgets`: NumberInput, RangeSlider,
+  ColorPicker, Combobox, MultiSelect, DescriptionList, Timeline, Carousel, Calendar, DatePicker,
+  TimePicker, FileUpload (plus the earlier Form/AuthCard/MasterDetail/Wizard/TreeView/DataTable/
+  Drawer and DataGrid). New **`lumen-ui-audio`** crate (façade feature `audio`): Knob, Fader,
+  VuMeter, LevelBar, Waveform, XyPad, Transport. **Layout v2** in `lumen-ui-layout`: Container,
+  AspectRatio, ResizableSplit, Stack, Scroll, GridTemplate (`fr`/`auto`/`px`/`minmax`). **Themes v2**
+  in `lumen-ui-themes`: `nord()`, `solarized_dark()` presets, `ThemeBuilder` (derive an AA-oriented
+  palette from two seeds), `system_mode()` (auto `prefers-color-scheme`). New `lumen-ui-core::date`
+  module (`Date`/`Time` + Gregorian helpers, dependency-free, ADR-0011). Each new widget resolves a
+  pure recipe (ADR-0009); DataGrid is feature-gated on `egui_extras` (ADR-0010). New `catalogue`
+  example showcases the audio controls + live theme presets.
 - **Screen-reader / AccessKit semantics** for the painter-drawn widgets: `Switch`/`Checkbox`
   expose `WidgetInfo::selected` (toggle state + label), `Slider` exposes `WidgetInfo::slider`
   (value), `RadioGroup` exposes `WidgetInfo::selected` per `RadioButton`. `RadioGroup` also gained

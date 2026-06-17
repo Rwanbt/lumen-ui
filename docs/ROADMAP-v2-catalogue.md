@@ -61,7 +61,11 @@
   + peak-hold) · LevelBar · Waveform (enveloppe min/max) · XyPad (contrôle 2D) · Transport
   (play/pause/stop/record, icônes painter) — **JALON CLÔTURÉ** (set de contrôles). Différé : Spectrum
   (entrée FFT, spécifique à l'app). Validation sur une vraie app (Seno / plugin CLAP) = suivi pré-1.0.
-- ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer
+- 🟡 **v2.0 Consolidation** — [x] CHANGELOG `[Unreleased]` (expansion v2 catalogue) · exemple
+  `catalogue` (audio + presets live) · audit WCAG AA (test par thème, dont presets) · matrice compat
+  egui 0.34.x / MSRV 1.92 (inchangée) ; [ ] galerie WASM exhaustive déployée · mdBook étendu au
+  catalogue v2 · snapshots `egui_kittest` (nécessite **wgpu en CI** — décision infra, gardé léger
+  jusqu'ici) · gel SemVer formel à la prochaine release.
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,
 Kbd, Stat, Breadcrumb, SegmentedControl, Pagination, EmptyState, Link, CircularProgress, Rating,
