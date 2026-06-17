@@ -1069,6 +1069,8 @@ pub struct MeterRecipe {
     pub high: Color32,
     /// Peak-hold marker color.
     pub peak: Color32,
+    /// Scale tick marks along the meter.
+    pub tick: Color32,
 }
 
 impl MeterRecipe {
@@ -1081,6 +1083,7 @@ impl MeterRecipe {
             mid: tokens.colors.warning,
             high: tokens.colors.danger,
             peak: tokens.colors.text,
+            tick: tokens.colors.border,
         }
     }
 }
@@ -1088,20 +1091,27 @@ impl MeterRecipe {
 /// Resolved style for a `Waveform` display (audio crate).
 #[derive(Clone, Copy, Debug)]
 pub struct WaveformRecipe {
-    /// Color of the waveform envelope.
+    /// Color of the waveform envelope outline.
     pub wave: Color32,
+    /// Translucent fill of the waveform body (a tint of `wave`).
+    pub fill: Color32,
     /// Color of the zero-amplitude baseline.
     pub baseline: Color32,
     /// Background fill.
     pub background: Color32,
 }
 
+/// Alpha of the waveform body fill, in `0..=255`.
+const WAVEFORM_FILL_ALPHA: u8 = 0x55;
+
 impl WaveformRecipe {
     /// Pure resolution from tokens (cf. ADR-0009): no states.
     #[must_use]
     pub fn resolve(tokens: &Tokens) -> Self {
+        let p = tokens.colors.primary;
         Self {
-            wave: tokens.colors.primary,
+            wave: p,
+            fill: Color32::from_rgba_unmultiplied(p.r(), p.g(), p.b(), WAVEFORM_FILL_ALPHA),
             baseline: tokens.colors.border,
             background: tokens.colors.surface_variant,
         }
