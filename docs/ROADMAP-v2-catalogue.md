@@ -29,7 +29,8 @@
   — **JALON CLÔTURÉ**
 - 🟡 **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
   [x] DataGrid (egui_extras `TableBuilder` — tri émis/virtualisation, feature `datagrid`, ADR-0010) ;
-  [ ] DescriptionList · Timeline · Calendar · Carousel
+  [x] DescriptionList (Grid 2 colonnes) · Timeline (dots + connecteur, single-pass) ;
+  [ ] Calendar (lié DatePicker) · Carousel (état index)
 - 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating · Textarea · NumberInput (DragValue +
   −/+ steppers) · RangeSlider (2 poignées, réutilise `SliderRecipe`) · ColorPicker (swatch thémé →
   picker egui) · Combobox (Select recherchable) · MultiSelect (`&mut Vec<T>`) · Form (layout, v1.8) ;

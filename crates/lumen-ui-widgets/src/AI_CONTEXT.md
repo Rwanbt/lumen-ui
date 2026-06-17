@@ -63,6 +63,11 @@ ui.add(Button::ghost("Cancel").enabled(false));
 - `multi_select.rs` — `MultiSelect<T>` over `egui::ComboBox`: `selectable_label` per option toggling
   membership in the caller's `&mut Vec<T>` (insertion order kept). `CloseOnClickOutside` keeps the
   popup open across toggles. Trigger shows "N selected". No recipe (composition).
+- `description_list.rs` — `DescriptionList` term/definition pairs (HTML `<dl>`) in an aligned
+  two-column `egui::Grid`. Pure display; `DescriptionListRecipe` (term/definition colors+sizes, gap).
+- `timeline.rs` — `Timeline` vertical chronological events: a dot per event linked by a connector
+  line, title (+ optional detail) to the right. Single-pass: each connector is drawn from the
+  previous dot to the current one (robust to row heights). `TimelineRecipe` (dot/line/text styles).
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.
