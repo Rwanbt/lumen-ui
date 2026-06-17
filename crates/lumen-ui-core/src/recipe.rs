@@ -1085,6 +1085,58 @@ impl MeterRecipe {
     }
 }
 
+/// Resolved style for a `Waveform` display (audio crate).
+#[derive(Clone, Copy, Debug)]
+pub struct WaveformRecipe {
+    /// Color of the waveform envelope.
+    pub wave: Color32,
+    /// Color of the zero-amplitude baseline.
+    pub baseline: Color32,
+    /// Background fill.
+    pub background: Color32,
+}
+
+impl WaveformRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009): no states.
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            wave: tokens.colors.primary,
+            baseline: tokens.colors.border,
+            background: tokens.colors.surface_variant,
+        }
+    }
+}
+
+/// Base side length of an `XyPad` before density scaling, in points.
+const XY_PAD_BASE_SIZE: f32 = 120.0;
+
+/// Resolved style for an `XyPad` 2-D control (audio crate).
+#[derive(Clone, Copy, Debug)]
+pub struct XyPadRecipe {
+    /// Background fill.
+    pub background: Color32,
+    /// Border + crosshair color.
+    pub guide: Color32,
+    /// The draggable point.
+    pub point: Color32,
+    /// Side length (square), in points.
+    pub size: f32,
+}
+
+impl XyPadRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            background: tokens.colors.surface_variant,
+            guide: tokens.colors.border,
+            point: tokens.colors.primary,
+            size: XY_PAD_BASE_SIZE * ctx.density_scale(),
+        }
+    }
+}
+
 /// Base minimum height of a `FileUpload` drop zone before density scaling, in points.
 const FILE_UPLOAD_BASE_HEIGHT: f32 = 80.0;
 /// Tint opacity of the drop zone fill while files hover over it, in `0..=255`.

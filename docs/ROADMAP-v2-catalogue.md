@@ -55,7 +55,8 @@
 - ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
 - 🟡 **v1.10 Crate `lumen-ui-audio`** — [x] Knob (rotatif 270°, `KnobRecipe`) · Fader (vertical,
   `SliderRecipe`) · VuMeter (zones vert/ambre/rouge + peak-hold) · LevelBar (horizontal zoné)
-  (`MeterRecipe`) ; [ ] Waveform · XY pad · Transport. À valider sur une vraie app (Seno / plugin CLAP).
+  (`MeterRecipe`) · Waveform (enveloppe min/max) · XyPad (contrôle 2D) ; [ ] Transport.
+  À valider sur une vraie app (Seno / plugin CLAP).
 - ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,
