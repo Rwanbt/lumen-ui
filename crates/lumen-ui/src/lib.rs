@@ -63,7 +63,9 @@ pub use lumen_ui_widgets::{
 
 #[cfg(feature = "layout")]
 #[doc(inline)]
-pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
+pub use lumen_ui_layout::{
+    responsive, Align, AspectRatio, Breakpoint, Container, Flex, FlexUiExt, Grid, Justify,
+};
 
 #[cfg(feature = "motion")]
 #[doc(inline)]
@@ -86,7 +88,9 @@ pub mod prelude {
     #[cfg(feature = "icons")]
     pub use lumen_ui_icons::{Icon, IconKind};
     #[cfg(feature = "layout")]
-    pub use lumen_ui_layout::{responsive, Align, Breakpoint, Flex, FlexUiExt, Grid, Justify};
+    pub use lumen_ui_layout::{
+        responsive, Align, AspectRatio, Breakpoint, Container, Flex, FlexUiExt, Grid, Justify,
+    };
     #[cfg(feature = "motion")]
     pub use lumen_ui_motion::{ease, fade, reduced_motion, set_reduced_motion, Easing, Spring};
     #[cfg(feature = "patterns")]
