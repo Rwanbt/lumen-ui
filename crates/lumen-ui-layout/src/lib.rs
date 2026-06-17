@@ -22,7 +22,7 @@
 
 use std::hash::Hash;
 
-use egui::{vec2, CursorIcon, Id, Response, Sense, Ui};
+use egui::{vec2, CursorIcon, Id, Response, ScrollArea, Sense, Ui};
 use egui_taffy::taffy::prelude::{fr, length};
 use egui_taffy::taffy::{self, Display, FlexDirection};
 use egui_taffy::{tui, Tui, TuiBuilderLogic};
@@ -326,9 +326,9 @@ fn clamp_fraction(fraction: f32, min: f32) -> f32 {
     }
 }
 
-/// Orientation of a [`ResizableSplit`].
+/// A main axis shared by [`ResizableSplit`] and [`Stack`].
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-enum SplitAxis {
+enum Axis {
     Horizontal,
     Vertical,
 }
@@ -343,13 +343,13 @@ enum SplitAxis {
 #[derive(Clone, Copy, Debug)]
 pub struct ResizableSplit {
     id: Id,
-    axis: SplitAxis,
+    axis: Axis,
     default_fraction: f32,
     min_fraction: f32,
 }
 
 impl ResizableSplit {
-    fn new(id_source: impl Hash, axis: SplitAxis) -> Self {
+    fn new(id_source: impl Hash, axis: Axis) -> Self {
         Self {
             id: Id::new(id_source),
             axis,
@@ -361,13 +361,13 @@ impl ResizableSplit {
     /// A left/right split.
     #[must_use]
     pub fn horizontal(id_source: impl Hash) -> Self {
-        Self::new(id_source, SplitAxis::Horizontal)
+        Self::new(id_source, Axis::Horizontal)
     }
 
     /// A top/bottom split.
     #[must_use]
     pub fn vertical(id_source: impl Hash) -> Self {
-        Self::new(id_source, SplitAxis::Vertical)
+        Self::new(id_source, Axis::Vertical)
     }
 
     /// Initial fraction of the main axis given to the first pane (default `0.5`).
@@ -391,7 +391,7 @@ impl ResizableSplit {
         first: impl FnOnce(&mut Ui),
         second: impl FnOnce(&mut Ui),
     ) -> Response {
-        let horizontal = self.axis == SplitAxis::Horizontal;
+        let horizontal = self.axis == Axis::Horizontal;
         let fraction_id = self.id.with("fraction");
         let mut fraction = ui
             .ctx()
@@ -453,6 +453,169 @@ impl ResizableSplit {
 
         ui.ctx().data_mut(|d| d.insert_temp(fraction_id, fraction));
         response
+    }
+}
+
+/// Scroll directions for a [`Scroll`] area.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
+enum ScrollAxis {
+    #[default]
+    Vertical,
+    Horizontal,
+    Both,
+}
+
+/// An ergonomic wrapper over [`egui::ScrollArea`] with sensible defaults: it does **not**
+/// auto-shrink (it fills the available space) and takes an optional max width/height. Scrollbar
+/// styling comes from the installed theme's egui visuals. Build with [`Scroll::vertical`] /
+/// [`Scroll::horizontal`] / [`Scroll::both`], then [`Scroll::show`].
+#[derive(Clone, Copy, Debug, Default)]
+pub struct Scroll {
+    axis: ScrollAxis,
+    max_width: Option<f32>,
+    max_height: Option<f32>,
+}
+
+impl Scroll {
+    #[must_use]
+    pub fn vertical() -> Self {
+        Self {
+            axis: ScrollAxis::Vertical,
+            ..Self::default()
+        }
+    }
+
+    #[must_use]
+    pub fn horizontal() -> Self {
+        Self {
+            axis: ScrollAxis::Horizontal,
+            ..Self::default()
+        }
+    }
+
+    #[must_use]
+    pub fn both() -> Self {
+        Self {
+            axis: ScrollAxis::Both,
+            ..Self::default()
+        }
+    }
+
+    /// Cap the scroll area's width, in points.
+    #[must_use]
+    pub fn max_width(mut self, max_width: f32) -> Self {
+        self.max_width = Some(max_width);
+        self
+    }
+
+    /// Cap the scroll area's height, in points.
+    #[must_use]
+    pub fn max_height(mut self, max_height: f32) -> Self {
+        self.max_height = Some(max_height);
+        self
+    }
+
+    /// Show the scrollable content. Returns the closure's value.
+    pub fn show<R>(self, ui: &mut Ui, content: impl FnOnce(&mut Ui) -> R) -> R {
+        let mut area = match self.axis {
+            ScrollAxis::Vertical => ScrollArea::vertical(),
+            ScrollAxis::Horizontal => ScrollArea::horizontal(),
+            ScrollAxis::Both => ScrollArea::both(),
+        }
+        // Default to filling the available space rather than shrinking to content.
+        .auto_shrink([false; 2]);
+        if let Some(w) = self.max_width {
+            area = area.max_width(w);
+        }
+        if let Some(h) = self.max_height {
+            area = area.max_height(h);
+        }
+        area.show(ui, content).inner
+    }
+}
+
+/// A simple vertical/horizontal list with a uniform gap and optional separators between items — a
+/// pure-egui alternative to [`Flex`] for plain stacks. Build with [`Stack::vertical`] /
+/// [`Stack::horizontal`], then [`Stack::show`], adding items via [`StackUi::item`].
+#[derive(Clone, Copy, Debug)]
+pub struct Stack {
+    axis: Axis,
+    gap: f32,
+    separators: bool,
+}
+
+impl Stack {
+    fn new(axis: Axis) -> Self {
+        Self {
+            axis,
+            gap: 0.0,
+            separators: false,
+        }
+    }
+
+    #[must_use]
+    pub fn vertical() -> Self {
+        Self::new(Axis::Vertical)
+    }
+
+    #[must_use]
+    pub fn horizontal() -> Self {
+        Self::new(Axis::Horizontal)
+    }
+
+    /// Space inserted between items, in points (ignored when [`Stack::separators`] is on).
+    #[must_use]
+    pub fn gap(mut self, gap: f32) -> Self {
+        self.gap = gap;
+        self
+    }
+
+    /// Draw a themed separator between items instead of plain spacing.
+    #[must_use]
+    pub fn separators(mut self, separators: bool) -> Self {
+        self.separators = separators;
+        self
+    }
+
+    /// Lay out the items. Returns the enclosing layout's response.
+    pub fn show(self, ui: &mut Ui, content: impl FnOnce(&mut StackUi)) -> Response {
+        let lay = |ui: &mut Ui| {
+            let mut stack = StackUi {
+                ui,
+                gap: self.gap,
+                separators: self.separators,
+                first: true,
+            };
+            content(&mut stack);
+        };
+        match self.axis {
+            Axis::Vertical => ui.vertical(lay).response,
+            Axis::Horizontal => ui.horizontal(lay).response,
+        }
+    }
+}
+
+/// Adds items inside a [`Stack::show`] closure, inserting the configured gap/separator between them.
+pub struct StackUi<'a> {
+    ui: &'a mut Ui,
+    gap: f32,
+    separators: bool,
+    first: bool,
+}
+
+impl StackUi<'_> {
+    /// Add one item. A separator (or gap) is inserted before every item except the first.
+    pub fn item(&mut self, content: impl FnOnce(&mut Ui)) {
+        if !self.first {
+            if self.separators {
+                // `Ui::separator` is themed and auto-orients to the current layout.
+                self.ui.separator();
+            } else if self.gap > 0.0 {
+                self.ui.add_space(self.gap);
+            }
+        }
+        self.first = false;
+        content(self.ui);
     }
 }
 
