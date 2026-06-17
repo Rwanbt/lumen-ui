@@ -5,7 +5,7 @@ use std::sync::Arc;
 use egui::accesskit::Role;
 use egui_kittest::kittest::Queryable;
 use egui_kittest::Harness;
-use lumen_ui_audio::{Fader, Knob};
+use lumen_ui_audio::{Fader, Knob, LevelBar, VuMeter};
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 
 fn theme_ctx(ctx: &egui::Context, theme: &Arc<dyn Theme>) {
@@ -22,6 +22,8 @@ fn knob_and_fader_render_under_dark_and_light() {
             theme_ctx(ui.ctx(), &theme);
             ui.add(Knob::new(&mut knob, 0.0..=1.0));
             ui.add(Fader::new(&mut gain, -60.0..=6.0));
+            ui.add(VuMeter::new(0.7).peak(0.9));
+            ui.add(LevelBar::new(0.4));
         });
         harness.run(); // a panic here fails the test
     }

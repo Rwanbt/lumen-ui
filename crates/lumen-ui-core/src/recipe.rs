@@ -1053,6 +1053,38 @@ impl KnobRecipe {
     }
 }
 
+/// Resolved style for level meters (`VuMeter`, `LevelBar`) in the audio crate.
+///
+/// The three zone colors map to the semantic success/warning/danger tokens so a meter reads
+/// green→amber→red regardless of theme.
+#[derive(Clone, Copy, Debug)]
+pub struct MeterRecipe {
+    /// Unlit meter background.
+    pub track: Color32,
+    /// Low (safe) zone color.
+    pub low: Color32,
+    /// Mid (caution) zone color.
+    pub mid: Color32,
+    /// High (clipping) zone color.
+    pub high: Color32,
+    /// Peak-hold marker color.
+    pub peak: Color32,
+}
+
+impl MeterRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009): no states.
+    #[must_use]
+    pub fn resolve(tokens: &Tokens) -> Self {
+        Self {
+            track: tokens.colors.surface_variant,
+            low: tokens.colors.success,
+            mid: tokens.colors.warning,
+            high: tokens.colors.danger,
+            peak: tokens.colors.text,
+        }
+    }
+}
+
 /// Base minimum height of a `FileUpload` drop zone before density scaling, in points.
 const FILE_UPLOAD_BASE_HEIGHT: f32 = 80.0;
 /// Tint opacity of the drop zone fill while files hover over it, in `0..=255`.
