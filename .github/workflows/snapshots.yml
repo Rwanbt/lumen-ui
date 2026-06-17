@@ -1,0 +1,51 @@
+name: snapshots
+
+# GPU pixel-snapshot tests (egui_kittest + wgpu). Kept OUT of the main CI matrix on purpose:
+# pixel snapshots are backend-sensitive, so references must be generated and verified in the SAME
+# environment. This job renders on a Linux software adapter (Mesa lavapipe/llvmpipe) so results are
+# deterministic and reproducible. Trigger manually:
+#   - update=true  → (re)generate the reference PNGs and upload them as an artifact to commit.
+#   - update=false → verify the committed references (fails on a visual diff).
+on:
+  workflow_dispatch:
+    inputs:
+      update:
+        description: "Regenerate reference snapshots and upload them as an artifact"
+        type: boolean
+        default: false
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: "1"
+  # Force a deterministic software adapter (Mesa) rather than any real GPU.
+  LIBGL_ALWAYS_SOFTWARE: "true"
+  WGPU_POWER_PREF: "low"
+
+jobs:
+  snapshots:
+    name: egui_kittest snapshots (software wgpu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Mesa software renderers (lavapipe + llvmpipe)
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y mesa-vulkan-drivers libgl1-mesa-dri vulkan-tools libegl1
+      - name: Run snapshot tests
+        run: |
+          set -e
+          if [ "${{ inputs.update }}" = "true" ]; then
+            UPDATE_SNAPSHOTS=1 cargo test -p lumen-ui-audio --test snapshot -- --ignored --nocapture
+          else
+            cargo test -p lumen-ui-audio --test snapshot -- --ignored --nocapture
+          fi
+      - name: Upload snapshots (references + any diffs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshots
+          path: crates/lumen-ui-audio/tests/snapshots/
+          if-no-files-found: ignore
