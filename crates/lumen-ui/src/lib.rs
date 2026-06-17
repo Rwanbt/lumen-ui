@@ -52,7 +52,7 @@ pub use lumen_ui_icons::{Icon, IconKind};
 
 #[cfg(feature = "audio")]
 #[doc(inline)]
-pub use lumen_ui_audio::{Fader, Knob, LevelBar, VuMeter};
+pub use lumen_ui_audio::{LevelBar, VuMeter, Waveform};
 
 #[cfg(feature = "widgets")]
 #[doc(inline)]
@@ -61,10 +61,11 @@ pub use lumen_ui_widgets::{
     show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
     Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Chip, ChipResponse,
     CircularProgress, Code, ColorPicker, Combobox, DatePicker, DescriptionList, Divider, Drawer,
-    DrawerSide, DropdownMenu, EmptyState, FileUpload, FileUploadResponse, FormField, Heading,
-    IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
-    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
-    Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, ToastVariant,
+    DrawerSide, DropdownMenu, EmptyState, Fader, FileUpload, FileUploadResponse, FormField,
+    Heading, IconButton, Kbd, Knob, Label, Link, Modal, MultiSelect, NumberInput, Pagination,
+    Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner,
+    Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, ToastVariant,
+    Transport, TransportAction, XyPad,
 };
 
 #[cfg(feature = "layout")]
@@ -88,9 +89,7 @@ pub use lumen_ui_patterns::{
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "audio")]
-    pub use lumen_ui_audio::{
-        Fader, Knob, LevelBar, Transport, TransportAction, VuMeter, Waveform, XyPad,
-    };
+    pub use lumen_ui_audio::{LevelBar, VuMeter, Waveform};
     #[cfg(feature = "theme")]
     pub use lumen_ui_core::{
         install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Date, Density, LightTheme,
@@ -119,10 +118,10 @@ pub mod prelude {
         show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
         Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Chip, ChipResponse,
         CircularProgress, Code, ColorPicker, Combobox, DatePicker, DescriptionList, Divider,
-        Drawer, DrawerSide, DropdownMenu, EmptyState, FileUpload, FileUploadResponse, FormField,
-        Heading, IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination,
-        Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider,
-        Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline,
-        ToastVariant,
+        Drawer, DrawerSide, DropdownMenu, EmptyState, Fader, FileUpload, FileUploadResponse,
+        FormField, Heading, IconButton, Kbd, Knob, Label, Link, Modal, MultiSelect, NumberInput,
+        Pagination, Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton,
+        Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker,
+        Timeline, ToastVariant, Transport, TransportAction, XyPad,
     };
 }

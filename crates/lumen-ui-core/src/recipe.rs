@@ -1027,7 +1027,7 @@ impl CalendarRecipe {
 /// Base diameter of a `Knob` before density scaling, in points.
 const KNOB_BASE_SIZE: f32 = 44.0;
 
-/// Resolved style for a rotary `Knob` (audio crate).
+/// Resolved style for a rotary `Knob` (in `lumen-ui-widgets`).
 #[derive(Clone, Copy, Debug)]
 pub struct KnobRecipe {
     /// The unfilled part of the value arc.
@@ -1111,7 +1111,7 @@ impl WaveformRecipe {
 /// Base side length of an `XyPad` before density scaling, in points.
 const XY_PAD_BASE_SIZE: f32 = 120.0;
 
-/// Resolved style for an `XyPad` 2-D control (audio crate).
+/// Resolved style for an `XyPad` 2-D control (in `lumen-ui-widgets`).
 #[derive(Clone, Copy, Debug)]
 pub struct XyPadRecipe {
     /// Background fill.
@@ -1140,7 +1140,7 @@ impl XyPadRecipe {
 /// Base size of a `Transport` button before density scaling, in points.
 const TRANSPORT_BASE_SIZE: f32 = 32.0;
 
-/// Resolved style for a `Transport` control bar (audio crate).
+/// Resolved style for a `Transport` control bar (in `lumen-ui-widgets`).
 #[derive(Clone, Copy, Debug)]
 pub struct TransportRecipe {
     /// Button background.

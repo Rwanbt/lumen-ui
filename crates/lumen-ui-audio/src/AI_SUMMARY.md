@@ -1,33 +1,28 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 12:48** — do not edit manually.
+> **Auto-generated 2026-06-18 00:00** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
 ## Purpose
-Audio/DAW controls for lumen-ui (the differentiator vs web design systems — lumen-ui comes from the
-Seno DAW context). Painter-drawn, theme-colored widgets resolving pure recipes (ADR-0009) from the
-installed `lumen_ui_core::Theme`. Depends only on `egui` + `lumen-ui-core`. Created at v1.10.
+Signal-**display** widgets for lumen-ui (the DAW differentiator): level meters and a waveform.
+Painter-drawn, theme-colored, resolving pure recipes (ADR-0009) from the installed
+`lumen_ui_core::Theme`. Depends only on `egui` + `lumen-ui-core`.
+
+**Scope note (v1.1 reclassification):** the generic controls a DAW also uses — `Knob`, `Fader`,
+`XyPad`, `Transport` — live in **`lumen-ui-widgets`**, because nothing about them is audio-specific.
+This crate keeps only the genuinely audio-flavored *displays*.
 
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `fader.rs` | 73 | |
-| `knob.rs` | 77 | |
 | `level_bar.rs` | 41 | |
-| `lib.rs` | 45 | |
-| `transport.rs` | 130 | |
+| `lib.rs` | 40 | |
 | `vu_meter.rs` | 71 | |
 | `waveform.rs` | 60 | |
-| `xy_pad.rs` | 64 | |
-| **Total** | **561** | |
+| **Total** | **212** | |
 
 ## Rust API
-- `Fader` (struct)
-- `Knob` (struct)
 - `LevelBar` (struct)
-- `Transport` (struct)
 - `VuMeter` (struct)
 - `Waveform` (struct)
-- `XyPad` (struct)
-- `TransportAction` (enum)

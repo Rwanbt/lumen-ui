@@ -16,10 +16,11 @@ use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
     Breadcrumb, Button, Calendar, Carousel, Checkbox, Chip, CircularProgress, Code, ColorPicker,
-    Combobox, DatePicker, DescriptionList, Divider, DropdownMenu, EmptyState, FileUpload,
-    FormField, IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
-    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
-    Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, TreeNode, TreeView,
+    Combobox, DatePicker, DescriptionList, Divider, DropdownMenu, EmptyState, Fader, FileUpload,
+    FormField, IconButton, Kbd, Knob, Label, Link, Modal, MultiSelect, NumberInput, Pagination,
+    Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner,
+    Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, Transport,
+    TransportAction, TreeNode, TreeView, XyPad,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -1128,4 +1129,69 @@ fn drawer_shows_when_open_and_hides_when_closed() {
         harness.query_by_label("Drawer nav").is_none(),
         "close_drawer hides the content"
     );
+}
+
+// ---------------------------------------------------------------------------
+// Reclassified from lumen-ui-audio (v1.1): Knob/Fader/XyPad/Transport are generic
+// controls, not audio-specific. (Level meters / waveform stay in lumen-ui-audio.)
+// ---------------------------------------------------------------------------
+
+#[test]
+fn knob_fader_xypad_transport_render() {
+    let mut knob = 0.5_f32;
+    let mut gain = -6.0_f32;
+    let mut x = 0.3_f32;
+    let mut y = 0.7_f32;
+    let mut harness = Harness::new_ui(move |ui| {
+        theme_ctx(ui.ctx(), &dark());
+        ui.add(Knob::new(&mut knob, 0.0..=1.0));
+        ui.add(Fader::new(&mut gain, -60.0..=6.0));
+        ui.add(XyPad::new(&mut x, &mut y, 0.0..=1.0, 0.0..=1.0));
+        Transport::new().playing(true).recording(false).show(ui);
+    });
+    harness.run(); // a panic here fails the test
+}
+
+#[test]
+fn knob_and_fader_expose_slider_role() {
+    let mut harness = Harness::new_ui(|ui| {
+        theme_ctx(ui.ctx(), &dark());
+        let mut knob = 0.5_f32;
+        let mut gain = -6.0_f32;
+        ui.add(Knob::new(&mut knob, 0.0..=1.0));
+        ui.add(Fader::new(&mut gain, -60.0..=6.0));
+    });
+
+    harness.run();
+    assert_eq!(
+        harness.query_all_by_role(Role::Slider).count(),
+        2,
+        "Knob and Fader each expose a Slider role"
+    );
+}
+
+#[test]
+fn transport_emits_action_on_click() {
+    #[derive(Default)]
+    struct State {
+        last: Option<TransportAction>,
+    }
+
+    let mut harness = Harness::new_ui_state(
+        |ui, state: &mut State| {
+            theme_ctx(ui.ctx(), &dark());
+            if let Some(action) = Transport::new().show(ui) {
+                state.last = Some(action);
+            }
+        },
+        State::default(),
+    );
+
+    harness.run();
+    harness.get_by_label("play").click();
+    harness.run();
+    assert_eq!(harness.state().last, Some(TransportAction::PlayPause));
+    harness.get_by_label("record").click();
+    harness.run();
+    assert_eq!(harness.state().last, Some(TransportAction::Record));
 }
