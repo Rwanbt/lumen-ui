@@ -15,10 +15,11 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
-    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, ColorPicker, Divider, DropdownMenu,
-    EmptyState, FormField, IconButton, Kbd, Label, Link, Modal, NumberInput, Pagination, Progress,
-    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
-    Stepper, Switch, Table, Tabs, TextField, Textarea, TreeNode, TreeView,
+    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, ColorPicker, Combobox, Divider,
+    DropdownMenu, EmptyState, FormField, IconButton, Kbd, Label, Link, Modal, MultiSelect,
+    NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select,
+    Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TreeNode,
+    TreeView,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -53,6 +54,8 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut amount = 5.0_f64;
         let mut span = (0.2_f32, 0.8_f32);
         let mut color = egui::Color32::from_rgb(120, 80, 200);
+        let mut lang = 1usize;
+        let mut tags: Vec<usize> = vec![1];
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -112,6 +115,14 @@ fn every_widget_renders_under_all_built_in_themes() {
             ui.add(NumberInput::new(&mut amount, 0.0..=10.0));
             ui.add(RangeSlider::new(&mut span.0, &mut span.1, 0.0..=1.0));
             ui.add(ColorPicker::new(&mut color));
+            Combobox::new("lang", &mut lang)
+                .option(0usize, "Rust")
+                .option(1usize, "Go")
+                .show(ui);
+            MultiSelect::new("tags", &mut tags)
+                .option(0usize, "bug")
+                .option(1usize, "feat")
+                .show(ui);
             FormField::new("Email")
                 .hint("We'll never share it")
                 .show(ui, |ui| {
@@ -357,6 +368,79 @@ fn color_picker_opens_picker_on_click() {
     assert!(
         harness.query_all_by_role(Role::SpinButton).next().is_some(),
         "clicking the swatch opens egui's RGB picker"
+    );
+}
+
+#[test]
+fn combobox_filters_then_selects() {
+    let mut harness = Harness::new_ui_state(
+        |ui, selected: &mut usize| {
+            theme_ctx(ui.ctx(), &dark());
+            Combobox::new("lang", selected)
+                .option(0usize, "Rust")
+                .option(1usize, "Ruby")
+                .option(2usize, "Go")
+                .show(ui);
+        },
+        0usize,
+    );
+
+    harness.run();
+    // Open by role (the trigger exposes the selection as its value, like Select).
+    harness.get_by_role(Role::ComboBox).click();
+    harness.run();
+    // Type into the search field to filter down to "Go", then pick it.
+    let field = harness.get_by_role(Role::TextInput);
+    field.focus();
+    field.type_text("Go");
+    harness.run();
+    harness.get_by_label("Go").click();
+    harness.run();
+
+    assert_eq!(
+        *harness.state(),
+        2,
+        "picking the filtered option rebinds the value"
+    );
+    // The popup is closed again after a pick (CloseOnClickOutside + manual close).
+    assert!(
+        harness.query_by_role(Role::TextInput).is_none(),
+        "combobox closes after selecting a value"
+    );
+}
+
+#[test]
+fn multi_select_toggles_membership() {
+    let mut harness = Harness::new_ui_state(
+        |ui, selected: &mut Vec<usize>| {
+            theme_ctx(ui.ctx(), &dark());
+            MultiSelect::new("tags", selected)
+                .option(0usize, "bug")
+                .option(1usize, "feat")
+                .show(ui);
+        },
+        Vec::new(),
+    );
+
+    harness.run();
+    harness.get_by_role(Role::ComboBox).click();
+    harness.run();
+    // The popup stays open across toggles (CloseOnClickOutside): add both, then remove one.
+    harness.get_by_label("bug").click();
+    harness.run();
+    harness.get_by_label("feat").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        vec![0, 1],
+        "toggling adds both values, order preserved"
+    );
+    harness.get_by_label("bug").click();
+    harness.run();
+    assert_eq!(
+        *harness.state(),
+        vec![1],
+        "toggling an active option removes it"
     );
 }
 

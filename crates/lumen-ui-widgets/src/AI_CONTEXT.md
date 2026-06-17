@@ -54,6 +54,15 @@ ui.add(Button::ghost("Cancel").enabled(false));
   and the panel drawn full-height (`content_rect().height()`). Open state in `ctx.data`; `show`
   returns `None` while closed. `DrawerRecipe` (fill/width/inner_margin). Motion instant (slide → v1.6).
 - `select.rs` — `Select<T>` dropdown (`&mut T`) over `egui::ComboBox` + `selectable_value`.
+- `combobox.rs` — `Combobox<T>` searchable `Select`: a search `TextField` + `selectable_value` list
+  filtered by case-insensitive substring, over `egui::ComboBox`. Uses `CloseOnClickOutside` (so
+  clicking the search field doesn't dismiss it) and closes the popup manually after a pick via
+  `Popup::close_id(response.id.with("popup"))` — replicates egui's private
+  `ComboBox::widget_to_popup_id` (`= id.with("popup")`, verified vs 0.34.3; re-check on upgrade).
+  Open state in egui memory; transient query in `ctx.data` keyed by id. No recipe (composition).
+- `multi_select.rs` — `MultiSelect<T>` over `egui::ComboBox`: `selectable_label` per option toggling
+  membership in the caller's `&mut Vec<T>` (insertion order kept). `CloseOnClickOutside` keeps the
+  popup open across toggles. Trigger shows "N selected". No recipe (composition).
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.

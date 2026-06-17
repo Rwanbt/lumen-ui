@@ -32,7 +32,8 @@
   [ ] DescriptionList · Timeline · Calendar · Carousel
 - 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating · Textarea · NumberInput (DragValue +
   −/+ steppers) · RangeSlider (2 poignées, réutilise `SliderRecipe`) · ColorPicker (swatch thémé →
-  picker egui) · Form (layout, v1.8) ; [ ] Combobox · MultiSelect · DatePicker · TimePicker · FileUpload
+  picker egui) · Combobox (Select recherchable) · MultiSelect (`&mut Vec<T>`) · Form (layout, v1.8) ;
+  [ ] DatePicker · TimePicker · FileUpload
 - ✅ **v1.5 Icônes à l'échelle** — [x] PoC pipeline codegen (ADR-0008) ; [x] set Lucide curé
   **généré et intégré** dans `lumen-ui-icons` (arrow ×4, chevron-left/up depuis `svg/` →
   `generated_icons.rs` via `include!`) — **JALON CLÔTURÉ**. Extensible : ajouter un SVG +

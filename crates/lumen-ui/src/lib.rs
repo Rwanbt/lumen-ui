@@ -54,10 +54,10 @@ pub use lumen_ui_widgets::{
     close_drawer, close_modal, context_menu, hover_card, open_drawer, open_modal, popover,
     show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
     Avatar, Badge, Breadcrumb, Button, Card, Checkbox, Chip, ChipResponse, CircularProgress, Code,
-    ColorPicker, Divider, Drawer, DrawerSide, DropdownMenu, EmptyState, FormField, Heading,
-    IconButton, Kbd, Label, Link, Modal, NumberInput, Pagination, Progress, RadioGroup,
-    RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper,
-    Switch, Table, Tabs, TextField, Textarea, ToastVariant,
+    ColorPicker, Combobox, Divider, Drawer, DrawerSide, DropdownMenu, EmptyState, FormField,
+    Heading, IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
+    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
+    Stepper, Switch, Table, Tabs, TextField, Textarea, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -100,9 +100,9 @@ pub mod prelude {
         close_drawer, close_modal, context_menu, hover_card, open_drawer, open_modal, popover,
         show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
         Avatar, Badge, Breadcrumb, Button, Card, Checkbox, Chip, ChipResponse, CircularProgress,
-        Code, ColorPicker, Divider, Drawer, DrawerSide, DropdownMenu, EmptyState, FormField,
-        Heading, IconButton, Kbd, Label, Link, Modal, NumberInput, Pagination, Progress,
-        RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
-        Stepper, Switch, Table, Tabs, TextField, Textarea, ToastVariant,
+        Code, ColorPicker, Combobox, Divider, Drawer, DrawerSide, DropdownMenu, EmptyState,
+        FormField, Heading, IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput,
+        Pagination, Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton,
+        Slider, Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, ToastVariant,
     };
 }
