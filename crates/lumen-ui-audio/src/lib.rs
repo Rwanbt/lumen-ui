@@ -21,11 +21,15 @@ mod fader;
 mod knob;
 mod level_bar;
 mod vu_meter;
+mod waveform;
+mod xy_pad;
 
 pub use fader::Fader;
 pub use knob::Knob;
 pub use level_bar::LevelBar;
 pub use vu_meter::VuMeter;
+pub use waveform::Waveform;
+pub use xy_pad::XyPad;
 
 use egui::Color32;
 use lumen_ui_core::MeterRecipe;

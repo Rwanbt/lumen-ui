@@ -45,7 +45,7 @@ pub use recipe::{
     NumberInputRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe, SegmentedRecipe,
     SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe,
     TextFieldRecipe, TextRecipe, TextRole, TimelineRecipe, ToggleRecipe, TreeViewRecipe,
-    WidgetState,
+    WaveformRecipe, WidgetState, XyPadRecipe,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};

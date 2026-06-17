@@ -34,7 +34,11 @@ ui.add(Fader::new(&mut gain_db, -60.0..=6.0));
 - `level_bar.rs` — `LevelBar::new(level)`: a horizontal bar whose fill is colored by the zone the
   level falls in. Display-only. Uses `MeterRecipe`.
 - `lib.rs` — shared zone thresholds (`ZONE_LOW_MAX` 0.6, `ZONE_MID_MAX` 0.85) + `zone_color`.
+- `waveform.rs` — `Waveform::new(&[f32])` (samples in `-1..=1`): per-column **min/max envelope**, so
+  it stays correct for buffers far larger than the pixel width. Display-only. `WaveformRecipe`.
+- `xy_pad.rs` — `XyPad::new(&mut x, &mut y, x_range, y_range)`: a square 2-D control; X left→right,
+  Y bottom→top; click/drag sets both. Crosshair + point. `XyPadRecipe`. a11y: `WidgetInfo::slider` (x).
 
 ## Roadmap (v1.10, in progress)
-Done: Knob, Fader, VuMeter, LevelBar. Next: Waveform, Spectrum, XY pad, Transport. To be validated
-on a real app (Seno / a CLAP plugin) before the milestone closes.
+Done: Knob, Fader, VuMeter, LevelBar, Waveform, XyPad. Next: Transport. To be validated on a real
+app (Seno / a CLAP plugin) before the milestone closes.

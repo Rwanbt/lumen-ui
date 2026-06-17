@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 12:16** — do not edit manually.
+> **Auto-generated 2026-06-17 12:22** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -15,12 +15,16 @@ installed `lumen_ui_core::Theme`. Depends only on `egui` + `lumen-ui-core`. Crea
 | `fader.rs` | 73 | |
 | `knob.rs` | 77 | |
 | `level_bar.rs` | 41 | |
-| `lib.rs` | 39 | |
+| `lib.rs` | 43 | |
 | `vu_meter.rs` | 71 | |
-| **Total** | **301** | |
+| `waveform.rs` | 60 | |
+| `xy_pad.rs` | 64 | |
+| **Total** | **429** | |
 
 ## Rust API
 - `Fader` (struct)
 - `Knob` (struct)
 - `LevelBar` (struct)
 - `VuMeter` (struct)
+- `Waveform` (struct)
+- `XyPad` (struct)
