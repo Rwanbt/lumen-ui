@@ -38,7 +38,11 @@ ui.add(Fader::new(&mut gain_db, -60.0..=6.0));
   it stays correct for buffers far larger than the pixel width. Display-only. `WaveformRecipe`.
 - `xy_pad.rs` — `XyPad::new(&mut x, &mut y, x_range, y_range)`: a square 2-D control; X left→right,
   Y bottom→top; click/drag sets both. Crosshair + point. `XyPadRecipe`. a11y: `WidgetInfo::slider` (x).
+- `transport.rs` — `Transport::new().playing(b).recording(b).show(ui) -> Option<TransportAction>`
+  ({PlayPause, Stop, Record}): a control bar with painter-drawn icons (triangle/bars/square/circle —
+  no font glyphs), record lit while recording. Buttons carry `WidgetInfo::labeled`. `TransportRecipe`.
 
-## Roadmap (v1.10, in progress)
-Done: Knob, Fader, VuMeter, LevelBar, Waveform, XyPad. Next: Transport. To be validated on a real
-app (Seno / a CLAP plugin) before the milestone closes.
+## Roadmap (v1.10)
+Done: Knob, Fader, VuMeter, LevelBar, Waveform, XyPad, Transport. **Milestone closed** for the
+control set. Spectrum analyzer deferred (needs FFT input — app-specific). Validation on a real app
+(Seno / a CLAP plugin) is the remaining pre-1.0 follow-up.

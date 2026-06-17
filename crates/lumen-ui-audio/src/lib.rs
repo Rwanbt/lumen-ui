@@ -20,6 +20,7 @@
 mod fader;
 mod knob;
 mod level_bar;
+mod transport;
 mod vu_meter;
 mod waveform;
 mod xy_pad;
@@ -27,6 +28,7 @@ mod xy_pad;
 pub use fader::Fader;
 pub use knob::Knob;
 pub use level_bar::LevelBar;
+pub use transport::{Transport, TransportAction};
 pub use vu_meter::VuMeter;
 pub use waveform::Waveform;
 pub use xy_pad::XyPad;

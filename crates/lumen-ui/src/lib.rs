@@ -86,7 +86,9 @@ pub use lumen_ui_patterns::{
 /// Glob-importable essentials.
 pub mod prelude {
     #[cfg(feature = "audio")]
-    pub use lumen_ui_audio::{Fader, Knob, LevelBar, VuMeter, Waveform, XyPad};
+    pub use lumen_ui_audio::{
+        Fader, Knob, LevelBar, Transport, TransportAction, VuMeter, Waveform, XyPad,
+    };
     #[cfg(feature = "theme")]
     pub use lumen_ui_core::{
         install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Date, Density, LightTheme,

@@ -53,10 +53,10 @@
   (search + sortable DataGrid + pagination, feature `datagrid`) ; [x] Drawer (off-canvas, scrim,
   réutilise `egui::Modal`) — **JALON CLÔTURÉ**
 - ⬜ **v1.9 Thèmes v2 & outillage** — theme builder, rampes sémantiques, auto color-scheme, `.ron`
-- 🟡 **v1.10 Crate `lumen-ui-audio`** — [x] Knob (rotatif 270°, `KnobRecipe`) · Fader (vertical,
-  `SliderRecipe`) · VuMeter (zones vert/ambre/rouge + peak-hold) · LevelBar (horizontal zoné)
-  (`MeterRecipe`) · Waveform (enveloppe min/max) · XyPad (contrôle 2D) ; [ ] Transport.
-  À valider sur une vraie app (Seno / plugin CLAP).
+- ✅ **v1.10 Crate `lumen-ui-audio`** — [x] Knob (rotatif 270°) · Fader (vertical) · VuMeter (zones
+  + peak-hold) · LevelBar · Waveform (enveloppe min/max) · XyPad (contrôle 2D) · Transport
+  (play/pause/stop/record, icônes painter) — **JALON CLÔTURÉ** (set de contrôles). Différé : Spectrum
+  (entrée FFT, spécifique à l'app). Validation sur une vraie app (Seno / plugin CLAP) = suivi pré-1.0.
 - ⬜ **v2.0 Consolidation** — galerie WASM, mdBook, snapshots, audit WCAG, gel SemVer
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,

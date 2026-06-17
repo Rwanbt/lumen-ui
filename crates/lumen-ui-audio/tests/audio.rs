@@ -5,7 +5,7 @@ use std::sync::Arc;
 use egui::accesskit::Role;
 use egui_kittest::kittest::Queryable;
 use egui_kittest::Harness;
-use lumen_ui_audio::{Fader, Knob, LevelBar, VuMeter, Waveform, XyPad};
+use lumen_ui_audio::{Fader, Knob, LevelBar, Transport, TransportAction, VuMeter, Waveform, XyPad};
 use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 
 fn theme_ctx(ctx: &egui::Context, theme: &Arc<dyn Theme>) {
@@ -29,9 +29,36 @@ fn knob_and_fader_render_under_dark_and_light() {
             ui.add(LevelBar::new(0.4));
             ui.add(Waveform::new(&samples));
             ui.add(XyPad::new(&mut x, &mut y, 0.0..=1.0, 0.0..=1.0));
+            Transport::new().playing(true).recording(false).show(ui);
         });
         harness.run(); // a panic here fails the test
     }
+}
+
+#[test]
+fn transport_emits_action_on_click() {
+    #[derive(Default)]
+    struct State {
+        last: Option<TransportAction>,
+    }
+
+    let mut harness = Harness::new_ui_state(
+        |ui, state: &mut State| {
+            theme_ctx(ui.ctx(), &(Arc::new(DarkTheme::new()) as Arc<dyn Theme>));
+            if let Some(action) = Transport::new().show(ui) {
+                state.last = Some(action);
+            }
+        },
+        State::default(),
+    );
+
+    harness.run();
+    harness.get_by_label("play").click();
+    harness.run();
+    assert_eq!(harness.state().last, Some(TransportAction::PlayPause));
+    harness.get_by_label("record").click();
+    harness.run();
+    assert_eq!(harness.state().last, Some(TransportAction::Record));
 }
 
 #[test]
