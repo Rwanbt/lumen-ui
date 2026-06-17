@@ -82,6 +82,10 @@ ui.add(Button::ghost("Cancel").enabled(false));
   (composes Button + Calendar).
 - `time_picker.rs` — `TimePicker` (`&mut Time`): two `egui::DragValue`s (hour `0..=23`, minute
   `0..=59`, zero-padded) separated by a colon. No recipe (egui visuals); returns the union response.
+- `file_upload.rs` — `FileUpload` (stateless) → `FileUploadResponse { response, dropped }`: a themed
+  drop zone reading egui's **native** `ctx.input().raw.dropped_files`/`hovered_files` (zero dep, no
+  `rfd`; a "browse" dialog would need an optional `rfd` feature). Highlights while files hover.
+  `FileUploadRecipe`. Works on desktop (path) and web (bytes).
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.

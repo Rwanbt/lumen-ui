@@ -55,10 +55,10 @@ pub use lumen_ui_widgets::{
     show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
     Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Chip, ChipResponse,
     CircularProgress, Code, ColorPicker, Combobox, DatePicker, DescriptionList, Divider, Drawer,
-    DrawerSide, DropdownMenu, EmptyState, FormField, Heading, IconButton, Kbd, Label, Link, Modal,
-    MultiSelect, NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating,
-    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
-    TextField, Textarea, TimePicker, Timeline, ToastVariant,
+    DrawerSide, DropdownMenu, EmptyState, FileUpload, FileUploadResponse, FormField, Heading,
+    IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
+    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
+    Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, ToastVariant,
 };
 
 #[cfg(feature = "layout")]
@@ -102,9 +102,10 @@ pub mod prelude {
         show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
         Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Chip, ChipResponse,
         CircularProgress, Code, ColorPicker, Combobox, DatePicker, DescriptionList, Divider,
-        Drawer, DrawerSide, DropdownMenu, EmptyState, FormField, Heading, IconButton, Kbd, Label,
-        Link, Modal, MultiSelect, NumberInput, Pagination, Progress, RadioGroup, RangeSlider,
-        Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table,
-        Tabs, TextField, Textarea, TimePicker, Timeline, ToastVariant,
+        Drawer, DrawerSide, DropdownMenu, EmptyState, FileUpload, FileUploadResponse, FormField,
+        Heading, IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination,
+        Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider,
+        Spinner, Stat, Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline,
+        ToastVariant,
     };
 }

@@ -16,8 +16,8 @@ use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
     Breadcrumb, Button, Calendar, Carousel, Checkbox, Chip, CircularProgress, Code, ColorPicker,
-    Combobox, DatePicker, DescriptionList, Divider, DropdownMenu, EmptyState, FormField,
-    IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
+    Combobox, DatePicker, DescriptionList, Divider, DropdownMenu, EmptyState, FileUpload,
+    FormField, IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
     RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
     Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, TreeNode, TreeView,
 };
@@ -141,6 +141,7 @@ fn every_widget_renders_under_all_built_in_themes() {
             Calendar::new("cal", &mut date).show(ui);
             DatePicker::new("dp", &mut picked_date).show(ui);
             TimePicker::new(&mut time).show(ui);
+            FileUpload::new().prompt("Drop here").show(ui);
             FormField::new("Email")
                 .hint("We'll never share it")
                 .show(ui, |ui| {
@@ -567,6 +568,23 @@ fn time_picker_exposes_hour_and_minute_fields() {
         harness.query_all_by_role(Role::SpinButton).count(),
         2,
         "time picker renders an hour and a minute field"
+    );
+}
+
+#[test]
+fn file_upload_renders_prompt_and_reports_no_drop_idle() {
+    let mut harness = Harness::new_ui(|ui| {
+        theme_ctx(ui.ctx(), &dark());
+        let upload = FileUpload::new().prompt("Drop your CSV").show(ui);
+        // No files dropped on an idle frame.
+        assert!(upload.dropped.is_empty());
+    });
+
+    harness.run();
+    // The prompt reaches the a11y tree.
+    assert!(
+        harness.query_by_label("Drop your CSV").is_some(),
+        "file upload exposes its prompt"
     );
 }
 

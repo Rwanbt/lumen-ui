@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 11:23** — do not edit manually.
+> **Auto-generated 2026-06-17 11:33** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -34,11 +34,12 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `drawer.rs` | 85 | |
 | `dropdown_menu.rs` | 45 | |
 | `empty_state.rs` | 43 | |
+| `file_upload.rs` | 63 | |
 | `focus.rs` | 27 | |
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
 | `kbd.rs` | 31 | |
-| `lib.rs` | 112 | |
+| `lib.rs` | 114 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `multi_select.rs` | 51 | |
@@ -67,7 +68,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `toast.rs` | 100 | |
 | `tree_view.rs` | 114 | |
 | `util.rs` | 37 | |
-| **Total** | **3401** | |
+| **Total** | **3466** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -93,6 +94,8 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Drawer` (struct)
 - `DropdownMenu` (struct)
 - `EmptyState` (struct)
+- `FileUpload` (struct)
+- `FileUploadResponse` (struct)
 - `FormField` (struct)
 - `Heading` (struct)
 - `IconButton` (struct)

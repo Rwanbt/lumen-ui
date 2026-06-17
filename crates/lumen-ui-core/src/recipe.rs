@@ -1023,3 +1023,48 @@ impl CalendarRecipe {
         }
     }
 }
+
+/// Base minimum height of a `FileUpload` drop zone before density scaling, in points.
+const FILE_UPLOAD_BASE_HEIGHT: f32 = 80.0;
+/// Tint opacity of the drop zone fill while files hover over it, in `0..=255`.
+const FILE_UPLOAD_HOVER_ALPHA: u8 = 28;
+
+/// Resolved style for a `FileUpload` drop zone.
+#[derive(Clone, Copy, Debug)]
+pub struct FileUploadRecipe {
+    /// Border around the drop zone.
+    pub border: Stroke,
+    /// Fill at rest.
+    pub fill: Color32,
+    /// Fill while files are being dragged over the window (a primary tint).
+    pub hover_fill: Color32,
+    /// Color of the prompt text.
+    pub text_color: Color32,
+    pub corner_radius: CornerRadius,
+    /// Minimum height of the drop zone, in points.
+    pub min_height: f32,
+    pub inner_margin: Vec2,
+}
+
+impl FileUploadRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        let scale = ctx.density_scale();
+        let p = tokens.colors.primary;
+        Self {
+            border: Stroke::new(1.0, tokens.colors.border),
+            fill: tokens.colors.surface_variant,
+            hover_fill: Color32::from_rgba_unmultiplied(
+                p.r(),
+                p.g(),
+                p.b(),
+                FILE_UPLOAD_HOVER_ALPHA,
+            ),
+            text_color: tokens.colors.text_muted,
+            corner_radius: tokens.radius.md,
+            min_height: FILE_UPLOAD_BASE_HEIGHT * scale,
+            inner_margin: Vec2::new(tokens.spacing.lg * scale, tokens.spacing.md * scale),
+        }
+    }
+}
