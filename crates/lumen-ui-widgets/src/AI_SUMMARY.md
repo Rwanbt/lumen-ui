@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-17 10:17** — do not edit manually.
+> **Auto-generated 2026-06-17 10:30** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -18,6 +18,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `badge.rs` | 49 | |
 | `breadcrumb.rs` | 58 | |
 | `button.rs` | 102 | |
+| `calendar.rs` | 124 | |
 | `card.rs` | 25 | |
 | `carousel.rs` | 83 | |
 | `checkbox.rs` | 63 | |
@@ -36,7 +37,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `form_field.rs` | 62 | |
 | `icon_button.rs` | 43 | |
 | `kbd.rs` | 31 | |
-| `lib.rs` | 106 | |
+| `lib.rs` | 108 | |
 | `link.rs` | 23 | |
 | `modal.rs` | 57 | |
 | `multi_select.rs` | 51 | |
@@ -64,7 +65,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `toast.rs` | 100 | |
 | `tree_view.rs` | 114 | |
 | `util.rs` | 37 | |
-| **Total** | **3194** | |
+| **Total** | **3320** | |
 
 ## Rust API
 - `Accordion` (struct)
@@ -73,6 +74,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 - `Badge` (struct)
 - `Breadcrumb` (struct)
 - `Button` (struct)
+- `Calendar` (struct)
 - `Card` (struct)
 - `Carousel` (struct)
 - `Checkbox` (struct)

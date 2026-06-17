@@ -32,12 +32,12 @@ pub use lumen_ui_core as core;
 pub use lumen_ui_core::{
     a11y, anim, install, set_theme, AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe,
     BadgeVariant, BreadcrumbRecipe, ButtonRecipe, ButtonVariant, CardRecipe, ChipRecipe,
-    CircularProgressRecipe, CodeRecipe, Colors, ContrastLevel, DarkTheme, Density, DividerRecipe,
-    Elevation, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe, LightTheme,
-    LinkRecipe, MenuRecipe, Motion, PaginationRecipe, PaletteTheme, ProgressRecipe, Radius,
-    RatingRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe,
+    CircularProgressRecipe, CodeRecipe, Colors, ContrastLevel, DarkTheme, Date, Density,
+    DividerRecipe, Elevation, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe,
+    LightTheme, LinkRecipe, MenuRecipe, Motion, PaginationRecipe, PaletteTheme, ProgressRecipe,
+    Radius, RatingRecipe, SegmentedRecipe, SkeletonRecipe, SliderRecipe, Spacing, SpinnerRecipe,
     StatRecipe, StepperRecipe, TableRecipe, TextFieldRecipe, TextRecipe, TextRole, Theme,
-    ThemeMode, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
+    ThemeMode, Time, ToggleRecipe, Tokens, Typography, UiContext, UiThemeExt, WidgetState,
 };
 
 #[cfg(feature = "themes")]
@@ -53,7 +53,7 @@ pub use lumen_ui_icons::{Icon, IconKind};
 pub use lumen_ui_widgets::{
     close_drawer, close_modal, context_menu, hover_card, open_drawer, open_modal, popover,
     show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
-    Avatar, Badge, Breadcrumb, Button, Card, Carousel, Checkbox, Chip, ChipResponse,
+    Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Chip, ChipResponse,
     CircularProgress, Code, ColorPicker, Combobox, DescriptionList, Divider, Drawer, DrawerSide,
     DropdownMenu, EmptyState, FormField, Heading, IconButton, Kbd, Label, Link, Modal, MultiSelect,
     NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating, SegmentedControl, Select,
@@ -80,8 +80,8 @@ pub use lumen_ui_patterns::{
 pub mod prelude {
     #[cfg(feature = "theme")]
     pub use lumen_ui_core::{
-        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Density, LightTheme,
-        PaletteTheme, TextRole, Theme, ThemeMode, UiContext, UiThemeExt, WidgetState,
+        install, set_theme, BadgeVariant, ButtonVariant, DarkTheme, Date, Density, LightTheme,
+        PaletteTheme, TextRole, Theme, ThemeMode, Time, UiContext, UiThemeExt, WidgetState,
     };
     #[cfg(feature = "icons")]
     pub use lumen_ui_icons::{Icon, IconKind};
@@ -100,7 +100,7 @@ pub mod prelude {
     pub use lumen_ui_widgets::{
         close_drawer, close_modal, context_menu, hover_card, open_drawer, open_modal, popover,
         show_toasts, toast, toast_error, toast_success, toast_warning, tooltip, Accordion, Alert,
-        Avatar, Badge, Breadcrumb, Button, Card, Carousel, Checkbox, Chip, ChipResponse,
+        Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Chip, ChipResponse,
         CircularProgress, Code, ColorPicker, Combobox, DescriptionList, Divider, Drawer,
         DrawerSide, DropdownMenu, EmptyState, FormField, Heading, IconButton, Kbd, Label, Link,
         Modal, MultiSelect, NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating,

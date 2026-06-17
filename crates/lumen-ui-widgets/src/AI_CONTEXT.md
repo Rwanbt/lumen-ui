@@ -72,6 +72,10 @@ ui.add(Button::ghost("Cancel").enabled(false));
   `add_slide(ui, index)` closure, framed by prev/next arrows that **wrap** around the ends, with a
   dot indicator row below. Arrows are painter glyphs with `WidgetInfo::labeled(Button,
   "previous"/"next")` for a11y + tests. `CarouselRecipe` (arrow/dot styles).
+- `calendar.rs` — `Calendar` (`&mut lumen_ui_core::Date`): a month grid (`egui::Grid`, 7 cols) that
+  selects a day. The *displayed* month lives in `ctx.data` (paged by header ‹/› arrows) and is
+  independent of the selection until a day is clicked. Uses the core `date` math (ADR-0011); day
+  cells + arrows are painter-drawn with `WidgetInfo::labeled` (a11y + tests). `CalendarRecipe`.
 - `overlay.rs` — `tooltip`/`popover`/`context_menu` free fns (over `Response` + `egui::Popup`).
 - `focus.rs` — `focus_ring(ui, &response, corner_radius, color)` (a11y, v0.8): a 2 px ring drawn
   outside a focused widget. Used by `Button`/`Switch`/`Checkbox`/`Slider`.

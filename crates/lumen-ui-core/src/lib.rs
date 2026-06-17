@@ -20,6 +20,7 @@ pub mod anim;
 mod builder;
 pub mod context;
 pub mod dark;
+pub mod date;
 pub mod light;
 pub mod palette;
 pub mod recipe;
@@ -32,17 +33,18 @@ pub use a11y::{
 };
 pub use context::{Density, UiContext};
 pub use dark::DarkTheme;
+pub use date::{day_of_week, days_in_month, is_leap_year, month_name, Date, Time};
 pub use light::LightTheme;
 pub use palette::{PaletteTheme, ThemeMode};
 pub use recipe::{
     AlertRecipe, AlertVariant, AvatarRecipe, BadgeRecipe, BadgeVariant, BreadcrumbRecipe,
-    ButtonRecipe, ButtonVariant, CardRecipe, CarouselRecipe, ChipRecipe, CircularProgressRecipe,
-    CodeRecipe, ColorPickerRecipe, DataGridRecipe, DescriptionListRecipe, DividerRecipe,
-    DrawerRecipe, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe, LinkRecipe,
-    MenuRecipe, NumberInputRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe, SegmentedRecipe,
-    SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe, TableRecipe,
-    TextFieldRecipe, TextRecipe, TextRole, TimelineRecipe, ToggleRecipe, TreeViewRecipe,
-    WidgetState,
+    ButtonRecipe, ButtonVariant, CalendarRecipe, CardRecipe, CarouselRecipe, ChipRecipe,
+    CircularProgressRecipe, CodeRecipe, ColorPickerRecipe, DataGridRecipe, DescriptionListRecipe,
+    DividerRecipe, DrawerRecipe, EmptyStateRecipe, FormFieldRecipe, IconButtonRecipe, KbdRecipe,
+    LinkRecipe, MenuRecipe, NumberInputRecipe, PaginationRecipe, ProgressRecipe, RatingRecipe,
+    SegmentedRecipe, SkeletonRecipe, SliderRecipe, SpinnerRecipe, StatRecipe, StepperRecipe,
+    TableRecipe, TextFieldRecipe, TextRecipe, TextRole, TimelineRecipe, ToggleRecipe,
+    TreeViewRecipe, WidgetState,
 };
 pub use theme::{install, set_theme, Theme, UiThemeExt};
 pub use tokens::{Colors, Elevation, Motion, Radius, Spacing, Tokens, Typography};

@@ -48,3 +48,6 @@ let recipe = ui.theme().button_recipe(variant, state, &ui.ui_ctx()); // inside a
 - `anim.rs` — minimal motion (`lerp_color`); swaps to `lumen-ui-motion` in v0.5.
 - `a11y.rs` — WCAG 2.1 contrast math (`relative_luminance`, `contrast_ratio`, `meets`/`meets_aa`,
   `ContrastLevel`). Pure fns; the theme layer audits its color pairs against these (v0.8).
+- `date.rs` — civil `Date`/`Time` value types + minimal Gregorian calendar math (`is_leap_year`,
+  `days_in_month`, `day_of_week` Mon=0, `month_name`). Pure, **dependency-free** (ADR-0011): no
+  time zones/parsing/instants. Consumed by the `Calendar`/`DatePicker`/`TimePicker` widgets.

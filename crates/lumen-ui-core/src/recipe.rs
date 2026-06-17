@@ -981,3 +981,45 @@ impl CarouselRecipe {
         }
     }
 }
+
+/// Base size of a `Calendar` day cell (and header arrow) before density scaling, in points.
+const CALENDAR_BASE_CELL: f32 = 30.0;
+
+/// Resolved style for a `Calendar` month grid.
+#[derive(Clone, Copy, Debug)]
+pub struct CalendarRecipe {
+    /// Color of the month/year header and its prev/next arrows.
+    pub header_color: Color32,
+    /// Color of the weekday labels (Mon…Sun).
+    pub weekday_color: Color32,
+    /// Color of normal day numbers.
+    pub day_color: Color32,
+    /// Background of the selected day cell.
+    pub selected_fill: Color32,
+    /// Number color of the selected day.
+    pub selected_text: Color32,
+    /// Corner radius of the selected-day background.
+    pub corner_radius: CornerRadius,
+    /// Square size of each day cell (and header arrow), in points.
+    pub cell_size: f32,
+    pub header_size: f32,
+    pub label_size: f32,
+}
+
+impl CalendarRecipe {
+    /// Pure resolution from tokens (cf. ADR-0009).
+    #[must_use]
+    pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
+        Self {
+            header_color: tokens.colors.text,
+            weekday_color: tokens.colors.text_muted,
+            day_color: tokens.colors.text,
+            selected_fill: tokens.colors.primary,
+            selected_text: tokens.colors.on_primary,
+            corner_radius: tokens.radius.sm,
+            cell_size: CALENDAR_BASE_CELL * ctx.density_scale(),
+            header_size: tokens.typography.body,
+            label_size: tokens.typography.label,
+        }
+    }
+}
