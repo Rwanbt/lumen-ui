@@ -27,14 +27,15 @@
 - ✅ **v1.2 Overlays & feedback** — [x] Alert · Progress · CircularProgress · Spinner · Skeleton ·
   EmptyState ; [x] Tooltip/Popover/ContextMenu (préexistants) ; [x] DropdownMenu · HoverCard
   — **JALON CLÔTURÉ**
-- 🟡 **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
+- ✅ **v1.3 Data display** — [x] Table · Avatar · Chip · Stat · Code · Kbd · Divider · Badge ;
   [x] DataGrid (egui_extras `TableBuilder` — tri émis/virtualisation, feature `datagrid`, ADR-0010) ;
   [x] DescriptionList (Grid 2 colonnes) · Timeline (dots + connecteur, single-pass) ·
-  Carousel (slide `&mut usize`, prev/next wrap, dots) ; [ ] Calendar (lié DatePicker)
+  Carousel (slide `&mut usize`, prev/next wrap, dots) · Calendar (grille mois, `Date` maison
+  ADR-0011) — **JALON CLÔTURÉ**
 - 🟡 **v1.4 Inputs & forms** — [x] SegmentedControl · Rating · Textarea · NumberInput (DragValue +
   −/+ steppers) · RangeSlider (2 poignées, réutilise `SliderRecipe`) · ColorPicker (swatch thémé →
-  picker egui) · Combobox (Select recherchable) · MultiSelect (`&mut Vec<T>`) · Form (layout, v1.8) ;
-  [ ] DatePicker · TimePicker · FileUpload
+  picker egui) · Combobox (Select recherchable) · MultiSelect (`&mut Vec<T>`) · Form (layout, v1.8) ·
+  DatePicker (Calendar en popup, ADR-0011) · TimePicker (h:m via `DragValue`) ; [ ] FileUpload
 - ✅ **v1.5 Icônes à l'échelle** — [x] PoC pipeline codegen (ADR-0008) ; [x] set Lucide curé
   **généré et intégré** dans `lumen-ui-icons` (arrow ×4, chevron-left/up depuis `svg/` →
   `generated_icons.rs` via `include!`) — **JALON CLÔTURÉ**. Extensible : ajouter un SVG +

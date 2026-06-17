@@ -11,15 +11,15 @@ use std::sync::Arc;
 use egui::accesskit::Role;
 use egui_kittest::kittest::Queryable;
 use egui_kittest::Harness;
-use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
+use lumen_ui_core::{install, DarkTheme, Date, LightTheme, Theme, Time, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
-    Breadcrumb, Button, Carousel, Checkbox, Chip, CircularProgress, Code, ColorPicker, Combobox,
-    DescriptionList, Divider, DropdownMenu, EmptyState, FormField, IconButton, Kbd, Label, Link,
-    Modal, MultiSelect, NumberInput, Pagination, Progress, RadioGroup, RangeSlider, Rating,
-    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
-    TextField, Textarea, Timeline, TreeNode, TreeView,
+    Breadcrumb, Button, Calendar, Carousel, Checkbox, Chip, CircularProgress, Code, ColorPicker,
+    Combobox, DatePicker, DescriptionList, Divider, DropdownMenu, EmptyState, FormField,
+    IconButton, Kbd, Label, Link, Modal, MultiSelect, NumberInput, Pagination, Progress,
+    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
+    Stepper, Switch, Table, Tabs, TextField, Textarea, TimePicker, Timeline, TreeNode, TreeView,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -57,6 +57,9 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut lang = 1usize;
         let mut tags: Vec<usize> = vec![1];
         let mut slide = 0usize;
+        let mut date = Date::new(2026, 6, 17);
+        let mut picked_date = Date::new(2026, 6, 17);
+        let mut time = Time::new(9, 30);
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -135,6 +138,9 @@ fn every_widget_renders_under_all_built_in_themes() {
             Carousel::new("car", &mut slide, 3).show(ui, |ui, index| {
                 ui.add(Label::new(format!("Slide {index}")));
             });
+            Calendar::new("cal", &mut date).show(ui);
+            DatePicker::new("dp", &mut picked_date).show(ui);
+            TimePicker::new(&mut time).show(ui);
             FormField::new("Email")
                 .hint("We'll never share it")
                 .show(ui, |ui| {
@@ -477,6 +483,91 @@ fn carousel_navigates_with_wraparound() {
     harness.get_by_label("next").click();
     harness.run();
     assert_eq!(*harness.state(), 0, "next wraps last -> 0");
+}
+
+#[test]
+fn calendar_selects_clicked_day() {
+    let mut harness = Harness::new_ui_state(
+        |ui, date: &mut Date| {
+            theme_ctx(ui.ctx(), &dark());
+            Calendar::new("cal", date).show(ui);
+        },
+        Date::new(2026, 6, 17),
+    );
+
+    harness.run();
+    // Day cells are labelled by their number; click the 10th of the displayed month (June 2026).
+    harness.get_by_label("10").click();
+    harness.run();
+    assert_eq!(*harness.state(), Date::new(2026, 6, 10));
+}
+
+#[test]
+fn calendar_pages_month_without_changing_selection() {
+    let mut harness = Harness::new_ui_state(
+        |ui, date: &mut Date| {
+            theme_ctx(ui.ctx(), &dark());
+            Calendar::new("cal", date).show(ui);
+        },
+        Date::new(2026, 6, 17),
+    );
+
+    harness.run();
+    harness.get_by_label("next month").click();
+    harness.run();
+    // Paging the view does not move the selection on its own.
+    assert_eq!(*harness.state(), Date::new(2026, 6, 17));
+    // June has 30 days; "31" exists only now that July (31 days) is displayed.
+    harness.get_by_label("31").click();
+    harness.run();
+    assert_eq!(*harness.state(), Date::new(2026, 7, 31));
+}
+
+#[test]
+fn date_picker_opens_calendar_and_picks_a_day() {
+    let mut harness = Harness::new_ui_state(
+        |ui, date: &mut Date| {
+            theme_ctx(ui.ctx(), &dark());
+            DatePicker::new("dp", date).show(ui);
+        },
+        Date::new(2026, 6, 17),
+    );
+
+    harness.run();
+    // Calendar day cells exist only once the popup is open.
+    assert!(
+        harness.query_by_label("10").is_none(),
+        "calendar is closed initially"
+    );
+    harness.get_by_label("17 June 2026").click();
+    harness.run();
+    harness.get_by_label("10").click();
+    harness.run();
+    assert_eq!(*harness.state(), Date::new(2026, 6, 10));
+    // Picking a day closes the popup again.
+    assert!(
+        harness.query_by_label("10").is_none(),
+        "date picker closes after a day is picked"
+    );
+}
+
+#[test]
+fn time_picker_exposes_hour_and_minute_fields() {
+    let mut harness = Harness::new_ui_state(
+        |ui, time: &mut Time| {
+            theme_ctx(ui.ctx(), &dark());
+            TimePicker::new(time).show(ui);
+        },
+        Time::new(9, 30),
+    );
+
+    harness.run();
+    // Hour + minute are two DragValues (Role::SpinButton).
+    assert_eq!(
+        harness.query_all_by_role(Role::SpinButton).count(),
+        2,
+        "time picker renders an hour and a minute field"
+    );
 }
 
 #[test]
