@@ -75,6 +75,57 @@ pub fn high_contrast() -> PaletteTheme {
     PaletteTheme::new(tokens(colors), ThemeMode::Dark)
 }
 
+/// The [Nord](https://www.nordtheme.com/) palette as a dark theme (Polar Night surfaces, Frost
+/// accent, Aurora semantics). Accent/semantic colors are tuned where needed so every pair clears
+/// WCAG AA (the `danger` red is darkened from Aurora `nord11` so white text passes).
+#[must_use]
+pub fn nord() -> PaletteTheme {
+    let colors = Colors {
+        background: Color32::from_rgb(0x2e, 0x34, 0x40), // nord0
+        surface: Color32::from_rgb(0x3b, 0x42, 0x52),    // nord1
+        surface_variant: Color32::from_rgb(0x43, 0x4c, 0x5e), // nord2
+        primary: Color32::from_rgb(0x88, 0xc0, 0xd0),    // nord8
+        on_primary: Color32::from_rgb(0x2e, 0x34, 0x40),
+        secondary: Color32::from_rgb(0x4c, 0x56, 0x6a), // nord3
+        on_secondary: Color32::from_rgb(0xec, 0xef, 0xf4), // nord6
+        success: Color32::from_rgb(0xa3, 0xbe, 0x8c),   // nord14
+        on_success: Color32::from_rgb(0x2e, 0x34, 0x40),
+        warning: Color32::from_rgb(0xeb, 0xcb, 0x8b), // nord13
+        on_warning: Color32::from_rgb(0x2e, 0x34, 0x40),
+        danger: Color32::from_rgb(0x9c, 0x3c, 0x44), // darkened nord11 so white clears AA
+        on_danger: Color32::from_rgb(0xec, 0xef, 0xf4),
+        text: Color32::from_rgb(0xec, 0xef, 0xf4), // nord6
+        text_muted: Color32::from_rgb(0xc8, 0xce, 0xda), // lightened nord4 for AA on surfaces
+        border: Color32::from_rgb(0x4c, 0x56, 0x6a),
+    };
+    PaletteTheme::new(tokens(colors), ThemeMode::Dark)
+}
+
+/// The [Solarized](https://ethanschoonover.com/solarized/) palette as a dark theme (base03 ground,
+/// base0 body text). Accents/semantics tuned where needed to clear WCAG AA.
+#[must_use]
+pub fn solarized_dark() -> PaletteTheme {
+    let colors = Colors {
+        background: Color32::from_rgb(0x00, 0x2b, 0x36), // base03
+        surface: Color32::from_rgb(0x07, 0x36, 0x42),    // base02
+        surface_variant: Color32::from_rgb(0x0c, 0x41, 0x4f),
+        primary: Color32::from_rgb(0x4a, 0xa3, 0xd6), // brightened blue for AA on dark + dark text
+        on_primary: Color32::from_rgb(0x00, 0x2b, 0x36),
+        secondary: Color32::from_rgb(0x58, 0x6e, 0x75), // base01
+        on_secondary: Color32::from_rgb(0xfd, 0xf6, 0xe3), // base3
+        success: Color32::from_rgb(0x85, 0x99, 0x00),   // green
+        on_success: Color32::from_rgb(0x00, 0x2b, 0x36),
+        warning: Color32::from_rgb(0xb5, 0x89, 0x00), // yellow
+        on_warning: Color32::from_rgb(0x00, 0x2b, 0x36), // dark text on yellow for AA
+        danger: Color32::from_rgb(0xa4, 0x31, 0x2a),  // darkened red so light text clears AA
+        on_danger: Color32::from_rgb(0xfd, 0xf6, 0xe3),
+        text: Color32::from_rgb(0xee, 0xe8, 0xd5), // base2 (brighter than base0 for AA)
+        text_muted: Color32::from_rgb(0x93, 0xa1, 0xa1), // base1
+        border: Color32::from_rgb(0x0c, 0x41, 0x4f),
+    };
+    PaletteTheme::new(tokens(colors), ThemeMode::Dark)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -116,5 +167,15 @@ mod tests {
     #[test]
     fn high_contrast_passes_wcag_aa() {
         assert_aa("high_contrast", &high_contrast());
+    }
+
+    #[test]
+    fn nord_passes_wcag_aa() {
+        assert_aa("nord", &nord());
+    }
+
+    #[test]
+    fn solarized_dark_passes_wcag_aa() {
+        assert_aa("solarized_dark", &solarized_dark());
     }
 }
