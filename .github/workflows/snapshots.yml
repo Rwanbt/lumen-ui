@@ -13,6 +13,12 @@ on:
         description: "Regenerate reference snapshots and upload them as an artifact"
         type: boolean
         default: false
+  # Gate visual regressions, but only when the audio crate or this workflow changes — the
+  # references live in the same env this job runs in, so verification is deterministic.
+  pull_request:
+    paths:
+      - "crates/lumen-ui-audio/**"
+      - ".github/workflows/snapshots.yml"
 
 env:
   CARGO_TERM_COLOR: always

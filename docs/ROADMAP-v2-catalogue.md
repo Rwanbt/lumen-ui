@@ -67,8 +67,9 @@
   v2 Widgets/Layout/Theming) · **snapshots `egui_kittest`+wgpu** (infra : test `#[ignore]` rendu via
   l'adaptateur logiciel Mesa, workflow `snapshots.yml` en `workflow_dispatch` — hors matrice
   principale ; références générées/vérifiées dans le **même env CI Linux** pour le déterminisme
-  cross-backend) ; [ ] générer+committer les PNG de référence via la CI puis passer la vérif sur PR ·
-  galerie WASM exhaustive déployée · gel SemVer formel à la prochaine release.
+  cross-backend) · **référence générée par la CI Linux et committée**, vérification **gatée sur PR**
+  (paths audio) — snapshots **opérationnels** ; [ ] galerie WASM exhaustive déployée · gel SemVer
+  formel à la prochaine release.
 
 **Widgets livrés cette session (19)** : Spinner, Progress, Divider, Alert, Skeleton, Avatar, Chip,
 Kbd, Stat, Breadcrumb, SegmentedControl, Pagination, EmptyState, Link, CircularProgress, Rating,
