@@ -57,10 +57,11 @@
   `text`/`on_*` choisis par contraste, mode inféré) · **`system_mode(ctx)`** (auto
   `prefers-color-scheme` via `ctx.system_theme()`) · `.ron` via `tools/lumen-theme-gen` + feature
   core `serde` — **JALON CLÔTURÉ**. (Rampes sémantiques couvertes par la dérivation du builder.)
-- ✅ **v1.10 Crate `lumen-ui-audio`** — [x] Knob (rotatif 270°) · Fader (vertical) · VuMeter (zones
-  + peak-hold) · LevelBar · Waveform (enveloppe min/max) · XyPad (contrôle 2D) · Transport
-  (play/pause/stop/record, icônes painter) — **JALON CLÔTURÉ** (set de contrôles). Différé : Spectrum
+- ✅ **v1.10 Crate `lumen-ui-audio`** — afficheurs de signal : VuMeter (zones + peak-hold) · LevelBar ·
+  Waveform (enveloppe min/max). **Reclassement v1.1** : Knob · Fader · XyPad · Transport sont
+  **génériques** → déplacés dans `lumen-ui-widgets` (rien d'audio en eux). Différé : Spectrum
   (entrée FFT, spécifique à l'app). Validation sur une vraie app (Seno / plugin CLAP) = suivi pré-1.0.
+  Style des afficheurs aligné sur Seno/Dynama/Spectra (mesh rempli + contour ; voir lot suivant).
 - 🟡 **v2.0 Consolidation** — [x] CHANGELOG `[Unreleased]` (expansion v2 catalogue) · exemple
   `catalogue` (audio + presets live) · audit WCAG AA (test par thème, dont presets) · matrice compat
   egui 0.34.x / MSRV 1.92 (inchangée) · **mdBook étendu au catalogue v2** (chapitre Audio + sections

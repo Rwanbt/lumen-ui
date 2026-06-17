@@ -1,37 +1,32 @@
-//! `lumen-ui-audio` — audio/DAW controls for **lumen-ui**.
+//! `lumen-ui-audio` — signal-display widgets for **lumen-ui** (the DAW differentiator).
 //!
-//! lumen-ui was born from a DAW context (Seno); no web design system offers these, so they are a
-//! unique differentiator. Each control is painter-drawn and theme-colored: it resolves its style
-//! from a pure recipe (cf. ADR-0009) just like the core widgets, and reads the installed
-//! [`lumen_ui_core::Theme`].
+//! These are the genuinely audio-flavored *displays* — level meters and a waveform. The generic
+//! controls a DAW also uses (Knob, Fader, XyPad, Transport) live in `lumen-ui-widgets`, since
+//! nothing about them is audio-specific. Like every lumen widget, each display is painter-drawn and
+//! resolves a pure recipe (cf. ADR-0009) from the installed [`lumen_ui_core::Theme`].
+//!
+//! Display-only: you pass values your own DSP computes (a `0..=1` level, a `&[f32]` of samples) and
+//! the widget draws them — there is no audio processing here.
 //!
 //! Enable via the `audio` feature of the `lumen-ui` façade.
 //!
 //! ```ignore
-//! use lumen_ui_audio::{Knob, Fader};
+//! use lumen_ui_audio::{VuMeter, Waveform};
 //!
-//! ui.add(Knob::new(&mut cutoff, 20.0..=20_000.0));
-//! ui.add(Fader::new(&mut gain_db, -60.0..=6.0));
+//! ui.add(VuMeter::new(level).peak(peak)); // level/peak are 0..=1 fractions of full scale
+//! ui.add(Waveform::new(&samples));        // samples in -1.0..=1.0
 //! ```
 
 #![forbid(unsafe_code)]
 #![warn(missing_debug_implementations)]
 
-mod fader;
-mod knob;
 mod level_bar;
-mod transport;
 mod vu_meter;
 mod waveform;
-mod xy_pad;
 
-pub use fader::Fader;
-pub use knob::Knob;
 pub use level_bar::LevelBar;
-pub use transport::{Transport, TransportAction};
 pub use vu_meter::VuMeter;
 pub use waveform::Waveform;
-pub use xy_pad::XyPad;
 
 use egui::Color32;
 use lumen_ui_core::MeterRecipe;

@@ -20,3 +20,6 @@ lumen-ui-core = { workspace = true }
 # Dev-deps are not built by `cargo check`, so this does not affect the MSRV job; the snapshot
 # test only runs in the dedicated `snapshots` workflow (Linux + software adapter).
 egui_kittest = { version = "0.34.3", features = ["wgpu", "snapshot"] }
+# Dev-only: the snapshot scene composes the generic controls (which live in widgets) next to the
+# audio displays, so the reference image stays representative. Not a runtime dependency.
+lumen-ui-widgets = { workspace = true }

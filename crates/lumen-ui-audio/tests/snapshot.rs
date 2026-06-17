@@ -8,8 +8,9 @@
 use std::sync::Arc;
 
 use egui_kittest::Harness;
-use lumen_ui_audio::{Fader, Knob, LevelBar, Transport, VuMeter, Waveform, XyPad};
+use lumen_ui_audio::{LevelBar, VuMeter, Waveform};
 use lumen_ui_core::{install, DarkTheme, Theme, UiContext};
+use lumen_ui_widgets::{Fader, Knob, Transport, XyPad};
 
 #[test]
 #[ignore = "needs a wgpu adapter; run via the snapshots workflow"]
