@@ -29,3 +29,7 @@ __pycache__/
 
 # graphify — regenerable AST graph (run: graphify update .)
 graphify-out/
+
+# WASM gallery (Trunk) build output
+web/target/
+web/dist/

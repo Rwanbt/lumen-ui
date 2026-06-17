@@ -1,0 +1,21 @@
+# Standalone WASM gallery for lumen-ui, built with Trunk.
+#
+# Detached from the main workspace (own empty `[workspace]` table) so it never weighs on the
+# library CI — it path-depends on the published crates and is built only by Trunk / the Pages job.
+[package]
+name = "lumen-ui-web-gallery"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+eframe = "0.34"
+lumen-ui = { path = "../crates/lumen-ui", features = ["widgets", "themes", "audio", "layout"] }
+
+# Browser-only glue (Trunk drives wasm-bindgen).
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen-futures = "0.4"
+console_error_panic_hook = "0.1"
+web-sys = { version = "0.3", features = ["Document", "Element", "HtmlCanvasElement", "Window"] }
