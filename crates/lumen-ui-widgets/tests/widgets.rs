@@ -15,10 +15,10 @@ use lumen_ui_core::{install, DarkTheme, LightTheme, Theme, UiContext};
 use lumen_ui_themes::{audio_dark, high_contrast};
 use lumen_ui_widgets::{
     close_modal, hover_card, open_modal, show_toasts, toast_success, Accordion, Alert, Avatar,
-    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, Divider, DropdownMenu, EmptyState,
-    FormField, IconButton, Kbd, Label, Link, Modal, Pagination, Progress, RadioGroup, Rating,
-    SegmentedControl, Select, Skeleton, Slider, Spinner, Stat, Stepper, Switch, Table, Tabs,
-    TextField, Textarea, TreeNode, TreeView,
+    Breadcrumb, Button, Checkbox, Chip, CircularProgress, Code, ColorPicker, Divider, DropdownMenu,
+    EmptyState, FormField, IconButton, Kbd, Label, Link, Modal, NumberInput, Pagination, Progress,
+    RadioGroup, RangeSlider, Rating, SegmentedControl, Select, Skeleton, Slider, Spinner, Stat,
+    Stepper, Switch, Table, Tabs, TextField, Textarea, TreeNode, TreeView,
 };
 
 /// Install a theme on the harness context (called every frame — idempotent).
@@ -50,6 +50,9 @@ fn every_widget_renders_under_all_built_in_themes() {
         let mut stars = 3u32;
         let mut notes = String::from("multi\nline");
         let mut tree_selected: Option<usize> = Some(1);
+        let mut amount = 5.0_f64;
+        let mut span = (0.2_f32, 0.8_f32);
+        let mut color = egui::Color32::from_rgb(120, 80, 200);
 
         let mut harness = Harness::new_ui(move |ui| {
             theme_ctx(ui.ctx(), &theme);
@@ -106,6 +109,9 @@ fn every_widget_renders_under_all_built_in_themes() {
                 ui.add(Label::new("details"));
             });
             ui.add(Textarea::new(&mut notes).hint("Notes"));
+            ui.add(NumberInput::new(&mut amount, 0.0..=10.0));
+            ui.add(RangeSlider::new(&mut span.0, &mut span.1, 0.0..=1.0));
+            ui.add(ColorPicker::new(&mut color));
             FormField::new("Email")
                 .hint("We'll never share it")
                 .show(ui, |ui| {
@@ -275,6 +281,82 @@ fn slider_responds_to_arrow_keys_when_focused() {
         *harness.state() > 0.5,
         "ArrowRight should increase a focused slider (got {})",
         harness.state()
+    );
+}
+
+#[test]
+fn number_input_increments_on_stepper_click() {
+    let mut harness = Harness::new_ui_state(
+        |ui, value: &mut f64| {
+            theme_ctx(ui.ctx(), &dark());
+            ui.add(NumberInput::new(value, 0.0..=10.0).step(1.0));
+        },
+        5.0_f64,
+    );
+
+    harness.run();
+    harness.get_by_label("increment").click();
+    harness.run();
+
+    assert_eq!(
+        *harness.state(),
+        6.0,
+        "the + stepper adds one step to the bound value"
+    );
+}
+
+#[test]
+fn range_slider_keeps_handles_ordered() {
+    #[derive(Default)]
+    struct State {
+        low: f32,
+        high: f32,
+    }
+
+    // Start with the handles inverted; the widget must restore low ≤ high on render.
+    let mut harness = Harness::new_ui_state(
+        |ui, s: &mut State| {
+            theme_ctx(ui.ctx(), &dark());
+            ui.add(RangeSlider::new(&mut s.low, &mut s.high, 0.0..=1.0));
+        },
+        State {
+            low: 0.8,
+            high: 0.2,
+        },
+    );
+
+    harness.run();
+    let s = harness.state();
+    assert!(
+        s.low <= s.high,
+        "RangeSlider keeps low ≤ high (got {}..{})",
+        s.low,
+        s.high
+    );
+}
+
+#[test]
+fn color_picker_opens_picker_on_click() {
+    let mut harness = Harness::new_ui_state(
+        |ui, color: &mut egui::Color32| {
+            theme_ctx(ui.ctx(), &dark());
+            ui.add(ColorPicker::new(color));
+        },
+        egui::Color32::from_rgb(200, 60, 60),
+    );
+
+    harness.run();
+    // The RGB DragValues (Role::SpinButton) only exist once the popup is open. There are
+    // several (R/G/B), so use `query_all_*` — `query_by_role` panics on multiple matches.
+    assert!(
+        harness.query_all_by_role(Role::SpinButton).next().is_none(),
+        "picker popup is closed initially"
+    );
+    harness.get_by_label("color picker").click();
+    harness.run();
+    assert!(
+        harness.query_all_by_role(Role::SpinButton).next().is_some(),
+        "clicking the swatch opens egui's RGB picker"
     );
 }
 
