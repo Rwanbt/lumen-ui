@@ -52,7 +52,8 @@
   AuthCard · MasterDetail · Wizard (patterns) · TreeView (widget) · DataTable pattern
   (search + sortable DataGrid + pagination, feature `datagrid`) ; [x] Drawer (off-canvas, scrim,
   réutilise `egui::Modal`) — **JALON CLÔTURÉ**
-- ✅ **v1.9 Thèmes v2 & outillage** — [x] presets **Nord** + **Solarized dark** (audités AA) ·
+- ✅ **v1.9 Thèmes v2 & outillage** — [x] presets **Nord** + **Solarized dark** + **Seno Night**
+  (palette maison Seno/Dynama/Spectra, accent `#e8653d`) (audités AA) ·
   **ThemeBuilder** (dérive une palette AA-orientée depuis bg+accent : surfaces/bordures interpolées,
   `text`/`on_*` choisis par contraste, mode inféré) · **`system_mode(ctx)`** (auto
   `prefers-color-scheme` via `ctx.system_theme()`) · `.ron` via `tools/lumen-theme-gen` + feature

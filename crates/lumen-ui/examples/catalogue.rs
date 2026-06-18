@@ -48,6 +48,7 @@ fn theme_for(index: usize) -> Arc<dyn Theme> {
             )
             .build(),
         ),
+        5 => Arc::new(seno_night()),
         _ => Arc::new(DarkTheme::new()),
     }
 }
@@ -65,6 +66,7 @@ impl eframe::App for CatalogueApp {
             .segment("Nord")
             .segment("Solarized")
             .segment("Custom")
+            .segment("Seno")
             .show(ui);
         if self.theme != before {
             set_theme(ui.ctx(), theme_for(self.theme));

@@ -1030,11 +1030,15 @@ const KNOB_BASE_SIZE: f32 = 44.0;
 /// Resolved style for a rotary `Knob` (in `lumen-ui-widgets`).
 #[derive(Clone, Copy, Debug)]
 pub struct KnobRecipe {
-    /// The unfilled part of the value arc.
+    /// Fill of the knob body disc.
+    pub disc: Color32,
+    /// Ring around the disc at rest (it brightens to `fill` while hovered/dragged).
+    pub ring: Color32,
+    /// The unfilled part of the value arc (a recessed groove).
     pub track: Color32,
     /// The filled part of the value arc (from the minimum to the current value).
     pub fill: Color32,
-    /// The pointer line indicating the current value.
+    /// The pointer tick indicating the current value.
     pub indicator: Color32,
     /// Diameter, in points.
     pub size: f32,
@@ -1045,7 +1049,9 @@ impl KnobRecipe {
     #[must_use]
     pub fn resolve(tokens: &Tokens, ctx: &UiContext) -> Self {
         Self {
-            track: tokens.colors.surface_variant,
+            disc: tokens.colors.surface_variant,
+            ring: tokens.colors.border,
+            track: tokens.colors.background,
             fill: tokens.colors.primary,
             indicator: tokens.colors.text,
             size: KNOB_BASE_SIZE * ctx.density_scale(),
