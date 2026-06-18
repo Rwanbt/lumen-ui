@@ -233,6 +233,33 @@ impl ThemeBuilder {
     }
 }
 
+/// The **Seno Night** palette shared by the Seno DAW and the Dynama/Spectra CLAP plugins: a layered
+/// near-black ground with the signature warm-orange accent (`#e8653d`). Brought into lumen-ui as a
+/// preset so a host app can match the Seno house look. `danger` is deepened from Seno's bright
+/// signal-red so button text clears WCAG AA (Seno uses that red for indicators, not text fills).
+#[must_use]
+pub fn seno_night() -> PaletteTheme {
+    let colors = Colors {
+        background: Color32::from_rgb(0x1a, 0x1a, 0x1a),
+        surface: Color32::from_rgb(0x25, 0x25, 0x25),
+        surface_variant: Color32::from_rgb(0x1e, 0x1e, 0x1e),
+        primary: Color32::from_rgb(0xe8, 0x65, 0x3d), // signature accent
+        on_primary: Color32::from_rgb(0x16, 0x16, 0x16),
+        secondary: Color32::from_rgb(0x2f, 0x2f, 0x2f),
+        on_secondary: Color32::from_rgb(0xff, 0xff, 0xff),
+        success: Color32::from_rgb(0x00, 0xc8, 0x6a), // Seno green, dark text passes AA
+        on_success: Color32::from_rgb(0x16, 0x16, 0x16),
+        warning: Color32::from_rgb(0xff, 0xc9, 0x47),
+        on_warning: Color32::from_rgb(0x16, 0x16, 0x16),
+        danger: Color32::from_rgb(0xc0, 0x39, 0x2b), // deepened from #ff4444 so white clears AA
+        on_danger: Color32::from_rgb(0xff, 0xff, 0xff),
+        text: Color32::from_rgb(0xff, 0xff, 0xff),
+        text_muted: Color32::from_rgb(0xb3, 0xb3, 0xb3), // Seno's #66 is too dim for AA body text
+        border: Color32::from_rgb(0x40, 0x40, 0x40),
+    };
+    PaletteTheme::new(tokens(colors), ThemeMode::Dark)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -284,6 +311,11 @@ mod tests {
     #[test]
     fn solarized_dark_passes_wcag_aa() {
         assert_aa("solarized_dark", &solarized_dark());
+    }
+
+    #[test]
+    fn seno_night_passes_wcag_aa() {
+        assert_aa("seno_night", &seno_night());
     }
 
     #[test]

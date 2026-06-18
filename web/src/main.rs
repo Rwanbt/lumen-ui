@@ -71,6 +71,7 @@ fn theme_for(index: usize) -> Arc<dyn Theme> {
         1 => Arc::new(LightTheme::new()),
         2 => Arc::new(nord()),
         3 => Arc::new(solarized_dark()),
+        4 => Arc::new(seno_night()),
         _ => Arc::new(DarkTheme::new()),
     }
 }
@@ -87,6 +88,7 @@ impl eframe::App for Gallery {
             .segment("Light")
             .segment("Nord")
             .segment("Solarized")
+            .segment("Seno")
             .show(ui);
         if self.theme != before {
             set_theme(ui.ctx(), theme_for(self.theme));

@@ -22,7 +22,9 @@ lumen_ui::set_theme(ctx, std::sync::Arc::new(lumen_ui_themes::high_contrast()));
 ```
 
 ## Modules
-- `lib.rs` — `audio_dark()`, `high_contrast()`, and v1.9 presets `nord()` + `solarized_dark()`
+- `lib.rs` — `audio_dark()`, `high_contrast()`, `nord()`, `solarized_dark()`, and `seno_night()`
+  (the Seno DAW / Dynama / Spectra house palette — layered near-black + signature accent `#e8653d`;
+  `danger` deepened from Seno's signal-red so button text clears AA).
   (all return `PaletteTheme`). **Every theme has a `*_passes_wcag_aa` test** (`audit_colors`):
   preset palettes are tuned (darkened danger, dark-on-yellow `on_warning`, brightened text) so all
   10 audited pairs clear AA — keep that invariant when adding a preset.

@@ -124,8 +124,10 @@ chrome rather than growing the frozen `Theme` trait per component.
 ## Generic DAW-style controls (reclassified from lumen-ui-audio, v1.1)
 Nothing audio-specific about these, so they live here (the signal *displays* — VuMeter/LevelBar/
 Waveform — stay in `lumen-ui-audio`). Each resolves a pure recipe in `lumen-ui-core`.
-- `knob.rs` — `Knob` (`&mut f32`, range): 270° rotary; vertical drag changes the value; arc fills
-  from min, pointer marks value. `KnobRecipe`. a11y `WidgetInfo::slider`.
+- `knob.rs` — `Knob` (`&mut f32`, range): 270° rotary, vertical drag. **Physical look** (aligned with
+  Seno's `mini_knob`): a body **disc** + **ring** (ring lights to the accent while hovered/dragged,
+  disc lightens while dragged) + recessed track arc + accent value arc + a **rim pointer tick**.
+  `KnobRecipe` (disc/ring/track/fill/indicator/size). a11y `WidgetInfo::slider`.
 - `fader.rs` — `Fader` (`&mut f32`, range): vertical fader (max at top), click/drag. Reuses
   `SliderRecipe`. a11y `WidgetInfo::slider`.
 - `xy_pad.rs` — `XyPad` (`&mut x`, `&mut y`, ranges): square 2-D control, X→/Y↑, crosshair + point.

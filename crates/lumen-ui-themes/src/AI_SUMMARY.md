@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-18 00:09** — do not edit manually.
+> **Auto-generated 2026-06-18 09:11** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -13,8 +13,8 @@ feature. Depends on `egui` + `lumen-ui-core`.
 ## Files & LOC
 | File | LOC | |
 |------|-----|--|
-| `lib.rs` | 271 | |
-| **Total** | **271** | |
+| `lib.rs` | 299 | |
+| **Total** | **299** | |
 
 ## Rust API
 - `ThemeBuilder` (struct)
@@ -23,5 +23,6 @@ feature. Depends on `egui` + `lumen-ui-core`.
 - `audio_dark()`
 - `high_contrast()`
 - `nord()`
+- `seno_night()`
 - `solarized_dark()`
 - `system_mode()`
