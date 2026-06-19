@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-18 09:11** — do not edit manually.
+> **Auto-generated 2026-06-19 09:28** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -19,8 +19,8 @@ This crate keeps only the genuinely audio-flavored *displays*.
 | `level_bar.rs` | 41 | |
 | `lib.rs` | 40 | |
 | `vu_meter.rs` | 97 | |
-| `waveform.rs` | 99 | |
-| **Total** | **277** | |
+| `waveform.rs` | 276 | |
+| **Total** | **454** | |
 
 ## Rust API
 - `LevelBar` (struct)

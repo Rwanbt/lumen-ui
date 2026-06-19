@@ -23,7 +23,7 @@ This crate keeps only the genuinely audio-flavored *displays*.
 ```rust
 use lumen_ui_audio::{VuMeter, Waveform};
 ui.add(VuMeter::new(level).peak(peak)); // 0..=1 fractions of full scale
-ui.add(Waveform::new(&samples));        // samples in -1.0..=1.0
+ui.add(Waveform::new(&samples).height(96.0)); // samples -1..=1; scroll=zoom, drag=pan
 ```
 
 ## Modules
@@ -32,10 +32,12 @@ ui.add(Waveform::new(&samples));        // samples in -1.0..=1.0
   switches to stacked LED zones. Tick marks at the zone thresholds + optional peak-hold line.
   Uses `MeterRecipe` (incl. `tick`).
 - `level_bar.rs` — `LevelBar::new(level)`: horizontal bar whose fill is colored by the level's zone.
-- `waveform.rs` — `Waveform::new(&[f32])` (samples in `-1..=1`): per-column **min/max envelope**
-  rendered as a **filled `epaint::Mesh` body + top/bottom outline** (Seno/Dynama/Spectra house
-  style). Default **symmetric** (`|amp|` mirrored); `.signed()` draws the true min/max envelope.
-  Uses `WaveformRecipe` (incl. translucent `fill`).
+- `waveform.rs` — `Waveform::new(&[f32])` (samples in `-1..=1`): **interactive, zoomable** display
+  (Ableton/Pro Tools model). Fills available width; `.height(pt)`, `.interactive(bool)`. Scroll =
+  zoom (centred on cursor), drag = pan, double-click = reset; zoom/pan state is keyed by the
+  widget's auto id in egui temp data. Picks the representation by zoom: **zoomed out** → filled
+  min/max **envelope** (`epaint::Mesh` body + outline); **zoomed in** (≤1 sample/px) → the **precise
+  per-sample line** + filled body (a true continuous sinusoid). Uses `WaveformRecipe`.
 - `lib.rs` — shared zone thresholds (`ZONE_LOW_MAX` 0.6, `ZONE_MID_MAX` 0.85) + `zone_color`.
 
 ## Reference implementations (real projects)
