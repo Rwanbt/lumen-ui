@@ -35,7 +35,7 @@ required-features = ["widgets"]
 
 [[example]]
 name = "gallery"
-required-features = ["widgets"]
+required-features = ["widgets", "themes"]
 
 [[example]]
 name = "responsive"
