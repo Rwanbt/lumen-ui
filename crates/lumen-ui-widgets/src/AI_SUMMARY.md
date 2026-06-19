@@ -1,6 +1,6 @@
 # AI_SUMMARY — src
 
-> **Auto-generated 2026-06-18 09:11** — do not edit manually.
+> **Auto-generated 2026-06-19 09:54** — do not edit manually.
 > Source: `tools/ai_docs/generate_ai_summary.py`
 > For purpose, thread model and constraints, read `AI_CONTEXT.md`.
 
@@ -23,7 +23,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `carousel.rs` | 83 | |
 | `checkbox.rs` | 63 | |
 | `chip.rs` | 61 | |
-| `circular_progress.rs` | 47 | |
+| `circular_progress.rs` | 55 | |
 | `code.rs` | 31 | |
 | `color_picker.rs` | 62 | |
 | `combobox.rs` | 78 | |
@@ -72,7 +72,7 @@ Widgets are the only place that calls egui's drawing API besides `lumen-ui-core:
 | `tree_view.rs` | 114 | |
 | `util.rs` | 37 | |
 | `xy_pad.rs` | 64 | |
-| **Total** | **3848** | |
+| **Total** | **3856** | |
 
 ## Rust API
 - `Accordion` (struct)

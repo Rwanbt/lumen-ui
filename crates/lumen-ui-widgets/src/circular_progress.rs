@@ -27,6 +27,16 @@ impl CircularProgress {
     }
 }
 
+/// Points along a circular arc of `sweep` radians from `start`, at `radius` around `center`.
+fn arc_points(center: Pos2, radius: f32, start: f32, sweep: f32, steps: usize) -> Vec<Pos2> {
+    (0..=steps)
+        .map(|i| {
+            let angle = start + (i as f32 / steps as f32) * sweep;
+            center + radius * vec2(angle.cos(), angle.sin())
+        })
+        .collect()
+}
+
 impl Widget for CircularProgress {
     fn ui(self, ui: &mut Ui) -> Response {
         let recipe = CircularProgressRecipe::resolve(ui.theme().tokens(), &ui.ui_ctx());
@@ -34,20 +44,19 @@ impl Widget for CircularProgress {
             ui.allocate_exact_size(vec2(recipe.diameter, recipe.diameter), Sense::hover());
         let center = rect.center();
         let radius = recipe.diameter / 2.0 - recipe.thickness / 2.0;
+        let start = -PI / 2.0; // 12 o'clock
         let painter = ui.painter();
-        painter.circle_stroke(center, radius, Stroke::new(recipe.thickness, recipe.track));
+        // Track and fill must use the SAME primitive: `circle_stroke` and `Shape::line` tessellate
+        // at slightly different effective radii, which made the two rings look off-centre. So the
+        // track is drawn as a full-sweep polyline, identical to the fill arc.
+        painter.add(Shape::line(
+            arc_points(center, radius, start, TAU, ARC_SEGMENTS),
+            Stroke::new(recipe.thickness, recipe.track),
+        ));
         if self.fraction > 0.0 {
-            let start = -PI / 2.0;
-            let end = start + self.fraction * TAU;
             let steps = ((ARC_SEGMENTS as f32 * self.fraction).ceil() as usize).max(2);
-            let points: Vec<Pos2> = (0..=steps)
-                .map(|i| {
-                    let angle = start + (i as f32 / steps as f32) * (end - start);
-                    center + radius * vec2(angle.cos(), angle.sin())
-                })
-                .collect();
             painter.add(Shape::line(
-                points,
+                arc_points(center, radius, start, self.fraction * TAU, steps),
                 Stroke::new(recipe.thickness, recipe.fill),
             ));
         }

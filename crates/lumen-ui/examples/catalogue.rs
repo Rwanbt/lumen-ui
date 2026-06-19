@@ -49,8 +49,23 @@ fn theme_for(index: usize) -> Arc<dyn Theme> {
             .build(),
         ),
         5 => Arc::new(seno_night()),
+        6 => Arc::new(seno_dawn()),
         _ => Arc::new(DarkTheme::new()),
     }
+}
+
+/// A more realistic preview signal than a clean sine: a decaying pluck (transient + body + tail)
+/// with light texture, so the waveform reads as audio rather than smooth lobes. Deterministic.
+fn preview_waveform(level: f32, samples: usize) -> Vec<f32> {
+    (0..samples)
+        .map(|i| {
+            let t = i as f32 / samples as f32;
+            let envelope = (-3.0 * t).exp() * (1.0 - (-40.0 * t).exp()); // attack + exp decay
+            let tone = (t * 90.0).sin() * 0.7 + (t * 230.0).sin() * 0.3; // fundamental + overtone
+            let texture = (t * 1300.0).sin() * 0.12; // light high-frequency grain
+            (envelope * (tone + texture) * level).clamp(-1.0, 1.0)
+        })
+        .collect()
 }
 
 impl eframe::App for CatalogueApp {
@@ -67,6 +82,7 @@ impl eframe::App for CatalogueApp {
             .segment("Solarized")
             .segment("Custom")
             .segment("Seno")
+            .segment("Dawn")
             .show(ui);
         if self.theme != before {
             set_theme(ui.ctx(), theme_for(self.theme));
@@ -96,10 +112,12 @@ impl eframe::App for CatalogueApp {
             ui.add_space(8.0);
             ui.add(Label::muted("Drive the meters:"));
             ui.add(Slider::new(&mut self.level, 0.0..=1.0));
-            let wave: Vec<f32> = (0..256)
-                .map(|i| (i as f32 * 0.12).sin() * self.level)
-                .collect();
-            ui.add(Waveform::new(&wave));
+            ui.add_space(8.0);
+            ui.add(Label::muted(
+                "Waveform — scroll to zoom, drag to pan, double-click to reset:",
+            ));
+            let wave = preview_waveform(self.level, 8192);
+            ui.add(Waveform::new(&wave).height(110.0));
         });
     }
 }

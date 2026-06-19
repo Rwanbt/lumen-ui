@@ -43,7 +43,8 @@ pub use lumen_ui_core::{
 #[cfg(feature = "themes")]
 #[doc(inline)]
 pub use lumen_ui_themes::{
-    audio_dark, high_contrast, nord, seno_night, solarized_dark, system_mode, ThemeBuilder,
+    audio_dark, high_contrast, nord, seno_dawn, seno_night, solarized_dark, system_mode,
+    ThemeBuilder,
 };
 
 #[cfg(feature = "icons")]
@@ -110,7 +111,8 @@ pub mod prelude {
     };
     #[cfg(feature = "themes")]
     pub use lumen_ui_themes::{
-        audio_dark, high_contrast, nord, seno_night, solarized_dark, system_mode, ThemeBuilder,
+        audio_dark, high_contrast, nord, seno_dawn, seno_night, solarized_dark, system_mode,
+        ThemeBuilder,
     };
     #[cfg(feature = "widgets")]
     pub use lumen_ui_widgets::{
