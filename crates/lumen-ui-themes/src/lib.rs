@@ -260,6 +260,33 @@ pub fn seno_night() -> PaletteTheme {
     PaletteTheme::new(tokens(colors), ThemeMode::Dark)
 }
 
+/// The **Seno Dawn** palette (the DAW's "Dawn / Aurora" theme): a warm-beige *light* ground keeping
+/// the signature orange accent (`#e8653d`). A light counterpart to [`seno_night`] for hosts that
+/// want the Seno look in daylight. Text is a deep warm brown; semantics are deepened so every
+/// `on_*` pair clears WCAG AA on the light surfaces.
+#[must_use]
+pub fn seno_dawn() -> PaletteTheme {
+    let colors = Colors {
+        background: Color32::from_rgb(0xc9, 0xb3, 0x99), // Seno Dawn bgDark
+        surface: Color32::from_rgb(0xd4, 0xbf, 0xa8),    // bgMedium — cards lift lighter
+        surface_variant: Color32::from_rgb(0xdc, 0xc9, 0xb5), // bgLight
+        primary: Color32::from_rgb(0xe8, 0x65, 0x3d), // signature accent (constant across Seno themes)
+        on_primary: Color32::from_rgb(0x1a, 0x12, 0x08), // dark on orange clears AA (white does not)
+        secondary: Color32::from_rgb(0xb8, 0xa0, 0x88),  // bgDarker — muted warm button
+        on_secondary: Color32::from_rgb(0x2e, 0x25, 0x19),
+        success: Color32::from_rgb(0x4c, 0xaf, 0x50),
+        on_success: Color32::from_rgb(0x16, 0x10, 0x08),
+        warning: Color32::from_rgb(0xe8, 0x9a, 0x2b),
+        on_warning: Color32::from_rgb(0x1a, 0x12, 0x06),
+        danger: Color32::from_rgb(0xb2, 0x3a, 0x2e), // deep red so white text clears AA on light bg
+        on_danger: Color32::from_rgb(0xff, 0xff, 0xff),
+        text: Color32::from_rgb(0x2e, 0x25, 0x19), // deep warm brown
+        text_muted: Color32::from_rgb(0x4d, 0x42, 0x32), // darkened from Seno's #6d5d4f for AA body text
+        border: Color32::from_rgb(0xab, 0x92, 0x77),
+    };
+    PaletteTheme::new(tokens(colors), ThemeMode::Light)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -316,6 +343,16 @@ mod tests {
     #[test]
     fn seno_night_passes_wcag_aa() {
         assert_aa("seno_night", &seno_night());
+    }
+
+    #[test]
+    fn seno_dawn_passes_wcag_aa() {
+        assert_aa("seno_dawn", &seno_dawn());
+    }
+
+    #[test]
+    fn seno_dawn_is_a_light_theme() {
+        assert_eq!(seno_dawn().mode(), ThemeMode::Light);
     }
 
     #[test]
